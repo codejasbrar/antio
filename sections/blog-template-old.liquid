@@ -1,0 +1,189 @@
+
+<!-- slider section start -->
+<div id="blog-banner" class="p-0 home-banner layout-2-menu shadow-home inner-banner">
+  
+  <div class="desc">
+    <div class="container">
+      <div class="text-block">
+        <h2>{{ section.settings.blog_banner_text }}</h2>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- slider section end-->
+
+<!-- Blog section start -->
+<div class="blog-section">
+  <div class="container">
+    <div class="site-title-block" style="text-align: center;">
+<!--       <div class="squer-block"></div> -->
+      <div class="title-text">
+<!--         <h2>{{ section.settings.blog_title }}</h2> -->
+      </div>
+    </div>
+<!--     <p class="text-center">{{ section.settings.blog_textarea }}</p> -->
+
+
+    <div class="blog-wrap">
+      <div class="row">
+        
+          <div class="col-md-3 blog_filters">
+    <h2 class="filter_title">{{ blog.title }}</h2>
+    <div class="blog_filters">
+    <p class="filters_ttl text-left">Refine</p>
+      <div class="blog_filters_heading_main">
+       {% comment %} <h2 class="blog_filters_heading">{% if section.settings.filter_name != blank %}{{ section.settings.filter_name }}{% else %}Filter name{% endif %}</h2> 
+        <h2 class="blog_filters_heading">{{ blog.title }} Type</h2> {% endcomment %}
+        {% include 'only_blog_filters' %}
+      </div>
+      {% comment %}
+      <ul>
+      {% for group_tag in blog.all_tags %}
+        <li>{{ group_tag | highlight_active_tag | link_to_add_tag: group_tag }}</li><br>
+      {% endfor %}
+      </ul>
+      {% endcomment %}
+    </div>
+  </div>
+        
+        
+        <div class="col-md-9 blog_articles">
+      	{% for article in blog.articles %} 
+        
+        
+          <div class="article-list col-lg-4 col-md-6 col-sm-12 el-blogs float_left  {% for tag in article.tags %}{{tag.handle }} {% endfor %}">
+            <div class="blog-box">
+              <div class="blog-img">
+                <img src="{{ article.image.src | img_url: '1200x' }}" alt="">
+                <div class="date-block">
+                  <div class="date-day">
+                    <p>{{ article.published_at | date: "%b" }}<span class="day">{{ article.published_at | date: "%d" }}</span></p>
+                  </div>
+                </div>
+              </div>
+              <div class="blog-text">
+                <a href="{{ article.url }}">{{ article.title | truncatewords: 8, "" }}</a>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+        </div>
+      </div>
+     <!--
+      <a href="#" class="loadMore btn btn-solid btn-center btn-sq" tabindex="0">View More</a>
+     -->
+    </div>
+  </div>
+</div>
+<!-- Blog section End -->
+
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight) {
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  });
+}
+</script>
+
+  
+  
+  <style>
+.accordion {
+  background-color: #fff;
+  color: #444;
+  cursor: pointer;
+  padding: 0px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+  transition: 0.4s;
+}
+
+.active, .accordion:hover {
+  background-color: #fff;
+}
+
+.accordion:after {
+  content: '\002B';
+  color: #777;
+  font-weight: bold;
+  float: right;
+  margin-left: 5px;
+}
+
+.active:after {
+  content: "\2212";
+}
+
+.panel {
+  padding: 0px 0px;
+  background-color: white;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+}
+    
+      button.accordion {
+    font-size: 13px;
+    padding: 1.5rem 0;
+    border-bottom: none;
+    font-weight: 400;
+    color: #000;
+    line-height: 1.4em;
+    letter-spacing: .1em;
+    display: flex;
+    justify-content: space-between;
+}
+</style>
+{% schema %}
+{
+  "name": {
+    "en": "Blog pages"
+  },
+  "settings": [
+	{
+      "type": "image_picker",
+      "id": "blog_banner_image",
+      "label": "Set Banner Image"
+    },
+    {
+      "type": "text",
+      "id": "blog_banner_text",
+      "label": "Set Banner Title"
+    },
+	{
+      "type": "text",
+      "id": "blog_title",
+      "label": "Set Blog Title"
+    },
+	{
+      "type": "textarea",
+      "id": "blog_textarea",
+      "label": "Set Blog Description"
+    },	
+	
+    {
+      "type": "range",
+      "id": "post_limit",
+      "label": {
+        "en": "Posts"
+      },
+      "min": 3,
+      "max": 12,
+      "step": 3,
+      "default": 3
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,207 @@
+<div>
+<!--     <label for="SortBy">Sort by</label>
+    <select name="sort_by" id="SortBy" aria-describedby="a11y-refresh-page-message" class="collection-sort__input">
+      <option value="manual">Featured</option>
+      <option value="best-selling" selected="selected">Best selling</option>
+      <option value="title-ascending">Alphabetically, A-Z</option>
+      <option value="title-descending">Alphabetically, Z-A</option>
+      <option value="price-ascending">Price, low to high</option>
+      <option value="price-descending">Price, high to low</option>
+      <option value="created-ascending">Date, old to new</option>
+      <option value="created-descending">Date, new to old</option>
+    </select> -->
+ {%- capture contentForQuerystring -%}{{ content_for_header }}{%- endcapture -%}
+{%- assign pageUrl = contentForQuerystring | split:'"pageurl":"' | last | split:'"' | first | split:'sort_by=' | last |
+   replace:'\/','/' | 
+   replace:'%20',' ' | 
+   replace:'\u0026','&'
+-%}
+    <div class="sort-btn-wrapper">
+
+          {% if pageUrl ==  'title' %}
+                           <div class="sort-btn" onclick="toggle_Name('title')">
+        <p>Product Name A-Z</p>
+        <i id="sort_Name" class="fa fa-chevron-up"></i>
+      </div>
+         
+      {% else %}
+                         <div class="sort-btn" onclick="toggle_Name('title')">
+        <p>Product Name A-Z</p>
+        <i id="sort_Name" class="fa fa-chevron-down"></i>
+      </div>
+      {% endif %}
+    
+      
+       {% if pageUrl ==  'best-selling' %}
+                         <div class="sort-btn" onclick="toggle_Sellers('best-selling')">
+        <p>Best Sellers</p>
+        <i id="sort_Seller" class="fa fa-chevron-up"></i>
+      </div>
+         
+      {% else %}
+                 
+                       <div class="sort-btn" onclick="toggle_Sellers('best-selling')">
+        <p>Best Sellers</p>
+        <i id="sort_Seller" class="fa fa-chevron-down"></i>
+      </div>
+      
+      {% endif %}
+      
+
+     
+      
+       {% if pageUrl ==  'Newest' %}
+                        
+      
+      <div class="sort-btn" onclick="toggle_Latest('Newest')">
+        <p>Latest</p>
+        <i id="sort_Latest" class="fa fa-chevron-up"></i>
+      </div>
+         
+      {% else %}
+                
+      <div class="sort-btn" onclick="toggle_Latest('Newest')">
+        <p>Latest</p>
+        <i id="sort_Latest" class="fa fa-chevron-down"></i>
+      </div>
+      
+      {% endif %}
+      
+  {% if pageUrl ==  'price' %}
+                  <div class="sort-btn" onclick="toggle_Price('price')">
+        <p>Price</p>
+        <i id="sort_Price" class="fa fa-chevron-up"></i>
+      </div>
+         
+      {% else %}
+                
+      <div class="sort-btn" onclick="toggle_Price('price')">
+        <p>Price</p>
+        <i id="sort_Price" class="fa fa-chevron-down"></i>
+      </div>
+      
+      {% endif %}
+     
+      
+      
+      
+    </div>
+  
+</div>
+
+<script>
+  // Save existing sort parameters
+  Shopify.queryParams = {};
+  if(location.search.length) {
+      for(var aKeyValue, i = 0, aCouples = location.search.substr(1).split('&'); i < aCouples.length; i++) {
+      aKeyValue = aCouples[i].split('=');
+          if (aKeyValue.length > 1) {
+              Shopify.queryParams[decodeURIComponent(aKeyValue[0])] = decodeURIComponent(aKeyValue[1]);
+          }
+      }
+  }
+
+  // Add existing sort parameters to current URL
+//   document.querySelector('#SortBy').addEventListener('change', function(e) {
+//       var value = e.currentTarget.value;
+//       Shopify.queryParams.sort_by = value;
+//       location.search = new URLSearchParams(Shopify.queryParams).toString();
+//   });
+
+  
+  
+  function toggle_Name(sortval){
+ 
+     var value = sortval;//e.currentTarget.value;
+     Shopify.queryParams.sort_by = value;
+     location.search = new URLSearchParams(Shopify.queryParams).toString();
+    
+//     var element = document.getElementById("sort_Name");
+//     if (element.classList) {
+//       element.classList.toggle("fa-chevron-up");
+//     } else {
+//       // For IE9
+//       var classes = element.className.split(" ");
+//       var i = classes.indexOf("fa-chevron-up");
+
+//       if (i >= 0)
+//         classes.splice(i, 1);
+//       else
+//         classes.push("fa-chevron-up");
+//         element.className = classes.join(" ");
+//     }
+    
+  }
+  
+  
+  
+  function toggle_Sellers(sortval){
+    var value = sortval; //e.currentTarget.value;
+    Shopify.queryParams.sort_by = value;
+    location.search = new URLSearchParams(Shopify.queryParams).toString();
+  
+//         var element = document.getElementById("sort_Seller");
+//         if (element.classList) {
+//           element.classList.toggle("fa-chevron-up");
+//         } else {
+//           // For IE9
+//           var classes = element.className.split(" ");
+//           var i = classes.indexOf("fa-chevron-up");
+
+//           if (i >= 0)
+//             classes.splice(i, 1);
+//           else
+//             classes.push("fa-chevron-up");
+//             element.className = classes.join(" ");
+//         }
+
+  }
+  
+  function toggle_Latest(sortval){
+    var value = sortval; //e.currentTarget.value;
+    Shopify.queryParams.sort_by = value;
+    location.search = new URLSearchParams(Shopify.queryParams).toString();
+  
+//       var element = document.getElementById("sort_Latest");
+//       if (element.classList) {
+//         element.classList.toggle("fa-chevron-up");
+//       } else {
+//         // For IE9
+//         var classes = element.className.split(" ");
+//         var i = classes.indexOf("fa-chevron-up");
+
+//         if (i >= 0)
+//           classes.splice(i, 1);
+//         else
+//           classes.push("fa-chevron-up");
+//         element.className = classes.join(" ");
+//       }
+
+  }
+  
+  function toggle_Price(sortval){
+    var value = sortval; //e.currentTarget.value;
+    Shopify.queryParams.sort_by = value;
+    location.search = new URLSearchParams(Shopify.queryParams).toString();
+  
+//       var element = document.getElementById("sort_Price");
+//       if (element.classList) {
+//         element.classList.toggle("fa-chevron-up");
+//       } else {
+//         // For IE9
+//         var classes = element.className.split(" ");
+//         var i = classes.indexOf("fa-chevron-up");
+
+//         if (i >= 0)
+//           classes.splice(i, 1);
+//         else
+//           classes.push("fa-chevron-up");
+//           element.className = classes.join(" ");
+//       }
+
+  }
+  
+  
+  
+  
+</script>

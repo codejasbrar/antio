@@ -1,0 +1,13 @@
+{% comment %}
+  DO NOT MODIFY THIS FILE DIRECTLY. THIS FILE WILL BE OVERWRITTEN.
+  YOU CAN MODIFY THE LIQUID CODE FOR THIS CUSTOM FIELD HERE:
+  https://customfields.bonify.io/dashboard/cheeky-chirp.myshopify.com/products/configure/167408/edit
+{% endcomment %}
+{% if product.metafields.custom_fields["product_graphic_section_conten"] != blank %}
+  <div class="custom-field custom-field__product-graphic-section-conten custom-field__type--text">
+    <h3 class="custom-field--title">Product Graphic Section_content</h3>
+    <div class="custom-field--value">
+      {{ product.metafields.custom_fields["product_graphic_section_conten"] }}
+    </div>
+  </div>
+{% endif %}

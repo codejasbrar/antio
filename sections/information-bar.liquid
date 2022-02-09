@@ -1,0 +1,59 @@
+<div class="Information-bar">
+	
+  <div class="container">
+  	
+    <a href="{{ section.settings.bar_url }}"><p>{{ section.settings.bar_text }}</p></a>
+  
+  </div>
+
+</div>
+
+{% schema %}
+{
+  "name": {
+   
+    "en": "Information Bar"
+  },
+  "class": "index-section",
+  "settings": [
+    
+    {
+      "type": "text",
+      "id": "bar_text",
+      "label": {
+       
+        "en": "Content"
+      },
+      "default": {
+     
+        "en": "Sign up to our newsletter and save 10%"
+      }
+    },
+	{
+      "type": "url",
+      "id": "bar_url",
+      "label": "Link"
+	
+      }
+  ],
+  "presets": [
+    {
+      "name": {
+        
+        "en": "Information Bar"
+      },
+      "category": {
+       
+        "en": "Text"
+      }
+    }
+  ]
+}
+{% endschema %}
+
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

@@ -1,0 +1,474 @@
+<!-- slider section start -->
+
+<!-- slider section end-->
+
+<!-- Why Superfoods desc section start -->
+<div class="why-superfoods-desc">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 col-sm-12">
+        <div class="desc-text">
+          <div class="title-block">
+            <div class="squer-block" style="background:"></div>
+            <div class="title-text">
+              <h2>{{ section.settings.superfood_content_title }}</h2>
+            </div>
+          </div>
+          <div class="img-block">
+            <img src="https://cdn.shopify.com/s/files/1/0073/8102/4820/files/40678020_l.jpg?v=1579385384" alt="img"/>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Why Superfoods desc section End -->
+
+<!-- NO Common Section Start-->
+<div class="no-common gf-sec">
+  <div class="container">
+    <div class="row">
+     {% for block in section.blocks %} 
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="block">
+          <div class="icon-box">
+            <img src="{{ block.settings.superfood_feature_image | img_url:'1024x1024' }}" alt="">
+          </div>
+          <div class="text-block">
+            <h4>{{ block.settings.superfood_feature_text }}</h4>
+          </div>
+        </div>
+      </div>
+     {% endfor %} 
+    </div>
+  </div>
+</div>
+<!-- NO Common Section End-->
+
+<!-- Why Superfoods desc section start -->
+<div class="why-superfoods-desc">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 col-sm-12">
+        <div class="desc-text">
+          <div class="title-block">
+            <div class="squer-block"></div>
+            <div class="title-text">
+              <h2>{{ section.settings.superfood_why_us_title }}</h2>
+            </div>
+          </div>
+          <div class="img-block text-block">
+            <p>{{ section.settings.superfood_why_us_content }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Why Superfoods desc section End -->
+
+<!-- LOREM TAB SECTION START -->
+<div class="lorem-tab-section">
+  <nav class="lorem-tab">
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+      <a class="nav-item nav-link active" id="tab-a" data-toggle="tab" href="#tab1" role="tab" aria-controls="nav-home" aria-selected="true"><span class="tab-round"></span><p>{{ section.settings.superfood_tab_title_1 }}</p></a>
+      <a class="nav-item nav-link" id="tab-b" data-toggle="tab" href="#tab2" role="tab" aria-controls="nav-profile" aria-selected="false"><p>{{ section.settings.superfood_tab_title_2 }}</p><span class="tab-round"></span></a>
+      <a class="nav-item nav-link" id="tab-c" data-toggle="tab" href="#tab3" role="tab" aria-controls="nav-contact" aria-selected="false"><span class="tab-round"></span><p>{{ section.settings.superfood_tab_title_3 }}</p></a>
+      <a class="nav-item nav-link" id="tab-d" data-toggle="tab" href="#tab4" role="tab" aria-controls="nav-home" aria-selected="true"><p>{{ section.settings.superfood_tab_title_4 }}</p><span class="tab-round"></span></a>
+      <a class="nav-item nav-link" id="tab-e" data-toggle="tab" href="#tab5" role="tab" aria-controls="nav-profile" aria-selected="false"><span class="tab-round"></span><p>{{ section.settings.superfood_tab_title_5 }}</p></a>
+      <a class="nav-item nav-link" id="tab-f" data-toggle="tab" href="#tab6" role="tab" aria-controls="nav-contact" aria-selected="false"><p>{{ section.settings.superfood_tab_title_6 }}</p><span class="tab-round"></span></a>
+      <a class="nav-item nav-link" id="tab-g" data-toggle="tab" href="#tab7" role="tab" aria-controls="nav-contact" aria-selected="false"><span class="tab-round"></span><p>{{ section.settings.superfood_tab_title_7 }}</p></a>
+    </div>
+  </nav>
+  <div class="tab-content" id="nav-tabContent">
+    <div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab-a">
+      <div class="container">
+        <div class="text-block">
+          <p>{{ section.settings.superfood_tab_content_1 }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="tab-b">
+      <div class="container">
+        <div class="text-block">
+          <p>{{ section.settings.superfood_tab_content_2 }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="tab-pane fade" id="tab3" role="tabpanel" aria-labelledby="tab-c">
+      <div class="container">
+        <div class="text-block">
+          <p>{{ section.settings.superfood_tab_content_3 }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="tab-pane fade" id="tab4" role="tabpanel" aria-labelledby="tab-d">
+      <div class="container">
+        <div class="text-block">
+          <p>{{ section.settings.superfood_tab_content_4 }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="tab-pane fade" id="tab5" role="tabpanel" aria-labelledby="tab-e">
+      <div class="container">
+        <div class="text-block">
+          <p>{{ section.settings.superfood_tab_content_5 }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="tab-pane fade" id="tab6" role="tabpanel" aria-labelledby="tab-f">
+      <div class="container">
+        <div class="text-block">
+          <p>{{ section.settings.superfood_tab_content_6 }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="tab-pane fade" id="tab7" role="tabpanel" aria-labelledby="tab-g">
+      <div class="container">
+        <div class="text-block">
+          <p>{{ section.settings.superfood_tab_content_7 }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div style="height:40px; background:#fff;"></div>
+<!-- LOREM TAB SECTION END -->
+
+<!-- NO Common Section Start-->
+<div class="no-common gf-sec">
+  <div class="container">
+    <div class="row">
+      
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="block">
+          <div class="icon-box">
+            <img src="{{ section.settings.superfood_feature_image1 | img_url: '360x360' }}" alt="">
+          </div>
+          <div class="text-block">
+            <h4>{{ section.settings.superfood_feature_text1 }}</h4>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="block">
+          <div class="icon-box">
+            <img src="{{ section.settings.superfood_feature_image2 | img_url: '360x360' }}" alt="">
+          </div>
+          <div class="text-block">
+            <h4>{{ section.settings.superfood_feature_text2 }}</h4>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-12">
+        <div class="block">
+          <div class="icon-box">
+            <img src="{{ section.settings.superfood_feature_image3 | img_url: '360x360' }}" alt="">
+          </div>
+          <div class="text-block">
+            <h4>{{ section.settings.superfood_feature_text3 }}</h4>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</div>
+<!-- NO Common Section End-->
+
+<!-- Why Superfoods desc section start -->
+<div class="why-superfoods-desc which-superfoods">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 col-sm-12">
+        <div class="desc-text">
+          <div class="title-block">
+            <div class="squer-block"></div>
+            <div class="title-text">
+              <h2>{{ section.settings.superfood_which_title }}</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="which-wrap flex">
+      <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-12 order1">
+          <div class="img-block">
+            <img src="{{ section.settings.which_superfood_image_1 | img_url:'1024x1024' }}" alt="">
+          </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-12 order2">
+          <div class="text-block text-center">
+            <h4>{{ section.settings.which_superfood_title_1 }}</h4>
+            <p>{{ section.settings.which_superfood_textarea_1 }}</p>
+          </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-12 order4">
+          <div class="text-block text-center">
+            <h4>{{ section.settings.which_superfood_title_2 }}</h4>
+            <p>{{ section.settings.which_superfood_textarea_2 }}</p>
+          </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-12 order3">
+          <div class="img-block">
+            <img src="{{ section.settings.which_superfood_image_2 | img_url:'1024x1024' }}" alt="">
+          </div>
+        </div>                 
+        <div class="col-lg-6 col-md-6 col-sm-12 order5">
+          <div class="img-block">
+            <img src="{{ section.settings.which_superfood_image_3 | img_url:'1024x1024' }}" alt="">
+          </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-12 order6">
+          <div class="text-block text-center">
+            <h4>{{ section.settings.which_superfood_title_3 }}</h4>
+            <p>{{ section.settings.which_superfood_textarea_3 }}</p>
+          </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-12 order8">
+          <div class="text-block text-center">
+            <h4>{{ section.settings.which_superfood_title_4 }}</h4>
+            <p>{{ section.settings.which_superfood_textarea_4 }}</p>
+          </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-12 order7">
+          <div class="img-block">
+            <img src="{{ section.settings.which_superfood_image_4 | img_url:'1024x1024' }}" alt="">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Why Superfoods desc section End -->
+
+{% schema %}
+  {
+    "name": "Superfoods",
+    "settings": [
+		{
+			"type": "text",
+			"id": "superfood_banner_text",
+			"label": "Banner Text"
+		},
+		{
+			"type": "image_picker",
+			"id": "superfood_banner_image",
+			"label": "Banner Image"
+		},
+		{
+			"type": "text",
+			"id": "superfood_content_title",
+			"label": "Superfood Content Title"
+		},
+		{
+			"type": "url",
+			"id": "superfood_content_video",
+			"label": "Superfood Content Video"
+		},
+		{
+			"type": "text",
+			"id": "superfood_why_us_title",
+			"label": "Superfood Why Us Title"
+		},
+		{
+			"type": "textarea",
+			"id": "superfood_why_us_content",
+			"label": "Superfood Why Us Content"
+		},
+
+		{
+			"type": "text",
+			"id": "superfood_tab_title_1",
+			"label": "Superfood First Tab Title"
+		},
+		{
+			"type": "textarea",
+			"id": "superfood_tab_content_1",
+			"label": "Superfood First Tab Content"
+		},
+		{
+			"type": "text",
+			"id": "superfood_tab_title_2",
+			"label": "Superfood Second Tab Title"
+		},
+		{
+			"type": "textarea",
+			"id": "superfood_tab_content_2",
+			"label": "Superfood Second Tab Content"
+		},
+		{
+			"type": "text",
+			"id": "superfood_tab_title_3",
+			"label": "Superfood Third Tab Title"
+		},
+		{
+			"type": "textarea",
+			"id": "superfood_tab_content_3",
+			"label": "Superfood Third Tab Content"
+		},
+		{
+			"type": "text",
+			"id": "superfood_tab_title_4",
+			"label": "Superfood Fourth Tab Title"
+		},
+		{
+			"type": "textarea",
+			"id": "superfood_tab_content_4",
+			"label": "Superfood Fourth Tab Content"
+		},
+		{
+			"type": "text",
+			"id": "superfood_tab_title_5",
+			"label": "Superfood Fifth Tab Title"
+		},
+		{
+			"type": "textarea",
+			"id": "superfood_tab_content_5",
+			"label": "Superfood Fifth Tab Content"
+		},
+		{
+			"type": "text",
+			"id": "superfood_tab_title_6",
+			"label": "Superfood Sixth Tab Title"
+		},
+		{
+			"type": "textarea",
+			"id": "superfood_tab_content_6",
+			"label": "Superfood Sixth Tab Content"
+		},
+		{
+			"type": "text",
+			"id": "superfood_tab_title_7",
+			"label": "Superfood Seven Tab Title"
+		},
+		{
+			"type": "textarea",
+			"id": "superfood_tab_content_7",
+			"label": "Superfood Seven Tab Content"
+		},
+		{
+            "type": "image_picker",
+            "id": "superfood_feature_image1",
+            "label": "Superfood Feature Image1"
+        },
+        {
+            "type": "text",
+            "id": "superfood_feature_text1",
+            "label": "Superfood Feature Text1"
+        },
+		{
+            "type": "image_picker",
+            "id": "superfood_feature_image2",
+            "label": "Superfood Feature Image2"
+        },
+        {
+            "type": "text",
+            "id": "superfood_feature_text2",
+            "label": "Superfood Feature Text2"
+        },
+		{
+            "type": "image_picker",
+            "id": "superfood_feature_image3",
+            "label": "Superfood Feature Image3"
+        },
+        {
+            "type": "text",
+            "id": "superfood_feature_text3",
+            "label": "Superfood Feature Text3"
+        },
+
+		{
+            "type": "text",
+            "id": "superfood_which_title",
+            "label": "Which Superfood Title"
+        },
+
+		{
+            "type": "image_picker",
+            "id": "which_superfood_image_1",
+            "label": "Which Superfood Image 1"
+        },
+		{
+            "type": "text",
+            "id": "which_superfood_title_1",
+            "label": "Which Superfood Title 1"
+        },
+        {
+            "type": "textarea",
+            "id": "which_superfood_textarea_1",
+            "label": "Which Superfood Textarea 1"
+        },
+		{
+            "type": "image_picker",
+            "id": "which_superfood_image_2",
+            "label": "Which Superfood Image 2"
+        },
+		{
+            "type": "text",
+            "id": "which_superfood_title_2",
+            "label": "Which Superfood Title 2"
+        },
+        {
+            "type": "textarea",
+            "id": "which_superfood_textarea_2",
+            "label": "Which Superfood Textarea 2"
+        },
+		{
+            "type": "image_picker",
+            "id": "which_superfood_image_3",
+            "label": "Which Superfood Image 3"
+        },
+		{
+            "type": "text",
+            "id": "which_superfood_title_3",
+            "label": "Which Superfood Title 3"
+        },
+        {
+            "type": "textarea",
+            "id": "which_superfood_textarea_3",
+            "label": "Which Superfood Textarea 3"
+        },
+		{
+            "type": "image_picker",
+            "id": "which_superfood_image_4",
+            "label": "Which Superfood Image 4"
+        },
+		{
+            "type": "text",
+            "id": "which_superfood_title_4",
+            "label": "Which Superfood Title 4"
+        },
+        {
+            "type": "textarea",
+            "id": "which_superfood_textarea_4",
+            "label": "Which Superfood Textarea 4"
+        }
+	],
+	"blocks": [
+		{
+			"type": "superfood",
+			"limit": 3,
+			"name": {
+              "en": "Superfood Features"
+            },
+            "settings": [
+				{
+					"type": "image_picker",
+                    "id": "superfood_feature_image",
+                    "label": "Superfood Feature Image"
+				},
+				{
+					"type": "text",
+                    "id": "superfood_feature_text",
+                    "label": "Superfood Feature Text"
+				}
+			]
+		}
+	]
+  }
+{% endschema %}
+
+

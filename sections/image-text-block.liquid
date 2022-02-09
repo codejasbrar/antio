@@ -1,0 +1,119 @@
+<section id="image_text_block">
+  <div class="quality_head">
+    <p class="subheading red_text text-center mb-10">{{ section.settings.heading }}</p>
+    <h1 class="heading text-center">{{ section.settings.subheading }}</h1>
+  </div>
+  
+  <div class="image_content_block desktop_only">
+  {% for block in section.blocks %}
+  <div class="row two_column_row m-0">
+    <div class="col-md-6 image_block">
+      <img src="{{ block.settings.image | img_url: 'master' }}">
+    </div>
+    <div class="col-md-6 content_block collection_home_content">
+      <h3 class="collection_heading">{{ block.settings.right_heading }}</h3>
+      <p class="collection_content">{{ block.settings.content }}</p>
+    </div>
+  </div>
+  {% endfor %}
+  </div>
+  
+  <div class="image_content_block_main mobile_only">
+  {% for block in section.blocks %}
+  <div class="row two_column_row m-0">
+    <div class="col-md-6 image_block">
+      <img src="{{ block.settings.image | img_url: 'master' }}">
+    </div>
+    <div class="col-md-6 content_block collection_home_content">
+      <h3 class="collection_heading">{{ block.settings.right_heading }}</h3>
+      <p class="collection_content">{{ block.settings.content }}</p>
+    </div>
+  </div>
+  {% endfor %}
+  </div>
+  
+</section>
+
+
+<script>
+ 
+  $('.image_content_block_main').slick({
+  autoplay: false,
+  autoplaySpeed: 3000,
+  infinite: true,
+  speed: 500,
+  slidesToShow: 4,
+  slidesToScroll: 1,
+  arrows: false,
+  dots: true,
+    adaptiveHeight: true,
+        responsive: [
+            {
+                breakpoint: 0,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                }
+            },
+            {
+                breakpoint: 768,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                }
+            }
+          ]
+});
+  
+</script>
+
+
+{% schema %}
+  {
+    "name": "Image and text block",
+    "settings": [
+
+            {
+              "type": "text",
+              "id": "heading",
+              "label": "Heading"
+            },
+            {
+              "type": "text",
+              "id": "subheading",
+              "label": "Subheading"
+            }
+],
+  "blocks": [
+    {
+      "type": "Image_text_block",
+      "name": {
+        "en": "Image text block"
+      },
+      "settings": [
+		{
+			"type": "image_picker",
+			"id": "image",
+			"label": "Image"
+		},
+		{
+			"type": "text",
+			"id": "right_heading",
+			"label": "Heading"
+		},
+		{
+			"type": "html",
+			"id": "content",
+			"label": "Content"
+		}
+]
+}
+]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

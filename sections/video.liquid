@@ -1,0 +1,67 @@
+<!-- video part start -->
+<div class="video_section">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-9 col-12">
+
+        <div class="text-block">
+          <h2>{{ section.settings.video_title }}</h2>
+          <p>{{ section.settings.video_text }}</p>
+        </div>
+        <div class="video-block">
+          <iframe src="{{ section.settings.video_link }}" allowfullscreen></iframe>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": {
+    "en": "Video"
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "video_title",
+      "label": {
+        "en": "Video Title"
+      }
+    },
+	{
+		"type": "textarea",
+		"id": "video_text",
+		"label": "Video Content"
+	},
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": {
+        "en": "Cover image"
+      },
+      "info": {
+        "en": "Always shown on mobile devices"
+      }
+    },
+    {
+      "type": "url",
+      "id": "video_link",
+      "label": {
+        "en": "Video link"
+      }
+    }
+  ],
+  "presets": [
+    {
+      "name": {
+        "en": "Video"
+      },
+      "category": {
+        "en": "Video"
+      }
+    }
+  ]
+}
+{% endschema %}

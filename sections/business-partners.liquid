@@ -1,0 +1,64 @@
+<div class="find-on_us">
+  <div class="container">
+    <h2 class="sing_title"><span></span>{{ section.settings.title }}</h2>
+    <div class="logo-wrap">
+      <div class="logo-block">
+        {% for block in section.blocks %}
+          <div class="logo_sig">
+            <img src="{{ block.settings.partner_image | img_url: '500x' }}" alt="">
+          </div>
+        {% endfor %}
+        <div class="clearfix"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Business Partners",
+	"max_blocks": 4,
+    "settings": [
+		{
+			"type": "text",
+			"id": "title",
+			"label": "Set Title"
+		}
+	],
+	"blocks": [
+		{
+			"type": "image",
+			"name": "Partners Image",
+			"settings": [
+				{
+					"type": "image_picker",
+					"id": "partner_image",
+					"label": "Set Partner Image"
+				}
+			]
+		}
+	],
+	"presets": [
+    {
+      "name": {
+        "en": "Partners Image"
+      },
+      "category": {
+        "en": "Image"
+      },
+      "settings": {
+        
+      },
+      "blocks": [
+        {
+          "type": "image"
+        },
+        {
+          "type": "image"
+        }
+      ]
+    }
+  ]
+  }
+{% endschema %}
+

@@ -1,0 +1,46 @@
+<section id="about_last_section">
+  <div class="quality_head">
+    <p class="founder_subheading red_text text-center mb-10">{{ section.settings.section_heading }}</p>
+    <h1 class="heading text-center">{{ section.settings.subheading }}</h1>
+  </div>
+  <div class="quality_content_image" style="background-image: url({{ section.settings.content_image | img_url: 'master' }});">
+  </div>
+  <div class="content_section">
+    <p>{{ section.settings.content }}</p>
+  </div>
+</section>
+{% schema %}
+  
+  {
+    "name": "Founder section",
+    "settings": [
+
+            {
+              "type": "text",
+              "id": "section_heading",
+              "label": "Section heading"
+            },
+            {
+              "type": "text",
+              "id": "subheading",
+              "label": "Subheading"
+            },
+            {
+              "type": "image_picker",
+              "id": "content_image",
+              "label": "Image"
+            },
+            {
+              "type": "richtext",
+              "id": "content",
+              "label": "Content"
+            }
+        ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

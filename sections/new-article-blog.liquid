@@ -1,0 +1,585 @@
+<!-- slider section start -->
+
+<!-- slider section end-->
+
+<!-- Singel Blog section start -->
+<div class="singel-blog-section">
+  <div class="container">
+    {% include 'breadcrumbs' %}
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="singel-blog-wrap">
+          {% comment %}
+          <h2>{{ article.title }}</h2>
+          {% endcomment %}
+          <div class="images-box">
+            <img src="{{ article.image.src | img_url: '1200x' }}" alt="">
+          </div>
+          {% comment %}
+          <div class="text-box">
+            <p>{{ article.content }}</p>
+          </div>
+          <div class="share-block">
+            <div class="left-side">
+              <h5><span><i class="fa fa-share-alt"></i></span>Share</h5>
+            </div>
+            <div class="right-side">
+              <ul>
+                {% assign share_permalink = article.url %}
+                {% assign share_title = article.title %}
+                <li>
+                  <a target="_blank" href="//www.facebook.com/sharer.php?u={{ shop.url | append: share_permalink }}">
+                    <span>{% include 'icon-facebook.liquid' %}</span>Facebook
+                  </a>
+                </li>
+                <li>
+                  <a target="_blank" href="//twitter.com/share?text={{ share_title | url_param_escape }}&amp;url={{ shop.url | append: share_permalink }}">
+                    <span>{% include 'icon-twitter.liquid' %}</span>Twitter
+                  </a>
+                </li>
+              </ul>
+            </div>
+            
+          </div>
+          
+          <div class="previous-next-blog-section">
+            <div class="previous-side">
+              {% if blog.previous_article %}
+              	<p>Previous article</p>
+              {% endif %}
+              <a href="{{blog.previous_article.url}}">{{blog.previous_article.title}}</a>
+            </div>
+            <div class="next-side">
+              {% if blog.next_article %}
+              	<p>Next article</p>
+              {% endif %}
+              <a href="{{blog.next_article.url}}">{{blog.next_article.title}}</a>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+          
+          {% if blog.comments_enabled? %}
+            {% if number_of_comments > 0 %}
+              
+              <div class="page-width">
+                <div class="grid">
+                  <div class="grid__item medium-up--five-sixths medium-up--push-one-twelfth">
+                    <h2 class="h3">{{ 'blogs.comments.comments_with_count' | t: count: number_of_comments }}</h2>
+
+                    {% paginate article.comments by 5 %}
+
+                      {% comment %}
+                        #comments is required, it is used as an anchor link by Shopify.
+                      {% endcomment %}
+                      <div id="comments">
+                        <ul class="comments">
+                          {% comment %}
+                            If a comment was just submitted with no blank field, show it.
+                          {% endcomment %}
+                          {% if comment.status == 'pending' %}
+                            <li id="{{ comment.id }}" class="comment">
+                              {% include 'comment' %}
+                            </li>
+                          {% endif %}
+
+                          {% for comment in article.comments %}
+                            <li id="{{ comment.id }}" class="comment">
+                              {% include 'comment' %}
+                            </li>
+                          {% endfor %}
+                        </ul>
+
+                        {% if paginate.pages > 1 %}
+                          {% include 'pagination' %}
+                        {% endif %}
+
+                      </div>
+                    {% endpaginate %}
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+
+            <div class="comment-form form-vertical">
+              {% form 'new_comment', article %}
+
+              {%- assign formId = 'CommentForm' -%}
+
+              {%- assign post_message = 'blogs.comments.success' -%}
+              {%- if blog.moderated? and comment.status == 'pending' -%}
+              {%- assign post_message = 'blogs.comments.success_moderated' -%}
+              {%- elsif comment.status == 'unapproved' or comment.status == 'spam' -%}
+              {%- assign post_message = 'blogs.comments.unapproved' -%}
+              {%- endif -%}
+
+              {% include 'form-status', form_id: formId, success_message: post_message %}
+
+              <div class="grid">
+
+                <div class="grid__item">
+                  <label for="{{ formId }}-body">{{ 'Comment' }}</label>
+                  <textarea name="comment[body]" id="{{ formId }}-body" class="input-full{% if form.errors contains 'body' %} input--error{% endif %}"{% if form.errors contains 'body' %} aria-invalid="true" aria-describedby="{{ formId}}-body-error"{% endif %}>{{ form.body }}</textarea>
+                  {% if form.errors contains 'body' %}
+                  <span id="{{ formId}}-body-error" class="input-error-message">
+                    <span class="visually-hidden">{{ 'general.accessibility.error' | t }} </span>
+                    {% include 'icon-error' %}
+                    <span>{{ 'blogs.comments.message' | t }} {{ form.errors.messages['body'] }}.</span>
+                  </span>
+                  {% endif %}
+                </div>
+
+                <div class="grid__item medium-up--one-half">
+                  <label for="{{ formId }}-author">{{ 'blogs.comments.name' | t }}</label>
+                  <input type="text" name="comment[author]" id="{{ formId }}-author" class="input-full{% if form.errors contains 'author' %} input--error{% endif %}" value="{{ form.author }}"{% if form.errors contains 'author' %} aria-invalid="true" aria-describedby="{{ formId}}-author-error"{% endif %}>
+                  {% if form.errors contains 'author' %}
+                  <span id="{{ formId}}-author-error" class="input-error-message">
+                    <span class="visually-hidden">{{ 'general.accessibility.error' | t }} </span>
+                    {% include 'icon-error' %}
+                    <span>{{ 'blogs.comments.name' | t }} {{ form.errors.messages['author'] }}.</span>
+                  </span>
+                  {% endif %}
+                </div>
+
+                <div class="grid__item medium-up--one-half">
+                  <label for="{{ formId }}-email">{{ 'blogs.comments.email' | t }}</label>
+                  <input type="email" name="comment[email]" id="{{ formId }}-email" class="input-full{% if form.errors contains 'email' %} input--error{% endif %}" value="{{ form.email }}" autocorrect="off" autocapitalize="off" {% if form.errors contains 'email' %} aria-invalid="true" aria-describedby="{{ formId}}-email-error"{% endif %}>
+                  {% if form.errors contains 'email' %}
+                  <span id="{{ formId}}-email-error" class="input-error-message">
+                    <span class="visually-hidden">{{ 'general.accessibility.error' | t }} </span>
+                    {% include 'icon-error' %}
+                    <span>{{ form.errors.translated_fields['email'] | capitalize }} {{ form.errors.messages['email'] }}.</span>
+                  </span>
+                  {% endif %}
+                </div>
+
+              </div>
+
+              {% if blog.moderated? %}
+              <p class="fine-print">{{ 'blogs.comments.moderated' | t }}</p>
+              {% endif %}
+
+              <input type="submit" class="btn" value="{{ 'blogs.comments.post' | t }}">
+              {% endform %}
+          </div>
+          
+          {% endif %}
+          {% endcomment %}
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12">
+        <div class="side-bar">
+          <div class="article_details">
+            <h2 class="article-title">{{ article.title }}</h2>
+            <div class="recipe_serve_time">
+              <p>{{article.metafields.single_recipe_time.single_recipe_sidebar_time}}</p>
+            </div>
+            <div class="recipe_tags">
+              <p>
+                
+                {% for tag in article.tags %}
+  
+                  <span>{{tag}}</span>
+                {% endfor %}
+                
+                {% comment %}
+                {% for tag in article.metafields.single_recipe_tag.single_recipe_tag %}
+              
+                {% endfor %}{% endcomment %}
+              </p>
+            </div>
+            <hr>
+            <div class="single_recipe_content">
+              <p>{{article.excerpt}}</p>
+            </div>
+            <hr>
+            <div class="single_recipe_ingredients">
+              <p>{{article.metafields.single_ingredients.single_ingredients}}</p>
+            </div>
+          </div>
+          <div class="single_article_related_product">
+            <div class="single_article_related_head">
+              <h3>{{article.metafields.related_product_head.related_product_heading}}</h3>
+            </div>
+            {% comment %}
+            {% assign products = article.metafields.related_product.related_product %}
+            
+            {% for product in products %}
+            {% assign product_title = all_products[product].title %}
+            {% assign product_url = all_products[product].url %}
+            {% assign product_image = all_products[product].featured_image %}
+            {% assign product_price = all_products[product].price %}
+            <div class="related_product_details d-flex">
+             
+              <div class="related_product_image">
+                <a href="{{ product_url }}" class="product_image">
+                  <img src="{{ product_image | img_url: '96X96' }}">
+                </a>
+              </div>
+              <div class="related_product_right">
+              <div class="related_product_title">
+               <a href="{{ product_url }}" class="product_title text-uppercase">{{ product_title }}</a>
+                <p class="product_price">{{ product_price | money }}</p>
+              </div>
+              <div class="product_btn">
+                
+                <form class="addtocart" method="post" action="/cart/add">
+                          <input type="hidden" name="id" value="{{ all_products[product].variants.first.id }}" />
+                          <input class="product-qt" min="1" type="number" id="quantity" name="quantity" value="1"  />
+                          <input type="submit" value="Add to cart" class="btn collection-btn btn product-form__cart-submit d-flex align-items-center justify-content-center" />
+                       </form> 
+              
+                    
+              </div>
+              </div>
+            </div>
+            
+              <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
+                     <div class="product-box">
+                        <div class="img-block">
+                           <a href="{{ all_products[product].title }}"><img src="{{ all_products[product].featured_image | img_url: '1024x1024' }}" alt=""></a>
+                        </div>
+                        <div class="text-block">
+                          <div class="des-top">
+                            {% assign product_description = all_products[product].description | split: '<!-- split -->' %}
+                            <h4><a href="{{ all_products[product].url }}">{{ all_products[product].title }}</a></h4>
+                            <div class="review-part">
+                               
+							{% render 'okendo-reviews-product-rating-summary', product: product %}
+                             
+                            </div>
+                              
+                          </div>
+                           
+                           
+                            <p><span style="color: black;">{{all_products[product].price | money}}</span> &nbsp&nbsp<span style="text-decoration: line-through;">{{ product.compare_at_price | money }}</span></p>
+                        </div>
+                      
+                       
+<!--                         <div class="btn-block">
+                          <a href="{{ product.url }}">Checkout</a>
+                          <a href="#">{{product.price | money}}</a>
+                        </div> -->
+                       <form class="addtocart" method="post" action="/cart/add">
+                          <input type="hidden" name="id" value="{{ all_products[product].variants.first.id }}" />
+                          <input class="product-qt" min="1" type="number" id="quantity" name="quantity" value="1"  />
+                          <input type="submit" value="Add to cart" class="btn collection-btn" />
+                       </form> 
+                         
+                     </div>
+                  </div>
+            
+            {% endfor %}
+    {% endcomment %}
+           {% assign selected_handles = article.metafields.Choose_products.Choose_products | split: '|' %}
+            
+          {% for selected_handle in selected_handles %}
+           
+         <div class="related_product_details d-flex">
+             
+              <div class="related_product_image">
+                <a href="{{ all_products[selected_handle].url }}" class="product_image">
+                  <img src="{{ all_products[selected_handle].featured_image | img_url: '96X96' }}">
+                </a>
+              </div>
+              <div class="related_product_right">
+              <div class="related_product_title">
+               <a href="{{ all_products[selected_handle].url }}" class="product_title text-uppercase">{{ all_products[selected_handle].title }}</a>
+                <p class="product_price">{{ all_products[selected_handle].price | money }}</p>
+              </div>
+              <div class="product_btn">
+                
+                <form class="addtocart" method="post" action="/cart/add">
+                          <input type="hidden" name="id" value="{{ all_products[selected_handle].variants.first.id }}" />
+                          <input class="product-qt" min="1" type="number" id="quantity" name="quantity" value="1"  />
+                          <input type="submit" value="Add" class="btn collection-btn btn product-form__cart-submit d-flex align-items-center justify-content-center" />
+                       </form> 
+              
+                    
+              </div>
+              </div>
+            </div>   
+            
+            
+          {% endfor %}
+            
+            
+            
+          </div>
+          <hr>
+          <div class="single_blog_methods">
+            <h3>{{article.metafields.method_heading.method_heading}}</h3>
+            <ul>
+              {% assign count = 0 %}
+            {% for method in article.metafields.method.method %}
+              {% assign count = count | plus: 1 %}
+              <li class="d-flex"> <span>{{ count }}</span> {{ method }} </li>
+            {% endfor %}
+            </ul>
+          </div>
+           {% comment %}
+          <div class="single_blog_author">
+            <span>Posted by {{ article.author }} </span> ///
+            <span>Category: Drinks,Smoothies</span> ///
+            <span>Type: Vegan</span>
+          </div>
+          <div class="single_blog_notify">
+            <a href="{{article.metafields.notify_btn_url.notify_btn_url}}" class="btn transparent_btn notify_btn" >{{article.metafields.notify_btn.notify_btn}}</a>
+            <p>{{article.metafields.notify_line.notify_line}}</p>
+          </div>
+         
+          <div class="stay-in-touch-sidebar">
+            <h3>{{section.settings.sidebar_title}}</h3>
+            <div class="stay-social-icon">
+              {% comment %}Custom Code For Social Icon{% endcomment %}
+                {%- assign social_accounts = 'Facebook, Instagram' | split: ', ' -%}
+                <ul>
+                  {% for social in social_accounts %}
+                  {%- assign social_handle = social | handleize -%}
+                  {% capture social_link %}social_{{ social_handle }}_link{% endcapture %}
+                  {% capture social_icon %}icon-{{ social_handle }}{% endcapture %}
+
+                  {% if settings[social_link] != blank %}
+                  <li>
+                    <a href="{{ settings[social_link] }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: social }}">
+                      {% include social_icon %}
+                    </a>
+                  </li>
+                  {% endif %}
+
+                  {% endfor %}
+                </ul>
+            </div>
+            <p>{{section.settings.sidebar_content}}</p>
+            <div class="form-group">
+              
+<!--               <form>
+                <input type="text" name="" placeholder="Your email address" class="form-control">
+                <button type="submit" class="btn"></button>
+              </form> -->
+              {% form "customer", class: "form-inline subscribe-form" %}
+                {% if form.posted_successfully? %}
+                {{ 'general.newsletter_form.confirmation' | t }}
+                {% endif %}
+                <input type="hidden" name="contact[tags]" value="newsletter"> 
+                <input type="email" name="contact[email]" class="form-control" value="{{ form.email }}" placeholder="Enter your email address here..." {% if form.errors %} aria-invalid="true" aria-describedby="{{ formId }}-email-error" data-form-status {% endif %}>
+                <button type="submit" name="commit" class="btn">{{section.settings.sidebar_button_title}}</button>   
+              {% endform %}
+              
+            </div>
+          </div>
+          
+          <div class="recent-blog-bar position-sticky">
+            {% for article in blog.articles limit: section.settings.post_limit %}
+            <div class="recent-blog-box">
+              <a href="{{ article.url }}">
+                <div class="img-box">
+                  <img src="{{ article.image.src | img_url: '1200x' }}" alt="">
+                </div>
+                <div class="text-title-box">
+                  <h3>{{ article.content | truncatewords: 6, "" }}</h3>
+                </div>
+                <div class="clearfix"></div>
+              </a>
+            </div>
+            {% endfor %}
+          </div>
+          {% endcomment %}          
+          
+        </div>
+      </div>
+    </div>
+    {% unless blog.handle == 'recipes' %}
+    <div class="blog-wrap">
+      <h3>{{section.settings.related_article_title}}</h3>
+      <div class="row">
+        {% assign selected_article_title = article.title %}
+        {% for article in blog.articles limit: section.settings.post_limit_1 %} 
+        	{% if selected_article_title != article.title %}
+              <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="blog-box">
+                  <div class="blog-img">
+                    <img src="{{ article.image.src | img_url: '1200x' }}" alt="">
+                    <div class="date-block">
+                      <div class="date-day">
+                        <p>{{ article.published_at | date: "%b" }}<span class="day">{{ article.published_at | date: "%d" }}</span></p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="blog-text">
+                    <a href="{{ article.url }}">{{ article.title | truncatewords: 20, "" }}</a>
+                  </div>
+                </div>
+              </div>
+        	{% endif %}
+        {% endfor %}
+        
+      </div>
+      <div class="row">
+        {% for block in section.blocks %} 
+        
+        {% assign article = articles[block.settings.blog_posts] %}
+        	  <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="blog-box">
+                  <div class="blog-img">
+                    <img src="{{ article.image.src | img_url: '1200x' }}" alt="">
+                    <div class="date-block">
+                      <div class="date-day">
+                        <p>{{ article.published_at | date: "%b" }}<span class="day">{{ article.published_at | date: "%d" }}</span></p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="blog-text">
+                    <a href="{{ article.url }}">{{ article.title | truncatewords: 20, "" }}</a>
+                  </div>
+                </div>
+              </div>
+        {% endfor %}
+        
+      </div>
+    </div>
+    {% endunless %}
+  </div>
+</div>
+<!-- Singel section End -->
+
+<style>
+  .recipe_tags p span {
+    margin-bottom: 10px;
+    float: left;
+}
+ .recipe_tags p {
+    width: 100%;
+    float: left;
+}
+
+.recipe_tags {
+    float: left;
+    width: 100%;
+}
+  
+  .single_recipe_content {
+    float: left;
+    width: 100%;
+}
+  
+  .single_recipe_ingredients {
+    float: left;
+    width: 100%;
+}
+  
+  hr {
+
+    float: left;
+    width: 100%;
+}
+ .recipe_tags {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+} 
+  
+  .single_recipe_ingredients ul li {
+    float: left;
+    width: 100%;
+    list-style-type: disc;
+}
+  </style
+
+{% schema %}
+{
+  "name": {
+    "en": "Posts"
+  },
+  "settings": [
+	{
+		"type": "image_picker",
+		"id": "blog_banner_image",
+		"label": "Set Banner Image"
+	},
+	{
+		"type": "text",
+		"id": "blog_banner_text",
+		"label": "Set Banner Title"
+	},
+	{
+		"type": "text",
+		"id": "sidebar_title",
+		"label": "Sidebar Title"
+	},
+	{
+		"type": "textarea",
+		"id": "sidebar_content",
+		"label": "Sidebar Content"
+	},
+	{
+		"type": "text",
+		"id": "sidebar_button_title",
+		"label": "Sidebar Button Text"
+	},
+	{
+		"type": "text",
+		"id": "related_article_title",
+		"label": "Related Article Title"
+	},
+	{
+      "type": "range",
+      "id": "post_limit",
+      "label": {
+        "en": "Posts"
+      },
+      "min": 3,
+      "max": 12,
+      "step": 1,
+      "default": 5
+    },
+	{
+      "type": "range",
+      "id": "post_limit_1",
+      "label": {
+        "en": "Posts"
+      },
+      "min": 3,
+      "max": 12,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "checkbox",
+      "id": "blog_show_author",
+      "label": {
+        "en": "Show author"
+      },
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "blog_show_date",
+      "label": {
+        "en": "Show date"
+      },
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_share_buttons",
+      "label": {
+        "en": "Show social sharing buttons"
+      },
+      "default": true
+    }
+  ],
+  "blocks": [  
+      {
+        "name": "Blog posts",
+        "type": "blog",
+        "limit": 3,
+        "settings": [
+             {
+              "type": "article",
+              "id": "blog_posts",
+              "label": "Blog posts"
+              }
+             ]
+      }
+  ]
+}
+{% endschema %}

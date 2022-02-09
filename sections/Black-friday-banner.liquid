@@ -1,0 +1,195 @@
+<section id="black_friday_section">
+  <div class="black_banner_main" style="background-image: url({{ section.settings.banner_bg | img_url: 'master' }});">
+    <div class="black_banner_inner">
+      <div class="black_banner_content text-center">
+        <h3 class="small_heading">{{ section.settings.text1 }}</h3>
+        <h1 class="big_heading">{{ section.settings.text2 }}</h1>
+        <div class="black_banner_buttons text-center">
+          <a href="{{ section.settings.button1_url }}" class="btn red_btn"> {{ section.settings.button1_text }} </a>
+          <a href="{{ section.settings.button2_url }}" class="btn red_btn"> {{ section.settings.button2_text }} </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+  .black_banner_buttons{
+    display: flex;
+    justify-content: center;
+  }
+  .black_banner_buttons a.btn.red_btn:nth-child(2){
+    margin-left: 20px;
+  }
+  .black_banner_buttons a.btn.red_btn:first-child{
+    margin-right: 20px;
+  }
+  .black_banner_buttons a.btn.red_btn:hover{
+    opacity: 0.8;
+  }
+  .black_banner_buttons a.btn.red_btn {
+    background: #A30505;
+    border: 1px solid #A30505;
+    box-shadow: 0px 4px 4px rgb(0 0 0 / 25%);
+    border-radius: 5px !important;
+    height: 79px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 320px;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 23px;
+    letter-spacing: 0.05em;
+    font-family: 'Open Sans';
+    color: #fff;
+}
+  .black_banner_inner h1.big_heading {
+    font-size: 95px;
+    line-height: 129px;
+    letter-spacing: 0.05em;
+    color: #FFFFFF;
+    font-weight: 800;
+    font-family: 'Open Sans', sans-serif;
+    margin-bottom: 40px;
+}
+  .black_banner_inner h3.small_heading {
+    font-size: 55px;
+    line-height: 75px;
+    letter-spacing: 0.05em;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 0;
+    font-family: 'Open Sans', sans-serif;
+}
+  .black_banner_inner {
+    height: 427px;
+    width: 908px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #00000060;
+}
+  .black_banner_main {
+    height: 676px;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+}
+   section#black_friday_section {
+    padding: 0;
+}
+
+  @media only screen and (min-width: 768px) and (max-width: 1024px){
+    
+    div.black_banner_inner h1.big_heading {
+      font-size: 74px;
+      line-height: 108px;
+    }
+    div.black_banner_inner h3.small_heading {
+      font-size: 45px;
+      line-height: 65px;
+    }
+    div.black_banner_inner{
+      width: 90%;
+    }
+  }
+  @media only screen and (max-width: 480px){
+    {% if section.settings.mobile_bg_image != blank %}
+    div.black_banner_main{
+      background-image: url({{ section.settings.mobile_bg_image | img_url: 'master' }}) !important;
+    }
+    {% endif %}
+    .black_banner_buttons a.btn.red_btn:nth-child(2){
+      margin-left: 10px;
+    }
+    div.black_banner_buttons a.btn.red_btn:first-child {
+      margin-right: 10px;
+    }
+    div.black_banner_buttons a.btn.red_btn {
+      height: 31px;
+      font-size: 10px;
+      line-height: 14px;
+      width: 100%;
+    }
+    div.black_banner_inner h1.big_heading {
+      font-size: 35px;
+      line-height: 48px;
+      margin-bottom: 28px;
+    }
+    div.black_banner_inner h3.small_heading {
+      font-size: 20px;
+      line-height: 27px;
+    }
+    div.black_banner_inner {
+      height: 256px;
+      width: 341px;
+    }
+    div.black_banner_main {
+      height: 571px;
+    }
+  }  
+  
+</style>
+{% schema %}
+  {
+    "name": "Black friday banner",
+    "settings": [
+		{
+			"type": "image_picker",
+			"id": "banner_bg",
+			"label": "Banner background image"
+		},
+		{
+			"type": "image_picker",
+			"id": "mobile_bg_image",
+			"label": "Mobile background image"
+		},
+		{
+			"type": "text",
+			"id": "text1",
+			"label": "Text 1"
+		},
+		{
+			"type": "text",
+			"id": "text2",
+			"label": "Text 2"
+		},
+		{
+			"type": "text",
+			"id": "button1_text",
+			"label": "Button1 text"
+		},
+		{
+			"type": "url",
+			"id": "button1_url",
+			"label": "Button1 Url"
+		},
+		{
+			"type": "text",
+			"id": "button2_text",
+			"label": "Button2 text"
+		},
+		{
+			"type": "url",
+			"id": "button2_url",
+			"label": "Button2 Url"
+		}
+],
+  "presets": [
+    {
+      "name": {
+        "en": "Black friday banner"
+      },
+      "category": "Homepage"
+    }
+  ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

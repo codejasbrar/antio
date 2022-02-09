@@ -1,0 +1,229 @@
+<!-- slider section start -->
+<!-- <div class="p-0 home-banner layout-2-menu shadow-home inner-banner">
+  <img src="{{ section.settings.contact_banner_image | img_url: '2048x2048' }}" alt="">
+  <div class="desc">
+    <div class="container">
+      <div class="text-block">
+        <h2>{{ section.settings.contact_banner_text }}</h2>
+      </div>
+    </div>
+  </div>
+</div> -->
+<!-- slider section end-->
+
+<!-- <div class="contain">
+  
+  
+<div class="conatiner contain-align">
+  
+   <div>
+    <p class="day-time"> Monday-Sunday 7:00am - 7:00pm(UTC) </p>
+  </div>
+  
+  <p class="contain-line">
+    TALK TO REAL PEOPLE
+  </p>
+  
+ 
+  
+  <div class="align-col">
+    <div class="col-md-3 col-sm-3 col-6 m">
+      <div class="black-box2">
+        <p class="head-box"> CHAT WITH US </p>
+        <p class="r-time">Response Time 0-5 minutes</p>
+      </div>
+    </div>
+    
+    <div class="col-md-3 col-sm-3 col-6 m">
+      <div class="black-box2">
+      <p class="head-box"> E-MAIL US </p>
+        <p class="r-time">Response Time Within 24 hours</p>
+      </div>
+    </div>
+    
+    <div class="col-md-3 col-sm-3 col-6 m">
+      <div class="black-box2">
+      <p class="head-box"> CALL OR TEXT US </p>
+        <p class="r-time">Response Time 0-5 minutes</p>
+      </div>
+    </div>
+    
+    <div class="col-md-3 col-sm-3 col-6 m">
+      <div class="black-box2">
+      <p class="head-box"> SOCIAL MEDIA US </p>
+        <p class="r-time">Response Time Within 24 hours</p>
+      </div>
+    </div>
+    
+  </div>
+  
+</div>
+
+</div> -->
+
+
+
+
+<div class="contact-section contact-page">
+  <div class="container">
+   
+
+<!--     <div class="site-title-block" style="text-align: center;"> -->
+<!--       <div class="squer-block"></div> -->
+<!--       <div class="title-text">
+        <h2>Get in touch</h2>
+      </div>
+    </div> -->
+<div class="main-sec">
+  <div class="title-text">
+        <h2 class="our-expert">GET IN TOUCH WITH OUR EXPERTS</h2>
+      </div>
+  <div class="main-boxform">
+    <div class="form-vertical">
+      {%- assign formId = 'ContactForm' -%}
+      {% form 'contact', id: formId %}
+      {% include 'form-status', form_id: formId %}
+      <div class="box-customer">
+      <div class="site-title-block" style="text-align: center;">
+<!--       <div class="squer-block"></div> -->
+      
+    </div>
+      <div class="grid grid--half-gutters">
+        <div class="grid__item medium-up--one-third">
+          <div class="form-group">
+<!--             <label for="{{ formId }}-name">{{ 'contact.form.name' | t }}</label> -->
+          	<input type="text" placeholder="Full Name" id="{{ formId }}-name"  name="contact[name]" value="{% if form[name] %}{{ form[name] }}{% elsif customer %}{{ customer.name }}{% endif %}">
+          </div>
+        </div>
+        <div class="grid__item medium-up--one-third">
+         <div class="form-group">
+<!--            <label for="{{ formId }}-email">{{ 'contact.form.email' | t }}  </label> -->
+          <input
+                 type="email"
+                 id="{{ formId }}-email"
+                 placeholder="Email"
+                 name="contact[email]"
+                 autocorrect="off"
+                 autocapitalize="off"
+                 value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+                 aria-required="true"
+                 {%- if form.errors contains 'email' -%}
+                 class="input--error"
+                 aria-invalid="true"
+                 aria-describedby="{{ formId }}-email-error"
+                 {%- endif -%}
+                
+                 >
+          {%- if form.errors contains 'email' -%}
+          <span id="{{ formId}}-email-error" class="input-error-message">
+            <span class="visually-hidden">{{ 'general.accessibility.error' | t }} </span>
+            {% include 'icon-error' %}
+            <span>{{ form.errors.translated_fields['email'] | capitalize }} {{ form.errors.messages['email'] }}.</span>
+          </span>
+          {%- endif -%}
+         </div>  
+        </div>
+<!--         <div class="grid__item medium-up--one-third">
+         <div class="form-group">
+           <label for="{{ formId }}-phone">{{ 'contact.form.phone' | t }}</label>
+      	   <input type="tel" id="{{ formId }}-phone" name="contact[phone]" pattern="[0-9\-]*" value="{% if form[phone] %}{{ form[phone] }}{% elsif customer %}{{ customer.phone }}{% endif %}">
+         </div>  
+        </div>   -->
+      </div>
+      </div>
+	  <div class="form-group">	
+<!--       	<label for="{{ formId }}-message">{{ 'contact.form.message' | t }}</label> -->
+      	<textarea rows="4" placeholder="Your Message" id="{{ formId }}-message" name="contact[body]">{% if form.body %}{{ form.body }}{% endif %}</textarea>
+      </div>	
+      <input type="submit" class="btn" value="{{ 'contact.form.submit' | t }}">
+
+      <p class="private-data"><i class="fa fa-lock"></i> We never share your Private Data</p>
+      {% endform %}
+      
+    </div>
+
+    <div class="customer-support"> 
+      <div class="customer-background">
+      <h3 class="customer-s-line"> Meet our Customer Happiness Support Team </h3>
+      <div class="customer-border">
+      </div>
+      <p class="support-avaliable">Live Support Available Daily from 7am-7pm</p>
+        <div class="team-info">
+        <div class="round-image-1">
+           <img class="round-img" src="https://cdn.shopify.com/s/files/1/0073/8102/4820/t/36/assets/image_2021_04_15T06_25_51_947Z.png?v=1618468011">
+           <p> Katie</p>
+        </div>
+        <div class="round-image-1">
+          <img class="round-img" src="https://cdn.shopify.com/s/files/1/0073/8102/4820/t/36/assets/image_2021_04_15T06_26_28_395Z.png?v=1618468024">
+          <p>Patrick</p>
+        </div>
+        </div>
+        
+      </div>
+      
+      <div class="features-main-div contact-icons">
+      
+<!--         <div class="features-div"><img src="https://cdn.shopify.com/s/files/1/0073/8102/4820/t/36/assets/comment.png?v=1617279285"><p class="title">Chat Support</p></div> -->
+        <div class="features-div"><img src="https://cdn.shopify.com/s/files/1/0073/8102/4820/t/36/assets/chat-support.svg?v=1620677011"><p class="title">Chat Support</p></div>
+           
+<!--         <div class="features-div"><img src="https://cdn.shopify.com/s/files/1/0073/8102/4820/t/36/assets/envelope2.png?v=1617279308"><p class="title">E-Mail Support</p></div> -->
+        <div class="features-div"><img src="https://cdn.shopify.com/s/files/1/0073/8102/4820/t/36/assets/mail-b.svg?v=1620676392"><p class="title">E-Mail Support</p></div>
+        
+<!--         <div class="features-div"><img src="https://cdn.shopify.com/s/files/1/0073/8102/4820/t/36/assets/call2.png?v=1617279274"><p class="title">Phone Support</p></div> -->
+        <div class="features-div"><img src="https://cdn.shopify.com/s/files/1/0073/8102/4820/t/36/assets/phone-b.svg?v=1620675815"><p class="title">Phone Support</p></div>
+      
+      </div>
+      
+    </div>
+  </div>
+  </div>
+    
+  </div>
+</div>
+
+
+ {%- capture contentForQuerystring -%}{{ content_for_header }}{%- endcapture -%}
+{%- assign pageUrl = contentForQuerystring | split:'"pageurl":"' | last | split:'"' | first | split:'contact_posted=' | last |
+   replace:'\/','/' | 
+   replace:'%20',' ' | 
+   replace:'\u0026','&'
+-%}
+{% if pageUrl contains true %}
+<div class="main-sec2" >
+  <div class="submit-align">
+  <p class="thanks-for">
+    Thank you for Submitting your inquiry.<br>
+One of our experts will be in touch within 24 hours
+</p>
+  
+  <a href="https://www.antioxi.co.uk/" class="home-button-p">
+    HOME
+  </a>
+  </div>
+</div>
+
+{% endif %}
+
+{% schema %}
+  {
+    "name": "Section name",
+    "settings": [
+		{
+			"type": "image_picker",
+			"id": "contact_banner_image",
+			"label": "Set Contact Banner Image"
+		},
+		{
+			"type": "text",
+			"id": "contact_banner_text",
+			"label": "Set Contact Banner Text"
+		}
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

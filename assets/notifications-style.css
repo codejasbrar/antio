@@ -1,0 +1,35 @@
+table.banner {
+    text-align: center;
+}
+table.banner tr td img {
+    width: 150px;
+}
+table.menu-item {
+    width: 100%;
+}
+
+table.menu-item tr td ul {
+    padding: 15px 25px;
+    width: 100%;
+    text-align: center;
+    margin: 0;
+    border-top: 2px solid #ccc;
+    border-bottom: 2px solid #ccc;
+}
+
+table.menu-item tr td ul li {
+    display: inline-block;
+    margin-right: 2%;
+}
+
+table.menu-item tr td ul li:last-child {
+    margin: 0;
+}
+
+table.menu-item tr td ul li a {
+    color: #000 !important;
+}
+
+table.menu-item tr td ul li a:hover {
+    color: #bdab80 !important;
+}

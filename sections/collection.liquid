@@ -1,0 +1,96 @@
+<!-- Product section start -->
+<div class="home-pro abc" id="home-collection-pro">
+  <div class="container" id="home-collection">
+    <div class="row">
+      <div class="col-xl-12 col-lg-12 col-md-12">
+        <div class="product-box">
+
+          <div class="blog-white">
+
+            <div class="text-block">
+              <div class="desc">
+                <h1>{{ section.settings.title }}</h1><br><h2>{{section.settings.content}}</h2>
+                
+              </div>
+            </div>
+            {% assign collection = collections[section.settings.collection] %}	
+            <div class="slide-2">
+              {% for product in collection.products %}
+                <div>
+                  <div class="product">
+                    <a href="{{ product.url }}"><img src="{{ product.featured_image | img_url: '1024x1024' }}" class=" img-fluid" alt=""></a>
+                    <div>
+                      <h2 style="padding-top: 20px;"><a>{{ product.title }}</a></h2>
+                      {% assign product_description = product.description | split: '<!-- split -->' %}
+                      <p>{{ product_description.first }}</p>
+                    </div>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+
+            <a href="{{ section.settings.button_url }}" class="btn btn-solid btn-center" tabindex="0">{{section.settings.button_text}}</a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+{% schema %}
+{
+  "name": {
+    "en": "Featured collection"
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": {
+        "en": "Heading"
+      },
+      "default": {
+        "en": "Featured collection"
+      }
+    },
+	{
+		"type": "text",
+		"id": "content",
+		"label": "Content"
+	},
+    {
+      "id": "collection",
+      "type": "collection",
+      "label": {
+        "en": "Collection"
+      }
+    },
+	{
+		"type": "text",
+		"id": "button_text",
+		"label": "Set Button text"
+	},
+	{
+        "type": "url",
+        "id": "button_url",
+        "label": "Set Button Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": {
+        "en": "Featured collection"
+      },
+      "category": {
+        "en": "Collection"
+      }
+    }
+  ]
+}
+{% endschema %}

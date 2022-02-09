@@ -1,0 +1,11 @@
+{% comment %}
+  The contents of the blog.liquid template can be found in /sections/blog-template.liquid
+{% endcomment %}
+{% if blog.handle == 'recipes' || blog.handle == 'news' %}
+  {% section 'blog-template' %}
+{% else %}
+  {% section 'blog-template' %}
+{% comment %}
+  {% section 'blog-template-old' %}
+{% endcomment %}
+{% endif %}

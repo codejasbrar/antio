@@ -1,0 +1,31 @@
+<div class="container">
+  <div class="row">
+   <div class="col-md-12 blog_image">
+    <img src="{{ article.image.src | img_url: 'master' }}" alt="">
+    <span>Blog by {{ article.author }}</span>
+   </div>
+   <div class="col-md-12 blog_details">
+     <div class="blog_title">
+       <h1>{{ article.title }}</h1>
+       <p>Written by {{ article.author }}</p>
+     </div>
+     <hr/>
+     <div class="blog_details_inner">
+       {{ article.content }}
+     </div>
+   </div>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Blog template",
+    "settings": []
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

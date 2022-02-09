@@ -1,0 +1,187 @@
+<!-- our offering -->
+
+<div class="offering-section">
+  
+  <div class="offering-header">
+    
+    <div class="head-offering">
+      <h1 class="offering-heading">
+        {{ section.settings.offer_main_heading }}
+      </h1>
+      <h2 class="sub-heading">
+        {{ section.settings.offer_sub_heading }}
+      </h2>
+    </div>
+    
+  </div> 
+  
+  <div class="offering-images">
+    <div class="offering-box">
+     
+      <h4 class="b-heading"> {{ section.settings.offer1_name }} </h4>
+      <p class="b-para">{{ section.settings.offer_text1 }} </p>
+       <div class="b-line">
+         <div class="b-part">
+<!--            <img src="https://cdn.shopify.com/s/files/1/0073/8102/4820/t/36/assets/tr3.png?v=1617191453" > -->
+           <img src="https://cdn.shopify.com/s/files/1/0073/8102/4820/t/36/assets/earth-hands-b.svg?v=1620673411" >
+           <p>Farmed Sustainably in a controlled Environment</p>
+         </div>
+         <div class="vertical-line"></div>
+         <div class="b-part border-lr">
+<!--            <img src="https://cdn.shopify.com/s/files/1/0073/8102/4820/t/36/assets/tr36.png?v=1617191469"> -->
+                      <img src="https://cdn.shopify.com/s/files/1/0073/8102/4820/t/36/assets/burner.png?v=1620666685">
+           <p>Lab Tested to ensure Consistent High Quality</p>
+         </div>
+         <div class="vertical-line"></div>
+         <div class="b-part">
+<!--            <img src="https://cdn.shopify.com/s/files/1/0073/8102/4820/t/36/assets/qqq.png?v=1617192207"> -->
+                      <img src="https://cdn.shopify.com/s/files/1/0073/8102/4820/t/36/assets/pointing-boxes-b.svg?v=1620674025">
+
+           
+           <form>
+<!--   <input type="checkbox" id="vehicle1" name="vehicle1" value="" checked> -->
+  <label> Capsules</label>
+<!--              <br> -->
+<!--   <input type="checkbox" id="vehicle2" name="vehicle2" value="" disabled> -->
+  <label> Powders</label>
+<!--              <br> -->
+<!--   <input type="checkbox" id="vehicle3" name="vehicle3" value="" disabled> -->
+  <label> Blends</label>
+<!--              <br><br> -->
+ 
+</form>
+         </div>
+      </div>
+      <a class="browse" href="https://www.antioxi.co.uk/collections/medicinal-mushrooms"> {{ section.settings.offer_button_text }}</a>
+      
+    </div>
+    
+    <div class="b-image1">
+     <img class="img-cup" src={{ section.settings.offer1_bg_image | img_url: '1920x1080'}}>
+      </div>
+    
+  
+  </div>
+  
+  
+    <div class="offering-images offer-2">
+      
+    <div class="b-image2">
+      <img class="img-cup" src={{ section.settings.offer2_bg_image | img_url: '1920x1080'}}>
+        </div>
+      <div class="offering-box">
+        <div>
+      <h4 class="b-heading"> {{ section.settings.offer2_name }} </h4>
+      <p class="b-para"> {{ section.settings.offer_text2 }} </p>
+          <div class="b-line">
+         <div class="b-part">
+           <img id="organic-img" src="https://cdn.shopify.com/s/files/1/0073/8102/4820/t/36/assets/organic.png?v=1620667111">
+           <p>  Vegan Friendly GMO FREE<br> </p>
+         </div>
+             <div class="vertical-line"></div>
+         <div class="b-part border-lr">
+           <img src="https://cdn.shopify.com/s/files/1/0073/8102/4820/t/36/assets/tr37.png?v=1617191479">
+           <p> Only Sourced from Real Plants </p>
+         </div>
+             <div class="vertical-line"></div>
+         <div class="b-part">
+           <img src="{{"pwder.png"|asset_url}}">
+           
+           <form>
+<!--       <input type="checkbox" id="vehicle1" name="vehicle1" value="" checked> -->
+      <label> Powders,</label>
+<!--              <br> -->
+<!--       <input type="checkbox" id="vehicle2" name="vehicle2" value="" disabled> -->
+      <label> Blends</label>
+<!--              <br> -->
+  
+ 
+</form>
+         </div>
+      </div>
+      <a class="browse" href="https://www.antioxi.co.uk/collections/superfoods-1"> {{ section.settings.offer_button2_text }}</a>
+        </div>
+    </div>
+  
+  
+</div>
+</div>
+
+
+{% schema %}
+  {
+    "name": "Our offer",
+    "settings": [
+   {
+			"type": "text",
+			"id": "offer_main_heading",
+			"label": "Heading"
+		},
+    {
+			"type": "text",
+			"id": "offer_sub_heading",
+			"label": "Set Banner Text"
+		},
+    {
+			"type": "text",
+			"id": "offer1_name",
+			"label": "Offer name 1"
+		},
+    {
+			"type": "textarea",
+			"id": "offer_text1",
+			"label": "Offer Text 1"
+		},
+      {
+        "type": "image_picker",
+        "id": "offer1_bg_image",
+        "label": "Set Background Image"
+      },
+      {
+        "type": "url",
+        "id": "offer_button_url",
+        "label": "Offer1 Button Link"
+      },
+      {
+        "type": "text",
+        "id": "offer_button_text",
+        "label": "Offer1 Button Title"
+      },
+     {
+			"type": "text",
+			"id": "offer2_name",
+			"label": "Offer name 2"
+		},
+     {
+			"type": "textarea",
+			"id": "offer_text2",
+			"label": "Offer Text 2"
+		},
+     {
+        "type": "image_picker",
+        "id": "offer2_bg_image",
+        "label": "Set Background Image"
+      },
+
+      {
+        "type": "url",
+        "id": "offer_button2_url",
+        "label": "Offer Button2 Link"
+      },
+      {
+        "type": "text",
+        "id": "offer_button2_text",
+        "label": "Offer Button2 Title"
+      }
+
+ ],
+"presets": [
+    {
+      "name": "Our offering",
+      "category": "Custom"
+    }
+  ]
+  }
+{% endschema %}
+
+

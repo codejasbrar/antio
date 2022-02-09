@@ -1,0 +1,57 @@
+<section class="world-banner" style="background: url({{ section.settings.world_banner_image | img_url: '2048x2048' }}) 0 0 no-repeat;">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="banner-bg">
+          <div class="banner-content text-center">
+            <h2 class="title">{{ section.settings.world_banner_title }}</h2>
+            <p>{{ section.settings.world_banner_content }}</p>
+            <a href="{{ section.settings.world_banner_link }}" class="btn btn-solid btn-center" tabindex="0">{{ section.settings.world_banner_button_text }}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+  {
+    "name": "World Banner",
+    "settings": [
+		{
+			"type": "image_picker",
+			"id": "world_banner_image",
+			"label": "Set Banner Image"
+		},
+		{
+			"type": "text",
+			"id": "world_banner_title",
+			"label": "Set Title"
+		},
+		{
+			"type": "textarea",
+			"id": "world_banner_content",
+			"label": "Set Content"
+		},
+		{
+			"type": "url",
+			"id": "world_banner_link",
+			"label": "Set Button Link"
+		},
+		{
+			"type": "text",
+			"id": "world_banner_button_text",
+			"label": "Set Button Text"
+		}
+	],
+	"presets":[
+		{
+			"name": "World Banner",
+			"category": "World Banner"
+		}
+	]
+  }
+
+
+{% endschema %}
+

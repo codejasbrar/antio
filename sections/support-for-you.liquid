@@ -1,0 +1,169 @@
+<!-- support for you portion start -->
+<div class="container-fluid support_section pl-0 pr-0">
+  
+	<div class="row">
+      <div class="offering-header w-100">
+        <div class="head-offering">
+          <h1 class="offering-heading">
+            {{ section.settings.support_main_heading }}
+          </h1>
+          <h2 class="sub-heading">
+            {{ section.settings.support_sub_heading }}
+          </h2>
+        </div>
+      </div>
+    </div>
+
+  	<div class="container-fluid pb-2 bg-spices" style="background-image: url({{ section.settings.bg_image | img_url: '1920x1080' }});">
+      	<div class="h-100 d-flex justify-content-end align-items-center flex-column support_mains">
+          <div class="center-content-div">
+            <p>{{ section.settings.support_whitecard_main_title }} <span>{{ section.settings.support_whitecard_sub_title }}</span></p>
+<!--             <ol>
+              {			{ section.settings.support_list_items }}
+            </ol> -->
+<!--             <a onclick="openchat()">
+              <button class="btn-black-box chat-btn">{{ section.settings.support_button_text }}</button>
+            </a> -->
+          </div>	
+          
+          <div class="features-main-div {% if section.settings.slider_for_mobile == true %} support_slider {% endif %} ">
+<!--        <div class="features-div"><img src="https://cdn.shopify.com/s/files/1/0073/8102/4820/t/36/assets/calendar.png?v=1617279203" /><p class="title">Available 7 days / week</p></div> -->
+            
+            {% for block in section.blocks %}
+            
+            <div class="features-div">
+              {% if block.settings.pic_list_items != blank %}
+              <img src="{{ block.settings.pic_list_items | img_url: 'master' }}" />
+              {% endif %}
+              <p class="title">{{ block.settings.support_list_items }}</p>
+            </div>
+            
+            {% endfor %}
+            
+          
+          <!--             <div class="features-div"><img src="https://cdn.shopify.com/s/files/1/0073/8102/4820/t/36/assets/shedule.png?v=1617187138" /><p class="title">Available 7 days / weekt</p></div>
+            <div class="features-div"><img src="https://cdn.shopify.com/s/files/1/0073/8102/4820/t/36/assets/chat.png?v=1617187120" /><p class="title">Chat Support</p></div>
+            <div class="features-div"><img src="https://cdn.shopify.com/s/files/1/0073/8102/4820/t/36/assets/envelope.png?v=1617187599" /><p class="title">E-Mail Support</p></div>
+            <div class="features-div"><img src="https://cdn.shopify.com/s/files/1/0073/8102/4820/t/36/assets/call.png?v=1617187110" /><p class="title">Phone Support</p></div> -->
+          </div>
+		</div>
+	</div>
+</div>
+<!-- support for you portion end -->
+
+<style>
+  @media only screen and (max-width:480px ){
+  
+  .bg-spices{
+  background-image: url({{ section.settings.mobile_bg_image | img_url: '1920x1080' }}) !important;
+  }
+    
+  }
+  
+</style>
+
+<script>
+
+  $('.support_slider').slick({
+  autoplay: true,
+  autoplaySpeed: 1000,
+  infinite: true,
+  speed: 1000,
+  slidesToShow: 4,
+  slidesToScroll: 1,
+  arrows: false,
+        responsive: [
+            {
+                breakpoint: 9999,
+                settings: "unslick"
+            },
+            {
+                breakpoint: 768,
+                settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 1
+                }
+            }
+          ]
+});
+  
+</script>
+
+
+{% schema %}
+  {
+    "name": "Support for you",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "bg_image",
+        "label": "Set Background Image"
+      },
+      {
+        "type": "image_picker",
+        "id": "mobile_bg_image",
+        "label": "Set Mobile Background Image"
+      },
+      {
+        "type": "text",
+        "id": "support_main_heading",
+        "label": "Set Main Heading"
+      },
+      {
+        "type": "text",
+        "id": "support_sub_heading",
+        "label": "Set Sub Heading"
+      },
+ {
+        "type": "text",
+        "id": "support_whitecard_main_title",
+        "label": "Set White Card Main Title"
+      },
+      {
+        "type": "text",
+        "id": "support_whitecard_sub_title",
+        "label": "Set White Card Sub Title"
+      },
+      {
+        "type": "checkbox",
+        "id": "slider_for_mobile",
+        "label": "Slider for mobile",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "support_button_text",
+        "label": "Set Button Title"
+      }
+    ],
+  "blocks": [
+    {
+      "type": "Logos",
+      "name": {
+        "en": "Support logos"
+      },
+      "limit": 5,
+      "settings": [
+		
+      {
+          "type": "image_picker",
+          "id": "pic_list_items",
+          "label": "Logo"
+      },
+      {
+          "type": "textarea",
+          "id": "support_list_items",
+          "label": "Enter text"
+      }
+]
+}
+],
+    "presets": [
+      {
+        "name": "Support for you",
+        "category": "Custom"
+      }
+    ]
+  }
+
+{% endschema %}

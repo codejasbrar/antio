@@ -1,0 +1,1148 @@
+<!-- Banner section start -->
+<!--   <div class="p-0 home-banner layout-2-menu shadow-home inner-banner">
+    <img src="{{ section.settings.banner_image | img_url: '1024x1024' }}" alt="">
+    <div class="desc">
+      <div class="container">
+        <div class="text-block">
+          <h2>{{ section.settings.banner_text }}</h2>
+        </div>
+      </div>
+    </div>
+  </div> -->
+<!-- Banner section end-->
+{% comment %}
+  Get first variant, or deep linked one
+{% endcomment %}
+
+{% assign sca_product = product %}{% assign sca_product_id_text = "," | append : sca_product.id | append : "," %}{% assign sca_price = sca_product.price %}{% assign sca_price_min = sca_product.price_min %}{% assign sca_price_max = sca_product.price_max %}{% assign sca_compare_at_price = sca_product.compare_at_price %}{% assign sca_compare_at_price_min = sca_product.compare_at_price_min %}{% assign sca_compare_at_price_max = sca_product.compare_at_price_max %}{% assign sca_product_available = sca_product.available %}{% assign sca_product_variantCount = sca_product.variants.size %}{% assign sca_compare_at_price_varies = sca_product.compare_at_price_varies %}{% assign sca_price_varies = sca_product.price_varies %}{% assign sca_has_only_default_variant = false %}{% capture sca_product_variants_json %}{{sca_product.variants | json }}{% endcapture %} {% capture sca_product_json %}{ {% if sca_all_gift_products_ids == null or sca_all_gift_products_ids contains sca_product_id_text %}{% assign sca_product_available = false %}{% assign sca_product_variantCount = 0 %}{% assign sca_has_only_default_variant = true %}{% assign sca_is_first_variant = true %}{% capture sca_variants_json %} [{% for variant in sca_product.variants %}{% unless variant.metafields.secomapp.freegifts %}{% unless variant.title contains '(Freegifts)' %}{% unless variant.title contains '% Off' %}{% unless variant.metafields.shappify_qb.qb_hide == "1" %}{% unless variant.metafields.shappify_bundle.is_bundle == "true" %}{% unless variant.metafields.brodev_scn.hide == "true" %}{% unless variant.metafields.wholesaler2.wholesale %}{% unless variant.metafields.Wholesaler.level %}{% unless variant.title contains '(Wholesale' %}{% if sca_is_first_variant%} {{ variant | json }}{% assign sca_price = variant.price %} {% assign sca_price_min = variant.price %} {% assign sca_price_max = variant.price %} {% assign sca_compare_at_price = variant.compare_at_price %} {% assign sca_compare_at_price_min = variant.compare_at_price %} {% assign sca_compare_at_price_max = variant.compare_at_price %} {% assign sca_product_available = variant.available %} {% assign sca_product_variantCount = 1 %} {% assign sca_is_first_variant = false%}{% else %},{{variant | json }} {% if sca_price_min >= variant.price %} {% assign sca_price_min = variant.price %} {% assign sca_price = variant.price %}{% endif %} {% if sca_price_max <= variant.price %} {% assign sca_price_max = variant.price %} {% endif %} {% if variant.compare_at_price %} {% if sca_compare_at_price_min==null or sca_compare_at_price_min >= variant.compare_at_price %} {% assign sca_compare_at_price_min = variant.compare_at_price %} {% assign sca_compare_at_price = variant.compare_at_price %} {% endif %} {% if sca_compare_at_price_max==null or sca_compare_at_price_max < variant.compare_at_price %} {% assign sca_compare_at_price_max = variant.compare_at_price %} {% endif %} {% endif %} {% if variant.available == true %} {% assign sca_product_available = true %} {% endif %} {% assign sca_product_variantCount = sca_product_variantCount | plus: 1 %}{% endif %}{% endunless %}{% endunless %}{% endunless %}{% endunless %}{% endunless %}{% endunless %}{% endunless %}{% endunless %}{% endunless %}{%endfor%} ]{% endcapture %}{% if sca_price_min < sca_price_max %}{% assign sca_price_varies = true %}{% else %}{% assign sca_price_varies = false %}{% endif %}{% if sca_compare_at_price_min < sca_compare_at_price_max %}{% assign sca_compare_at_price_varies = true %}{% else %}{% assign sca_compare_at_price_varies = false %}{% endif %}{% if sca_product_variantCount > 1 %}{% assign sca_has_only_default_variant = false %}{% endif %}{% if sca_product_variantCount == sca_product.variants.size %} "variants":{{ sca_product.variants }},{% else %}{%assign sca_product_variants_json = sca_variants_json %} "variants":{{ sca_variants_json }},{% endif %}{% else %} "variants":{{ sca_product_variants_json }},{% endif %} "id": {{sca_product.id}}, "title": {{sca_product.title | json}}, "handle": {{sca_product.handle | json}}, "description": {{sca_product.description | json}}, "published_at": "{{sca_product.published_at | date: "%Y-%m-%dT%H-%M-%S%:z" }}", "created_at": "{{sca_product.created_at | date: "%Y-%m-%dT%H-%M-%S%:z" }}", "vendor": {{sca_product.vendor | json}}, "type": {{sca_product.type | json}}, "tags": {{sca_product.tags | json}}, "price": {{sca_price}}, "price_min": {{sca_price_min}}, "price_max": {{sca_price_max}}, "available": {{sca_product.available}}, "price_varies": {{sca_price_varies}}, "compare_at_price": {{sca_compare_at_price}}, "compare_at_price_min": {{sca_compare_at_price_min}}, "compare_at_price_max": {{sca_compare_at_price_max}}, "compare_at_price_varies": {{sca_compare_at_price_varies}}, "images": {{sca_product.images | json}}, "featured_image": {{sca_product.featured_image | json }}, "options": {{sca_product.options | json}}, "media": {{sca_product.media | json }}, "content": {{sca_product.content | json }}} {% endcapture sca_product_json %}
+
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+{%- assign compare_at_price = current_variant.compare_at_price -%}
+{%- assign price = current_variant.price -%}
+
+<!-- Product Details Section Start-->
+<div class="product-details" id="product-detailsection" >
+  <div class="container"  style="margin-top: 100px;">
+    <!---  <div class="container"  style="max-width: 90% !important; margin-top: 100px;"> ---->
+    <div class="row">
+      <div class="col-lg-6 col-md-6 col-sm-12" id="productImg">
+        
+          <div id="blog-demo-2" class="" style="">
+            {% assign temp = 0 %}
+           {% for image in product.images %} 
+            {% if temp == 0 %}
+            
+           
+<!--               <figure class="img-block"> -->
+<!--                 <img class="image-zoom" src="{{ image.src | img_url: '1024x1024' }}" alt="" data-zoom="{{ image.src | img_url: 'large', scale: 3 }}" /> -->
+              <img class="image-zoom-1" src="{{ image.src | img_url: '1024x1024' }}" alt=""  />
+<!--               </figure> -->
+           
+            {% endif %}
+            {% assign temp = temp | plus: 1 %}
+           {% endfor %} 
+          </div>   
+        
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12">
+                <div class="prod-all-txt">
+        <div class="desc-text">
+          
+          {% assign product_description = product.description | split: '<!-- split -->' %}
+         <div class="reviewList" style="width:100%;"> 
+          <div class="review-part" style="justify-content: start;">
+             {% render 'okendo-reviews-product-rating-summary' %}
+           </div>
+          <div class="title-block mt-1">
+            <div class="title-text" id="product-title">
+              <h1>{{ product.title }} <span>{{ product.metafields.custom_fields["product_details_"] }}</span>
+              {% comment %}
+                {% if product.metafields.custom_fields["product_blend_custom_title"] != blank %}
+      <a class="altenate_link" href="{{ product.metafields.custom_fields["product_blend_custom_text"] }}">{{ product.metafields.custom_fields["product_blend_custom_title"]}}</a>   
+{% endif %}
+                {% endcomment %}
+              </h1>
+            </div>
+          </div>
+          </div>         
+        </div>
+               
+        <div class="writing-box" id="writing-des">
+        	{{ product.metafields.custom_fields["product_writing_box"] }}          
+        </div>
+				
+			<div class="size-and-qty-wrapper-alternate">
+                  
+                   <h4 class="sub-title">Alternative </h4>
+
+
+              {% if product.metafields.custom_fields["product_blend_custom_title"] != blank %}
+
+                {% if product.title contains "Capsules" %}
+                  <a class="alternate-swatcher" style="background: rgb(204, 204, 204);" href="#" aria-describedby="a11y-external-message">Shop Capsule</a>
+                  <a class="alternate-swatcher"  href="{{ product.metafields.custom_fields["product_blend_custom_text"] }}">Shop Powder</a>   
+                {% endif%}
+                {% if product.title contains "Powder" %}
+                  <a class="alternate-swatcher" href="{{ product.metafields.custom_fields["product_blend_custom_text"] }}" aria-describedby="a11y-external-message">Shop Capsule</a>
+                  <a class="alternate-swatcher" style="background: rgb(204, 204, 204);" href="#">Shop Powder</a>   
+                {% endif%}         
+              {% endif %}                       
+
+
+           	       
+           </div>
+       {%- capture "form_classes" -%}
+        product-form product-form-{{ section.id }}{% unless section.settings.show_variant_labels %} product-form--hide-variant-labels{% endunless %}{% if section.settings.enable_payment_button and product.has_only_default_variant%} product-form--payment-button-no-variants{% endif %}
+        {%- endcapture %}
+        {% form 'product', product, data-productid: product.id, class:form_classes, id: "test", novalidate: 'novalidate', data-productid: product.id, data-product-form: '' %}
+<!--      	  {					% if product.available %}{					% include 'subscription-product' %}{			% endif %}  -->
+                  
+                  
+             <select name="id" data-productid="{{ product.id }}" data-productid="{{product.id}}" id="ProductSelect-{{ section.id }}" class="d-none product-form__variants no-js pid-{{ product.id }}{% if sca_product_variantCount == 1 %} myhidden{% endif %} ">
+              {% for variant in product.variants %}
+{% unless variant.metafields.secomapp.freegifts %}
+{% unless variant.title contains '% off)' %}
+
+              
+              <option {% if variant == product.selected_or_first_available_variant %} selected="selected" {% endif %} value="{{ variant.id }}">
+                {{ variant.title }}
+              </option>
+
+{% endunless %}
+{% endunless %}
+              {% endfor %}
+            </select>
+
+
+           <div class="size-and-qty-wrapper">
+
+             <div class="size-and-qty {% for variant in product.variants %}
+{% unless variant.metafields.secomapp.freegifts %}
+{% unless variant.title contains '% off)' %}
+
+
+{% if variant.metafields.discount_variant.discount_variant_text != blank %} sub_products {% endif %} 
+
+{% endunless %}
+{% endunless %}
+{% endfor %}">
+
+                 <div class="pr-3">
+                   <h4 class="sub-title">Select Size</h4>
+                   <div class="size-div">
+
+                     {% for variant in product.variants %}
+{% unless variant.metafields.secomapp.freegifts %}
+{% unless variant.title contains '% off)' %}
+
+
+                     <div class="p-rel">
+                       <input type="radio" name="id" data-productid="{{ product.id }}" data-productid="{{product.id}}" id="ProductSelect-{{ section.id }}" class="product-form__variants no-js pid-{{ product.id }}{% if sca_product_variantCount == 1 %} myhidden{% endif %} " value="{{ variant.id }}" price="{{variant.price | money}}">
+                     <label for="10" variant_heading="{{ variant.metafields.my_fields.variant_heading }}" base_price="{{ variant.price }}" base_compare="{{variant.compare_at_price}}" variant-compare="{{variant.compare_at_price | money}}" price="{{variant.price | money}}"> 
+                         {% if variant.title =="Default Title" %} 
+                         	90 Capsules
+                         {% else %}
+                         	{{ variant.title }}
+                         {% endif %}
+                       </label>
+                       {% if variant.metafields.my_fields.variant_heading != blank %}
+                       <div class="text-center">{{variant.metafields.my_fields.variant_heading}}</div>
+                       {% endif %}
+                     </div>
+
+{% endunless %}
+{% endunless %}
+                     {% endfor %}
+
+
+                   </div>
+                </div>
+               <!--                 
+                <select name="id" id="ProductSelect-{{ section.id }}" class="product-single__variants product-variant-selector"{% if sca_product_variantCount == 1 %} style="visibility: hidden;"{% endif %}>
+                    {% for variant in product.variants %}
+{% unless variant.metafields.secomapp.freegifts %}
+{% unless variant.title contains '% off)' %}
+
+                        
+                            <option {% if variant == product.selected_or_first_available_variant %} selected="selected" {% endif %} data-sku="{{ variant.sku }}" value="{{ variant.id }}" data-compare-price="{{ variant.compare_at_price | money }}" data-regular-price="{{ variant.price | money }}">
+                                <div class="variant-title">{{ variant.title }}</div>
+                                &nbsp;&ndash;&nbsp;
+                                {% if current_variant.compare_at_price > current_variant.price %}
+                                    <div class="variant-compare-price">RRP: {{ variant.compare_at_price | money }}&nbsp;</div>
+                                {% endif %}
+                                <div class="variant-regular-price">{% if current_variant.compare_at_price > current_variant.price %}NOW:&nbsp;{% endif %}{{ variant.price | money }}</div>
+                            </option>
+                        
+
+{% endunless %}
+{% endunless %}
+                    {% endfor %}
+                </select>
+                -->
+
+
+
+                <div class="">
+                  <h4 class="sub-title">Quantity</h4>
+                    <div class="price-nd-qu">
+
+                      <div class="product-form__item product-form__item--quantity quan">
+                        <input type='button' value='-' class='qtyminus' field='quantity' />
+                        <input type="number" id="Quantity-{{ section.id }}" name="quantity" value="1" min="1" class="product-form__input qty" pattern="[0-9]*" data-quantity-input>
+                        <input type='button' value='+' class='qtyplus' field='quantity' />
+                      </div>
+
+  <!--                     <div class="price">
+                        <h4>{		{ price | money }} <span class="sale-price">{		{ sca_compare_at_price | money }}</span></h4>  
+                      </div> -->
+
+                    </div>
+
+                </div>
+
+            </div> 
+			
+             <div class="prices-product">
+             <!---	 <div class="price price-black">
+                  <h4>{{ price | money }}</h4>  
+            </div>--->
+               <div class="main-price">
+                 <h4>{{ price | money }}</h4>  
+               </div>
+            
+                 <div class="price-black">
+              	<h4> <span class="sale-price">{{ sca_compare_at_price | money }}</span></h4>  
+            </div>
+             
+             </div>
+             
+           
+               
+             
+             
+          </div>      
+                  
+<!--           <div class="product-form__error-message-wrapper product-form__error-message-wrapper--hidden{% if section.settings.enable_payment_button %} product-form__error-message-wrapper--has-payment-button{% endif %}" data-error-message-wrapper role="alert">
+            <span class="visually-hidden">{{ 'general.accessibility.error' | t }} </span>
+            {% include 'icon-error' %}
+            <span class="product-form__error-message" data-error-message>{{ 'products.product.quantity_minimum_message' | t }}</span>
+          </div> -->
+
+                                    
+                        {% assign product_quantity = 0 %}
+                        {% for variant in product.variants %}
+{% unless variant.metafields.secomapp.freegifts %}
+{% unless variant.title contains '% off)' %}
+
+                          {% assign product_quantity = product_quantity | plus: variant.inventory_quantity %}
+
+{% endunless %}
+{% endunless %}
+                        {% endfor %}
+                        {% if product_quantity <=0 %}
+                        <p class="pre_order_message">{{product.metafields.oversell-note.oversell-note}}</p>  
+                          {% else %}
+                          <p></p>  
+
+                           {% endif %}
+                  
+         <div class="btns-and-icons dff">
+            <div class="product-form__item product-form__item--submit product-form__item--payment-button{% if product.has_only_default_variant %} product-form__item--no-variants{% endif %}">
+				
+              
+              <button type="submit" name="add" id="ei_add_to_cart_button" style="border-color: #000 !important;"
+                      
+                      aria-label="{{ 'products.product.add_to_cart' | t }}"
+                      class="btn product-form__cart-submit{% if section.settings.enable_payment_button %} btn--secondary-accent{% endif %}"
+                      data-add-to-cart>
+
+                {% if product_quantity > 0 %}
+                <span data-add-to-cart-text>
+                  {% comment %}}
+                  {% unless current_variant.available %}
+                  {{ 'products.product.sold_out' | t }}
+                  {% else %}
+                  {{ 'products.product.add_to_cart' | t }}
+                  {% endunless %}
+                  {% endcomment %}
+                  {{ 'products.product.add_to_cart' | t }}
+
+                </span>
+                 {% else %}
+                <span data-add-to-cart-text>
+                   {{ 'Pre-order' | json | remove: '"' }}
+                </span>
+                {% endif %}
+                <span class="hide" data-loader>
+                  {% include 'icon-spinner' %}
+                </span>
+              </button>
+			   {% if product.available %}{% include 'subscription-product' %}{% endif %}
+              
+              
+                     {% if product_quantity <= 0 %}
+                    
+                     <input id="pre-order" type="text" name="properties[*Pre order product]" value="{{ settings.pre_order_text }}" hidden>
+                    {% comment %}
+                      <p class="text-black"> {{ settings.pre_order_text }}</p>
+                    {% endcomment %}
+                      {% endif %}
+              
+              <!--
+              {% if section.settings.enable_payment_button %}
+              {{ form | payment_button }}
+              {% endif %}
+              -->
+              
+                </div>
+           		{% endform %}
+                    <div class="three-features">
+                      <span>
+                        <h5>Subscription Benefits</h5>
+                      </span>
+                      <span>
+<!--                         <i class="fa fa-car"></i> -->
+<!--                         <img src="https://cdn.shopify.com/s/files/1/0073/8102/4820/t/36/assets/tag.png?v=1618066936" /> -->
+						<img src="https://cdn.shopify.com/s/files/1/0073/8102/4820/files/superfood_powder_discount.svg?v=1620757349" />
+                        <h6>INSTANT<br /> 10% off</h6>
+                      </span>
+                      <span>
+<!--                         <i class="fa fa-shipping-fast"></i> -->
+                        
+<!--                         <img src="https://cdn.shopify.com/s/files/1/0073/8102/4820/t/36/assets/delivery.png?v=1618066948" /> -->
+                         <img src="https://cdn.shopify.com/s/files/1/0073/8102/4820/files/shipping_free.svg?v=1620757613" />
+                        
+                        <h6>free <br /> shipping</h6>
+                      </span>
+                      <span>
+<!--                         <i class="fa fa-car"></i> -->
+<!--                         <img src="https://cdn.shopify.com/s/files/1/0073/8102/4820/t/36/assets/tag.png?v=1618066936" /> -->
+                             <img src="https://cdn.shopify.com/s/files/1/0073/8102/4820/files/subscription_calander.svg?v=1620757704" />
+                        
+                        <h6>easily adjust <br /> frequency</h6>
+                      </span>
+                    </div>
+                  </div>
+                  
+                  
+                  
+                  <script>
+                    $(document).ready(function(){
+                      $('.size-div .p-rel:nth-child(1)').click(function() {
+
+
+                        $(this).css("background-color", "#ccc");
+                        $('.size-div .p-rel:nth-child(2)').css("background-color", "#fff");
+
+
+                      }); 
+                      $('.size-div .p-rel:nth-child(2)').click(function() {
+
+
+                        $(this).css("background-color", "#ccc");
+                        $('.size-div .p-rel:nth-child(1)').css("background-color", "#fff");
+
+
+                      }); 
+
+                    });
+                  </script>
+
+                  
+         <!--         
+         <div id="accordion" class="myaccordion">
+            <div class="card">
+              <div class="card-header" id="headingOne">
+                <h2 class="mb-0" onclick="func();">
+                  <button class="d-flex align-items-center justify-content-between btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                   Product Information                  
+                  </button>
+                </h2>
+              </div>
+              <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                <div class="card-body">
+                    {{ product.metafields.custom_fields["product_content1"] }}
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header" id="headingTwo">
+                <h2 class="mb-0" onclick="func();">
+                  <button class="d-flex align-items-center justify-content-between btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    Ingredients                    
+                  </button>
+                </h2>
+              </div>
+              <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                <div class="card-body">
+                 {{ product.metafields.custom_fields["product_content2"] }}
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header" id="headingThree">
+                <h2 class="mb-0" onclick="func();">
+                  <button class="d-flex align-items-center justify-content-between btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    Directions
+                  </button>
+                </h2>
+              </div>
+              <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                <div class="card-body">
+                  {{ product.metafields.custom_fields["product_content3"] }}
+                </div>
+              </div>
+            </div>
+           <div class="card">
+              <div class="card-header" id="headingFour">
+                <h2 class="mb-0" onclick="func();">
+                  <button class="d-flex align-items-center justify-content-between btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                    Nutrition Information
+                  </button>
+                </h2>
+              </div>
+              <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
+                <div class="card-body">
+                  {{ product.metafields.custom_fields["product_content4"] }}
+                </div>
+              </div>
+            </div>
+           <div class="card">
+              <div class="card-header" id="headingFive">
+                <h2 class="mb-0" onclick="func();">
+                  <button class="d-flex align-items-center justify-content-between btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                    FAQS
+                  </button>
+                </h2>
+              </div>
+              <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordion">
+                <div class="card-body">
+                  {{ product.metafields.custom_fields["product_content5"] }}
+                </div>
+              </div>
+            </div>
+          </div>
+          -->        
+        </div>
+
+  
+<!--         <div class="pro-details-cat">
+          <div class="item">
+            <div class="icon">
+              {{ product.metafields.custom_fields["product_benefits_image_1"] }}
+            </div>
+            <div class="text">
+              {{ product.metafields.custom_fields["product_benefits_text_1"] }}
+            </div>
+          </div>
+          <div class="item">
+            <div class="icon">
+              {{ product.metafields.custom_fields["product_benefits_image_2"] }}
+            </div>
+            <div class="text">
+              {{ product.metafields.custom_fields["product_benefits_text_2"] }}
+            </div>
+          </div>
+          <div class="item">
+            <div class="icon">
+              {{ product.metafields.custom_fields["product_benefits_image_3"] }}
+            </div>
+            <div class="text">
+              {{ product.metafields.custom_fields["product_benefits_text_3"] }}
+            </div>
+          </div>
+          <div class="item">
+            <div class="icon">
+              {{ product.metafields.custom_fields["product_benefits_image_4"] }}
+            </div>
+            <div class="text">
+              {{ product.metafields.custom_fields["product_benefits_text_4"] }}
+            </div>
+          </div>
+        </div> -->
+      </div>
+     
+    </div>
+  </div>
+</div>
+
+
+
+
+<!-- <div class="no-common">
+  <div class="container">
+    <div class="row justfy-content-center">
+        {	{product_description[1]}}
+       
+    </div>
+    <div class="row">    	
+      	
+      		{	{	product_description[2]}}
+       
+    </div>
+    <div class="row">
+      <div class="icons">
+        <div class="block">
+          <div class="icon-box">
+            <img src="https://cdn.shopify.com/s/files/1/0073/8102/4820/files/1-icon.png?v=1589118471" />
+          </div>
+          <div class="text-block">
+            <h6>100% Natural Ingredients </h6>
+          </div>
+        </div>
+      </div>
+      <div class="icons">
+        <div class="block">
+          <div class="icon-box">
+            <img src="https://cdn.shopify.com/s/files/1/0073/8102/4820/files/2-icon.png?v=1589118471" />
+          </div>
+          <div class="text-block">
+            <h6>Vegan Friendly </h6>
+          </div>
+        </div>
+      </div>
+      <div class="icons">
+        <div class="block">
+          <div class="icon-box">
+            <img src="https://cdn.shopify.com/s/files/1/0073/8102/4820/files/3-icon.png?v=1589118471" />
+          </div>
+          <div class="text-block">
+            <h6>Naturally Gluten Free</h6>
+          </div>
+        </div>
+      </div>
+       <div class="icons">
+        <div class="block">
+          <div class="icon-box">
+            <img src="https://cdn.shopify.com/s/files/1/0073/8102/4820/files/4-icon.png?v=1589118471" />
+          </div>
+          <div class="text-block">
+            <h6>Non GMO Ingredients</h6>
+          </div>
+        </div>
+      </div>
+                                 <div class="col-sm-6 col-md-2 col-lg-2 " style='display: none;'>
+                                  <div class="block">
+                                    <div class="icon-box">
+                                      <img src="https://cdn.shopify.com/s/files/1/0073/8102/4820/files/5-icon.png?v=1589118471" />
+                                    </div>
+                                    <div class="text-block">
+                                      <h6>Recyclable Packaging</h6>
+                                    </div>
+                                  </div>
+                                </div>
+       <div class="icons">
+        <div class="block">
+          <div class="icon-box">
+            <img src="https://cdn.shopify.com/s/files/1/0073/8102/4820/files/6-icon.png?v=1589118471" />
+          </div>
+          <div class="text-block">
+            <h6>Naturally Soya Free</h6>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-sm-3" id="sub_addcart">
+        <a href="#" id="sub_addcartbtn">
+        	<span data-add-to-cart-text>
+                {	% unless current_variant.available %}
+                {	{ 'products.product.sold_out' | t }}
+                {	% else %}
+                {	{ 'products.product.add_to_cart' | t }}
+                {	% endunless %}
+              </span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+
+{% render 'custom-strip-bar' %}
+
+
+
+<div class="product-details second-product-detail-div" id="product-detailsection-1">
+  <div class="container" style="max-width: 100% !important; margin-top: 0px !important;">
+    <div class="row">
+      
+      
+      
+            <!--       image-and-text-two start -->
+      <div class="col-lg-6 col-md-6 col-sm-12" style="margin: auto; padding: 20px 0;">
+         <div id="accordion-1" class="myaccordion">
+           <h2>{{ product.metafields.custom_fields["new_sec_title"] }} </h2>
+<!--            <p>{	{ product.metafields.custom_fields["new_sec_des"] }}</p> -->
+            <div class="card">
+              <div class="card-header" id="headingOne-1">
+                <h2 class="mb-0" data-toggle="collapse" data-target="#collapseOne-1" aria-expanded="false" aria-controls="collapseOne-1">
+                  <img class="sub_image" src="https://cdn.shopify.com/s/files/1/0073/8102/4820/files/1_602f7031-9539-41d7-bbf5-469e1cd8310b.PNG?v=1600770585" />
+                  <button class="d-flex align-items-center justify-content-between btn btn-link collapsed" >
+                   {{ product.metafields.custom_fields["new_sec_title1"] }}                 
+                  </button>
+                </h2>
+              </div>
+              <div id="collapseOne-1" class="collapse" aria-labelledby="headingOne-1" data-parent="#accordion-1">
+                <div class="card-body">
+                  <p>{{ product.metafields.custom_fields["new_sec_content1"] }}</p>
+                  <div class="prodcut-metarial">
+                    
+                    
+                  	<img src="{{product.metafields.logo.logo}}"/>
+                    <a href="{{product.metafields.lab-test-document.lab-test-document}}" target="_blank"><button class="track-button"><i class="fa fa-download" aria-hidden="true"></i>
+Download Lab Test Document</button></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header" id="headingTwo-1">
+                <h2 class="mb-0" data-toggle="collapse" data-target="#collapseTwo-1" aria-expanded="false" aria-controls="collapseTwo-1">
+                  <img class="sub_image" src="https://cdn.shopify.com/s/files/1/0073/8102/4820/files/4_16d2e932-3c23-44a8-b5b7-5da4c3ef9fa1.png?v=1600770585" />
+                  <button class="d-flex align-items-center justify-content-between btn btn-link collapsed" >
+                    {{ product.metafields.custom_fields["new_sec_title2"] }}                     
+                  </button>
+                </h2>
+              </div>
+              <div id="collapseTwo-1" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion-1">
+                <div class="card-body">
+                  <p>{{ product.metafields.custom_fields["new_sec_content2"] }}</p>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header" id="headingThree-1">
+                <h2 class="mb-0" data-toggle="collapse" data-target="#collapseThree-1" aria-expanded="false" aria-controls="collapseThree-1">
+                  	<img class="sub_image" src="https://cdn.shopify.com/s/files/1/0073/8102/4820/files/3_d9db6cd8-9d3a-4645-a393-3b9024889a66.png?v=1600770585" />
+                  <button class="d-flex align-items-center justify-content-between btn btn-link collapsed">
+                    {{ product.metafields.custom_fields["new_sec_title3"] }} 
+                  </button>
+                </h2>
+              </div>
+              <div id="collapseThree-1" class="collapse" aria-labelledby="headingThree-1" data-parent="#accordion-1">
+                <div class="card-body">
+                  <p> {{ product.metafields.custom_fields["new_sec_content3"] }}</p>
+                </div>
+              </div>
+            </div>
+           <div class="card">
+              <div class="card-header" id="headingFour-1">
+                <h2 class="mb-0"  data-toggle="collapse" data-target="#collapseFour-1" aria-expanded="false" aria-controls="collapseFour-1">
+                  	<img class="sub_image" src="https://cdn.shopify.com/s/files/1/0073/8102/4820/files/2_a874453c-d1db-4e56-8a24-8cb9d8fe9960.PNG?v=1600770585" />
+                  	<button class="d-flex align-items-center justify-content-between btn btn-link collapsed">
+                    {{ product.metafields.custom_fields["new_sec_title4"] }} 
+                  </button>
+                </h2>
+              </div>
+              <div id="collapseFour-1" class="collapse" aria-labelledby="headingFour-1" data-parent="#accordion-1">
+                <div class="card-body">
+                  <p>{{ product.metafields.custom_fields["new_sec_content4"] }}</p>
+                </div>
+              </div>
+            </div>
+           
+          </div>
+
+       </div>
+      
+      
+      <div class="col-lg-6 col-md-6 col-sm-12 product_meta_img pl-0 onlyImageProduct">
+          {{ product.metafields.custom_fields["new_sec_image"] }}
+      </div>
+      
+      <!--       image-and-text-two end -->
+      
+      
+      
+<!--       image-and-text-one start -->
+      <div class="col-lg-6 col-md-6 col-sm-12 product_meta_img onlyImageProduct pr-0 img-before-content">
+          {{ product.metafields.custom_fields["new_sec_imageb"] }}
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-12" style="margin: auto; padding: 20px 0;">
+         <div id="accordion-1b" class="myaccordion">
+           <h2>{{ product.metafields.custom_fields["new_sec_titleb"] }} </h2>
+<!--            <p>{	{ product.metafields.custom_fields["new_sec_des"] }}</p> -->
+            <div class="card">
+              <div class="card-header" id="headingOne-1">
+                <h2 class="mb-0"  data-toggle="collapse" data-target="#collapseOne-1b" aria-expanded="false" aria-controls="collapseOne-1b">
+                  <img class="sub_image" src="
+                       {% if product.metafields.benefits-title-img1.benefits-title-img1 !=blank %}
+                                              {{product.metafields.benefits-title-img1.benefits-title-img1}}
+                                              {% else %}
+                                              https://cdn.shopify.com/s/files/1/0073/8102/4820/files/1_602f7031-9539-41d7-bbf5-469e1cd8310b.PNG?v=1600770585" 
+                      						  {% endif %}" />
+                  <button class="d-flex align-items-center justify-content-between btn btn-link collapsed">
+                   {{ product.metafields.custom_fields["new_sec_title1b"] }}                 
+                  </button>
+                </h2>
+              </div>
+              <div id="collapseOne-1b" class="collapse" aria-labelledby="headingOne-1b" data-parent="#accordion-1b">
+                <div class="card-body">
+                  <p>{{ product.metafields.custom_fields["new_sec_content1b"] }}</p>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header" id="headingTwo-1">
+                <h2 class="mb-0"  data-toggle="collapse" data-target="#collapseTwo-1b" aria-expanded="false" aria-controls="collapseTwo-1b">
+                  <img class="sub_image" src="{% if product.metafields.benefits-title-img2.benefits-title-img2 !=blank %}
+                                              {{product.metafields.benefits-title-img2.benefits-title-img2}}
+                       
+                                              {% else %}
+                                              https://cdn.shopify.com/s/files/1/0073/8102/4820/files/4_16d2e932-3c23-44a8-b5b7-5da4c3ef9fa1.png?v=1600770585" 
+                      						  {% endif %}" />
+                  <button class="d-flex align-items-center justify-content-between btn btn-link collapsed">
+                    {{ product.metafields.custom_fields["new_sec_title2b"] }}                     
+                  </button>
+                </h2>
+              </div>
+              <div id="collapseTwo-1b" class="collapse" aria-labelledby="headingTwob" data-parent="#accordion-1b">
+                <div class="card-body">
+                  <p>{{ product.metafields.custom_fields["new_sec_content2b"] }}</p>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header" id="headingThree-1">
+                <h2 class="mb-0" data-toggle="collapse" data-target="#collapseThree-1b" aria-expanded="false" aria-controls="collapseThree-1b">
+                  	<img class="sub_image" src="
+                                                {% if product.metafields.benefits-title-img3.benefits-title-img3 !=blank %}
+                                              {{product.metafields.benefits-title-img3.benefits-title-img3}}
+                       
+                                              {% else %}
+                                              https://cdn.shopify.com/s/files/1/0073/8102/4820/files/3_d9db6cd8-9d3a-4645-a393-3b9024889a66.png?v=1600770585
+                                              {% endif %}
+                                                " />
+                  <button class="d-flex align-items-center justify-content-between btn btn-link collapsed" >
+                    {{ product.metafields.custom_fields["new_sec_title3b"] }} 
+                  </button>
+                </h2>
+              </div>
+              <div id="collapseThree-1b" class="collapse" aria-labelledby="headingThree-1b" data-parent="#accordion-1b">
+                <div class="card-body">
+                  <p> {{ product.metafields.custom_fields["new_sec_content3b"] }}</p>
+                </div>
+              </div>
+            </div>
+           <div class="card">
+              <div class="card-header" id="headingFour-1">
+                <h2 class="mb-0" data-toggle="collapse" data-target="#collapseFour-1b" aria-expanded="false" aria-controls="collapseFour-1b">
+                  	<img class="sub_image" src="
+                                                {% if product.metafields.benefits-title-img4.benefits-title-img4 !=blank %}
+                                              {{product.metafields.benefits-title-img4.benefits-title-img4}}
+                       
+                                              {% else %}
+                                              https://cdn.shopify.com/s/files/1/0073/8102/4820/files/2_a874453c-d1db-4e56-8a24-8cb9d8fe9960.PNG?v=1600770585
+                                              {% endif %}
+                                                
+                                                " />
+                  	<button class="d-flex align-items-center justify-content-between btn btn-link collapsed" >
+                    {{ product.metafields.custom_fields["new_sec_title4b"] }} 
+                  </button>
+                </h2>
+              </div>
+              <div id="collapseFour-1b" class="collapse" aria-labelledby="headingFour-1b" data-parent="#accordion-1b">
+                <div class="card-body">
+                  <p>{{ product.metafields.custom_fields["new_sec_content4b"] }}</p>
+                </div>
+              </div>
+            </div>
+           
+          </div>
+
+       </div>
+      
+      
+      <!--       image-and-text-two end -->
+      
+
+      
+      
+      <div class="oke-reviews-widget-holder">
+	  	<h2 class="review_title" style='text-align: center;'>Ratings & Reviews</h2>
+        <p class="review-text">Want to write a Review? Look out for an e-mail from Antioxi 30 days after Purchase.</p>
+        <h4 class="status-text">EXCELLENT</h4>
+     {% render 'okendo-reviews-widget' %}
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% schema %}
+{
+  "name": {
+    "en": "Product pages"
+  },
+  "settings": [
+	{
+		"label": "Banner Image",
+		"id": "banner_image",
+		"type": "image_picker"
+	},
+	{
+		"label": "Product Information",
+		"id": "product_text",
+		"type": "richtext"
+	},
+     {
+            "label": "Ingredients",
+            "id": "ingredients_text",
+            "type": "richtext"
+    },
+
+    {
+            "label": "Directions",
+            "id": "directions_text",
+            "type": "richtext"
+        },
+{
+            "label": "Nutrition Information",
+            "id": "nutufrition_image",
+            "type": "image_picker"
+        },
+    
+    {
+            "label": "FAQS",
+            "id": "faqs_text",
+            "type": "richtext"
+        },
+   
+    {
+      "type": "checkbox",
+      "id": "enable_payment_button",
+      "label": {
+        "en": "Show dynamic checkout button"
+      },
+      "info": {
+        "en": "Each customer will see their preferred payment method from those available on your store, such as PayPal or Apple Pay. [Learn more](https://help.shopify.com/manual/using-themes/change-the-layout/dynamic-checkout)"
+      },
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_share_buttons",
+      "label": {
+        "en": "Show social sharing buttons"
+      },
+      "default": true
+    }
+  ]
+}
+{% endschema %}
+<style>
+    select#ProductSelect-product-template{
+  	display:block;
+  } 
+.template-product .prod-all-txt form select.myhidden {
+    display: none !important;
+}
+.product-details .price-nd-qu .price {
+    font-family: "Work Sans", sans-serif;
+    font-size: 26px;
+    line-height: 44px;
+    color: #000;
+    padding: 0;
+    margin: 0;
+  
+}
+  .variant-option + label {
+  background-color: #f2f2f2;
+  padding: 10px 15px;
+  margin: 0 5px;
+}
+.variant-option:checked + label {
+  background-color: #000;
+  color: #fff;
+}
+.variant-option[disabled] + label {
+  opacity: 0.5;  
+}
+.variant-option {
+   display: none;
+}
+</style>
+
+{% if product.metafields.custom_fields["product_graphic_section_title"] != blank %}
+	{% assign upsell_product = all_products[product.metafields.custom_fields["product_graphic_section_title"]] %}
+{% endif %}
+
+<div class='work-well-main-div'>
+  
+  	<div class="container">
+      <div class="work-well-header">
+        <h1>WORKS WELL WITH</h1>
+        <div class="hr-line"></div>
+      </div>
+      <h3>ADD SOME EXTRA GOODNESS</h3>
+      <div class="content-div">
+        <div>
+          
+          
+          
+           {% assign temp = 0 %}
+           {% for image in upsell_product.images %} 
+            {% if temp == 0 %}
+            
+           
+<!--               <figure class="img-block"> -->
+<!--                 <img class="image-zoom" src="{{ image.src | img_url: '1024x1024' }}" alt="" data-zoom="{{ image.src | img_url: 'large', scale: 3 }}" /> -->
+              <img class="product-img" src="{{ image.src | img_url: '1024x1024' }}" alt=""  />
+<!--               </figure> -->
+           
+            {% endif %}
+            {% assign temp = temp | plus: 1 %}
+           {% endfor %} 
+                 
+          
+          
+        </div>
+        <div>
+          <div class="white-card">
+            
+            
+            <div class="title-block">
+              <div class="title-text" id="product-title">
+                <h2>{{ upsell_product.title }} <span>{{ product.metafields.custom_fields["product_details_"] }}</span></h2>
+              </div>
+            </div>
+            
+            <p>
+            {% if product.metafields.custom_fields["product_graphic_section_conten"] != blank %}
+                 {{ product.metafields.custom_fields["product_graphic_section_conten"] }}
+            {% endif %}
+            </p>
+<!--             {{ product.metafields.custom_fields["product_benefits_text_3"] }} -->
+            
+            
+            <div class="button-wrapper">
+              <form class="addtocart" method="post" action="/cart/add">
+                
+                <span class="btn collection-btn add_to_bag" data-count="2">
+                  <span>Quick Add To Bag</span>
+                  <span><i class="icon2 fa fa-plus2"></i></span>
+                </span>     
+                
+                <div class="slide-categories step" style="display:none">
+                   <h4 class="sub-title">Select Size</h4>
+                   
+                   <div class="size-div">
+                     {% for variant in upsell_product.variants %}
+{% unless variant.metafields.secomapp.freegifts %}
+{% unless variant.title contains '% off)' %}
+
+                      {% if variant.available %}
+                     <div class="p-rel selectBox" >
+                       <input style="" type="radio" name="id" data-countx="{{ count }}" data-priceee="{{variant.price | money }}" data-productid="{{ upsell_product.id }}" data-productid="{{upsell_product.id}}" id="ProductSelect-{{ section.id }}" class="product-form__variants no-js pid-{{ upsell_product.id }}{% if upsell_sca_product_variantCount == 1 %} myhidden{% endif %} " value="{{ variant.id }}">
+                       <div class="variation-box">
+    	                   <label for="10">  
+                             {% if variant.title =="Default Title" %} 
+                                90 Capsules
+                             {% else %}
+                                {{ variant.title }}
+                             {% endif %}
+                            </label>
+<!--                        <br> -->
+	                       <span>{{variant.price | money }} GBP</span>
+                         </div>
+                     </div>
+                      {% else %}
+                     <div class="p-rel">
+                       <input style="" type="radio"  disabled="disabled" name="id" data-productid="{{ upsell_product.id }}" data-productid="{{upsell_product.id}}" id="ProductSelect-{{ section.id }}" class="product-form__variants no-js pid-{{ upsell_product.id }}{% if upsell_sca_product_variantCount == 1 %} myhidden{% endif %} " value="{{ variant.id }}">
+						<div class="variation-box">
+                       <label for="10">  {{ variant.title }} - {{ 'products.product.sold_out' | t }}</label>
+<!--                        <br> -->
+	                       <span>{{variant.price | money }} GBP</span>
+                         </div>
+                     </div>
+                      {% endif %}
+
+{% endunless %}
+{% endunless %}
+                     {% endfor %}
+                   </div>
+                   <input type="submit" value="Add to cart" class="btn collection-btn" />
+              	  </div>
+              </form>
+<div class="sca-fg-cat-list" style="display: none;" name="secomapp-fg-data-{{ upsell_product.id }}"></div>
+
+            </div>
+           
+            
+              <script>
+$(document).ready(function(){
+$('.p-rel input[type="radio"]').click(function(){
+  
+      
+
+var selectedOption = $("input:radio[name=id]:checked").val()
+
+var priceee = $(this).attr('data-priceee');
+  
+var countx = $(this).attr('data-countx');
+
+
+$('.change_price'+countx).text(priceee);
+
+
+//$(".p-rel input:radio[name=id]:checked").closest('form').trigger("click");
+// this.form.submit()
+
+
+//alert("Your value is "+selectedOption);
+});
+  
+  
+$('.p-rel-blends input[type="radio"]').click(function(){
+  
+      
+
+var selectedOption = $("input:radio[name=id]:checked").val()
+
+var priceee = $(this).attr('data-priceee');
+  
+var countx = $(this).attr('data-countx');
+
+
+$('.change_price_blends'+countx).text(priceee);
+
+
+//$(".p-rel input:radio[name=id]:checked").closest('form').trigger("click");
+// this.form.submit()
+
+
+//alert("Your value is "+selectedOption);
+});
+  
+  
+  
+  $('.p-rel-cap input[type="radio"]').click(function(){
+  
+      
+
+var selectedOption = $("input:radio[name=id]:checked").val()
+
+var priceee = $(this).attr('data-priceee');
+  
+var countx = $(this).attr('data-countx');
+
+
+$('.change_price_cap'+countx).text(priceee);
+
+
+//$(".p-rel input:radio[name=id]:checked").closest('form').trigger("click");
+// this.form.submit()
+
+
+//alert("Your value is "+selectedOption);
+});
+  
+  
+
+  $('.add_to_bag').click(function() {    
+    var c = $(this).attr('data-count');    
+    $('.step').slideToggle(500);
+    $('.icon'+c).toggleClass('fa-minus2');
+   
+  });
+
+  $('.add_to_subscription').click(function() { 
+    $('.subscriptionstep').slideToggle(500);  
+    
+    setTimeout(function(){ 
+      if ($('.subscriptionstep').is(":visible")){}
+      else{	$(".rc_purchase_type_onetime").trigger('click');}
+    }, 500);
+  });
+  
+  
+  
+  $('.add_to_bag3').click(function() {
+    
+   var c = $(this).attr('data-count');
+    
+    $('.step3'+c).slideToggle(500);
+    $('.icon3'+c).toggleClass('fa-minus3');
+   
+  });
+  
+  $('.add_to_bag4').click(function() {
+    
+   var c = $(this).attr('data-count');
+    
+    $('.step4'+c).slideToggle(500);
+    $('.icon4'+c).toggleClass('fa-minus4');
+   
+  });
+  
+  
+  $('.size-div .p-rel:nth-child(1)').click(function() { 
+	 var newPrice=$(this).find('label').attr("price");
+     var newSel=$(this).find('input').attr("value");
+    
+     $("#ProductSelect-product-pre-order-template").val(newSel);
+     $('.price.price-black').html(newPrice);
+     $(this).css("background-color", "#ccc");     
+  }); 
+  $('.size-div .p-rel:nth-child(2)').click(function() {
+     var newPrice=$(this).find('label').attr("price");
+     var newSel=$(this).find('input').attr("value");
+    
+     $("#ProductSelect-product-pre-order-template").val(newSel);
+     $('.price.price-black').html(newPrice);
+     $(this).css("background-color", "#ccc");    
+  }); 
+  
+  
+
+//   $('.selectBox').click(function() {
+//      $(this).css("background-color", "red");
+//   });
+  
+});
+                
+                
+                  $('.p-rel').click(function() { 
+     
+     console.log("Vsel");
+     
+	 var newPrice=$(this).find('label').attr("price");
+     var newSel=$(this).find('input').attr("value");
+     var newPrice_compare=$(this).find('label').attr("variant-compare");
+     
+     
+     var base_price = $(this).find('label').attr("base_price");
+     var base_compare = $(this).find('label').attr("base_compare");
+	
+     if(base_compare > base_price){
+     
+       $(".main-price").html(newPrice);
+       $(".sale-price").html(newPrice_compare);
+     
+     
+     } else {
+     
+     	$(".main-price").html(newPrice);
+       $(".sale-price").html("");
+     }
+       
+        
+     
+     
+     
+    
+     $("#ProductSelect-product-pre-order-template").val(newSel);
+    
+     $(".p-rel").css("background-color", "#fff");
+     $(this).css("background-color", "#ccc");     
+  }); 
+</script>
+            
+            
+            
+          </div>
+        </div>
+      </div>
+	</div>
+</div>

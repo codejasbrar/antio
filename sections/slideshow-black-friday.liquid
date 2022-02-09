@@ -1,0 +1,215 @@
+<section id="black_friday_section">
+      {% for block in section.blocks %}
+
+  <div class="black_banner_main" style="background-image: url({{ block.settings.desktop_banner_bg | img_url: 'master' }});">
+    <div class="black_banner_inner">
+      <div class="black_banner_content text-center">
+        <h3 class="small_heading">{{ block.settings.banner_text1 }}</h3>
+        <h1 class="big_heading">{{ block.settings.banner_text2 }}</h1>
+        <div class="black_banner_buttons text-center">
+          <a href="{{ block.settings.button_url1 }}" class="btn red_btn"> {{ block.settings.button_text1 }} </a>
+          <a href="{{ block.settings.button_url_second }}" class="btn red_btn"> {{ block.settings.button_text_second }} </a>
+        </div>
+      </div>
+    </div>
+  </div>
+      {% endfor %}
+
+</section>
+
+{% comment %}
+{% render 'custom-strip-bar' %}
+{% endcomment %}
+
+
+{% schema %}
+{
+  "name": {
+    "en": "Slideshow Black Friday"
+  },
+  "max_blocks": 4,
+  "settings": [
+
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": {
+        "en": "Image slide"
+      },
+      "settings": [
+		{
+			"type": "image_picker",
+			"id": "desktop_banner_bg",
+			"label": "Set Banner Image"
+		},
+		{
+			"type": "image_picker",
+			"id": "mobile_banner_image",
+			"label": "Set mobile Banner Image"
+		},
+		{
+			"type": "html",
+			"id": "banner_text1",
+			"label": "Set Banner first Text"
+		},	
+{
+			"type": "html",
+			"id": "banner_text2",
+			"label": "Set Banner second Text"
+		},	
+		{
+			"type": "text",
+			"id": "button_text1",
+			"label": "Set First Button Title"
+		},
+		{
+			"type": "url",
+			"id": "button_url1",
+			"label": "Set Button Link"
+		},
+		{
+			"type": "text",
+			"id": "button_text_second",
+			"label": "Set Second Button Title"
+		},
+		{
+			"type": "url",
+			"id": "button_url_second",
+			"label": "Set Second Button Link"
+		}
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": {
+        "en": "Slideshow Black Friday"
+      },
+      "category": {
+        "en": "Image"
+      },
+      "settings": {
+        
+      },
+      "blocks": [
+        {
+          "type": "image"
+        },
+        {
+          "type": "image"
+        },
+		{
+          "type": "image"
+        },
+		{
+          "type": "image"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+<style>
+  .black_banner_buttons{
+    display: flex;
+  }
+  .black_banner_buttons a.btn.red_btn:first-child{
+    margin-right: 40px;
+  }
+  .black_banner_buttons a.btn.red_btn:hover{
+    opacity: 0.8;
+  }
+  .black_banner_buttons a.btn.red_btn {
+    background: #A30505;
+    border: 1px solid #A30505;
+    box-shadow: 0px 4px 4px rgb(0 0 0 / 25%);
+    border-radius: 5px !important;
+    height: 79px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 320px;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 23px;
+    letter-spacing: 0.05em;
+    font-family: Raleway;
+    color: #FFFFFF;
+}
+  .black_banner_inner h1.big_heading {
+    font-size: 70px;
+    line-height: 163px;
+    letter-spacing: 0.05em;
+    color: #FFFFFF;
+    font-weight: 800;
+    font-family: 'Open Sans', sans-serif;
+}
+  .black_banner_inner h3.small_heading {
+    font-size: 60px;
+    line-height: 82px;
+    letter-spacing: 0.05em;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 0;
+    font-family: 'Open Sans', sans-serif;
+}
+  .black_banner_inner {
+    height: 427px;
+    width: 908px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #00000060;
+}
+  .black_banner_main {
+    height: 676px;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+}
+   section#black_friday_section {
+    padding: 0;
+}
+
+  @media only screen and (min-width: 768px) and (max-width: 1024px){
+    div.black_banner_inner{
+      width: 90%;
+    }
+  }
+  @media only screen and (max-width: 480px){
+    {% if section.settings.mobile_bg_image != blank %}
+    div.black_banner_main{
+      background-image: url({{ section.settings.mobile_banner_image | img_url: 'master' }}) !important;
+    }
+    {% endif %}
+    div.black_banner_buttons a.btn.red_btn:first-child {
+      margin-right: 20px;
+    }
+    div.black_banner_buttons a.btn.red_btn {
+      height: 31px;
+      font-size: 10px;
+      line-height: 12px;
+      width: 100%;
+    }
+    div.black_banner_inner h1.big_heading {
+      font-size: 36px;
+      line-height: 75px;
+      margin-bottom: 28px;
+    }
+    div.black_banner_inner h3.small_heading {
+      font-size: 35px;
+      line-height: 48px;
+    }
+    div.black_banner_inner {
+      height: 256px;
+      width: 341px;
+    }
+    div.black_banner_main {
+      height: 571px;
+    }
+  }  
+  
+</style>

@@ -1,0 +1,44 @@
+<section id="gems_section">
+  <div class="quality_head gems_head">
+    <p class="subheading red_text text-center mb-10">{{ section.settings.heading }}</p>
+    <h1 class="heading text-center">{{ section.settings.subheading }}</h1>
+  </div>
+  <div class="gems_image text-center">
+    {% comment %}
+    <img src="{{ section.settings.image | img_url: 'master' }}">
+    {% endcomment %}
+    <video  id="myVideo" width="100%" height="100%" controls>
+       <source src="{{ section.settings.video_url }}" type="video/mp4">
+    </video>
+  </div>
+</section>
+{% schema %}
+  
+  {
+    "name": "Gems section",
+    "settings": [
+
+            {
+              "type": "text",
+              "id": "heading",
+              "label": "Heading"
+            },
+            {
+              "type": "text",
+              "id": "subheading",
+              "label": "Subheading"
+            },
+            {
+              "type": "text",
+              "id": "video_url",
+              "label": "Video Url"
+            }
+        ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

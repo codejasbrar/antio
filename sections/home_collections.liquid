@@ -1,0 +1,93 @@
+<section id="home_collections_section">
+  <div class="home_collections product_slider">
+    <h4 class="small_heading text-center">{{ section.settings.small_heading }}</h4>
+    <h2 class="main_heading text-center">{{ section.settings.main_heading }}</h2>
+    <div class="collections_items_main">
+    {% for block in section.blocks %}
+        {%- assign collection = collections[block.settings.collections] -%}
+      <div class="home_collections_items">
+        <div class="home_coll_image">
+          <img src="{% if collection.image != blank %} {{ collection.image | img_url: 'master' }} {% else %} {{ block.settings.collection_image | img_url: 'master' }} {% endif %} ">
+        </div>
+        <div class="collection_home_content">
+          <h3 class="collection_heading">{{ block.settings.collection_heading }}</h3>
+          <p class="collection_content">{{ block.settings.collection_content }}</p>
+          <a class="btn btn-solid" href="{{ collection.url }}"> {{ block.settings.button_title }} </a>
+        </div>
+      </div>
+    {% endfor %}
+    </div>
+  </div>
+</section>
+
+
+
+
+{% schema %}
+  {
+    "name": "Home collections",
+    "settings": [
+		{
+			"type": "text",
+			"id": "small_heading",
+			"label": "Small heading"
+		},
+		{
+			"type": "text",
+			"id": "main_heading",
+			"label": "Main heading"
+		}
+],
+  "blocks": [
+    {
+      "type": "collection",
+      "name": {
+        "en": "Collections"
+      },
+      "settings": [
+		{
+			"type": "collection",
+			"id": "collections",
+			"label": "Collection"
+		},
+		{
+			"type": "text",
+			"id": "collection_heading",
+			"label": "Collection heading"
+		},
+		{
+			"type": "html",
+			"id": "collection_content",
+			"label": "Collection content"
+		},
+		{
+			"type": "image_picker",
+			"id": "collection_image",
+			"label": "Collection image"
+		},
+		{
+			"type": "text",
+			"id": "button_title",
+			"label": "Button title"
+		}
+]
+}
+],
+  "presets": [
+    {
+      "name": {
+        "en": "Home collections "
+      },
+      "category": {
+        "en": "Homepage"
+      }
+    }
+  ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

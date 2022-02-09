@@ -1,0 +1,422 @@
+
+
+<!-- header part start -->
+<header class="header-2"> 
+  {% if section.settings.show_top_bar == true %}
+<div class="top-announcebar" style="background-color: {{ section.settings.bar_bg_color }};">
+  {% comment %}
+   <marquee direction="right" height="auto" width="100%" >Free UK Delivery on Orders Over £50</marquee>
+  {% endcomment %}
+  <div class="top_announce_content d-flex align-items-center justify-content-center">
+    <p> {{ section.settings.top_bar_text }} </p>
+    {% if section.settings.top_bar_btn_text !=blank %}
+    <a href="{{ section.settings.top_bar_btn_url }}" class="btn top_bar_btn" style="background-color: {{ section.settings.btn_bg_color }}; color: {{ section.settings.btn_text_color }};">{{ section.settings.top_bar_btn_text }}</a>
+    {% endif %}
+  </div>
+</div>
+{% endif %}
+  <div class="mobile-fix-header">
+  </div>
+  <div class="container" id="header-container">
+    <div class="row header-content">
+      <div class="col-12">
+        <div class="content-header">
+          <div class="left-section">
+            <div class="header-top">
+              
+              <div class="brand-logo">
+                <a href="{{ routes.root_url }}">
+                  <img class="mainLogo"
+                       src="{{ section.settings.logo | img_url: '300x300' }}"
+                       data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
+                       data-aspectratio="{{ section.settings.logo.aspect_ratio }}"
+                       data-sizes="auto"
+                       alt="{{ logo_alt | escape }}">	
+					<img class="mobileLogo"
+                       src="{{ section.settings.mobile_logo | img_url: '300x300' }}"
+                       data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
+                       data-aspectratio="{{ section.settings.mobile_logo.aspect_ratio }}"
+                       data-sizes="auto"
+                       alt="{{ logo_alt | escape }}">                
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="right-section"> 
+            <div class="forDesktop">
+                <div class="nav-icon">
+                  {% if shop.customer_accounts_enabled %}
+                  {% if customer %}
+                  <a href="{{ routes.account_url }}" class="site-header__icon site-header__account">
+                    {% comment %}
+                    <img src="{{ 'header_user.png' | asset_url }}">
+                    {% endcomment %}
+                    {% include 'icon-login' %}
+                    
+                    <span class="icon__fallback-text">{{ 'layout.customer.account' | t }}</span>
+                  </a>
+                  {% else %}
+                  <a href="{{ routes.account_login_url }}" class="site-header__icon site-header__account">
+                    {% comment %}
+                    <img src="{{ 'header_user.png' | asset_url }}">
+                    {% endcomment %}
+                    {% include 'icon-login' %}
+                    
+                    <span class="icon__fallback-text">{{ 'layout.customer.log_in' | t }}</span>
+                  </a>
+                  {% endif %}
+                  {% endif %}
+
+                  <a href="/cart" class="asc onhover-div cart-icon site-header__icon site-header__cart">
+                    <img id="cart-icon" src="{{ section.settings.cart_icon | img_url }}">
+                    <span class="icon__fallback-text">{{ 'layout.cart.title' | t }}</span>
+                    <div class="site-header__cart-count{% if cart.item_count == 0 %} hide{% endif %}" data-cart-count-bubble>
+                      <span id="count-number" data-cart-count>{{ cart.item_count }}</span>
+                      <span class="icon__fallback-text medium-up--hide">{{ 'layout.cart.items_count' | t: count: cart.item_count }}</span>
+                    </div>
+                  </a>
+
+
+
+                  {% if shop.enabled_currencies.size > 1 %}
+                  {% form 'currency', class: "currency-selector small--hide" %}
+                  <label for="CurrencySelector" class="visually-hidden">{{ 'general.currency.dropdown_label' | t }}</label>
+                  <div class="currency-selector__input-wrapper select-group">
+                    <select name="currency" id="CurrencySelector" class="currency-selector__dropdown" aria-describedby="a11y-refresh-page-message a11y-selection-message" data-currency-selector>
+                      {% for currency in shop.enabled_currencies %}
+                      <option value="{{currency.iso_code}}"{% if currency == cart.currency %} selected="true"{% endif %}>{{currency.iso_code}}</option>
+                      {% endfor %}
+                    </select>
+                    {% include 'icon-chevron-down' %}
+                  </div>
+                  {% endform %}
+                  {% endif %}
+
+                  <div class="social-block">
+                    {% comment %}Custom Code For Social Icon{% endcomment %}
+                    {%- assign social_accounts = 'Facebook, Twitter, Pinterest, Instagram' | split: ', ' -%}
+                    <ul>
+                      {% for social in social_accounts %}
+                      {%- assign social_handle = social | handleize -%}
+                      {% capture social_link %}social_{{ social_handle }}_link{% endcapture %}
+                      {% capture social_icon %}icon-{{ social_handle }}{% endcapture %}
+
+                      {% if settings[social_link] != blank %}
+                      <li>
+                        <a href="{{ settings[social_link] }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: social }}">
+                          {% include social_icon %}
+                        </a>
+                      </li>
+                      {% endif %}
+
+                      {% endfor %}
+                    </ul>
+                  </div>
+                </div>
+                <div class="three-box">
+                   <div id="Searchdrawer" class="search-bar drawer drawer--top" role="dialog" aria-modal="true" aria-label="{{ 'general.search.placeholder' | t }}">
+
+                   <button class="search-bar__submit search__submit btn--link" type="submit">
+                     {% include 'icon-search' %}
+                     <span class="icon__fallback-text">{{ 'general.search.submit' | t }}</span>
+                    </button>
+
+                     <div class="search-bar__table">
+
+                    <div class="search-bar__table-cell search-bar__form-wrapper">
+
+                    <form class="search search-bar__form"  action="{{ routes.search_url }}" method="get" role="search">
+                     <input class="search__input search-bar__input" type="search" name="q" autocomplete="off" value="{{ search.terms | escape }}" placeholder="{{ 'general.search.placeholder' | t }}" aria-label="{{ 'general.search.placeholder' | t }}">
+
+                    </form>
+
+
+                    </div>
+
+                    </div>
+
+                   </div>
+
+                  <div class="btntrack">
+
+                    <a href="https://www.royalmail.com/track-your-item/" target="_blank">
+                      
+                      <button class="track-button">
+                      <img src="{{ 'track_icon.png' | asset_url }}"> Track Orders
+                    </button>
+                    </a>
+                  </div>
+
+    <!--               <div class="btntrack">
+                    <button class="track-button">
+                      GBP &#163;<i class="fa fa-chevron-down "></i>
+                      <ul class="drop-dw">
+                        <li>EURO'S</li>
+                      </ul>
+                    </button>
+                  </div> -->
+                </div>
+             </div>	
+             <div class="forMobile">
+               
+                  <a href="/cart" class="asc onhover-div cart-icon site-header__icon site-header__cart">
+                    
+                    <i class="fa fa-shopping-cart"></i>
+                    
+                    {% comment %}
+                    <img src="{{ 'header_cart.png' | asset_url }}">
+                    {% endcomment %}
+                    <span class="icon__fallback-text">{{ 'layout.cart.title' | t }}</span>
+                    <div class="site-header__cart-count{% if cart.item_count == 0 %} hide{% endif %}" data-cart-count-bubble>
+                      <span id="count-number" data-cart-count>{{ cart.item_count }}</span>
+                      <span class="icon__fallback-text medium-up--hide">{{ 'layout.cart.items_count' | t: count: cart.item_count }}</span>
+                    </div>
+                  </a>
+               
+               {% if shop.customer_accounts_enabled %}
+                  {% if customer %}
+                  <a href="{{ routes.account_url }}" class="site-header__icon site-header__account">
+                    <i class="fa fa-user"></i>
+                    {% comment %}
+                    <img src="{{ 'header_user.png' | asset_url }}">
+                    {% endcomment %}
+                  </a>
+                  {% else %}
+                  <a href="{{ routes.account_login_url }}" class="site-header__icon site-header__account">
+                     <i class="fa fa-user"></i> 
+                    {% comment %}
+                    <img src="{{ 'header_user.png' | asset_url }}">
+                    {% endcomment %}
+                  </a>
+                  {% endif %}
+                  {% endif %}
+
+               	  {% comment %}
+                    <a href="https://www.royalmail.com/track-your-item#/" target="_blank"><i class="fa fa-archive"></i></a>
+                  {% endcomment %}
+               
+                  <a href="/search" >
+                     <i class="fa fa-search"></i> 
+                    {% comment %}
+                    <img src="{{ 'header_search.png' | asset_url }}">
+                    {% endcomment %}
+                  </a>
+               
+                  <a class="cMenuBar" href="javascript:void(0)" onclick="openNav()">
+                    <div class="bar-style"><i class="fa fa-bars sidebar-bar" aria-hidden="true"></i></div>
+                  </a>
+               <div class="navbar">
+                <div id="mySidenav" class="sidenav">
+                  <a href="javascript:void(0)" class="sidebar-overlay" onclick="closeNav()"></a>
+                  <nav class="">
+                    <div onclick="closeNav()">
+                      <div class="sidebar-back text-left"><i class="fa fa-angle-left pr-2" aria-hidden="true"></i> Back</div>
+                    </div>
+                    <ul id="sub-menu" class="sm chira sm-vertical ">
+                      {% for link in linklists[section.settings.main_linklist].links %}
+                      <li>
+                        <a href="{{ link.url }}"> {{ link.title }} </a>
+                      	{% if link.links != blank %}
+                        	<ul class="dropdown">
+        						{% for child_link in link.links %}
+                              		<li> <a href="{{ child_link.url }}"> {{ child_link.title }} </a> </li>
+                              	{% endfor %}
+                        	</ul>  
+                        {% endif %}
+                      </li>
+                      {% endfor %}
+                    </ul>
+                  </nav>
+                </div>
+              </div>
+            
+            </div>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+      </div>
+    </div>
+  
+  
+  <div class="menu-header desktop_menu-header justify-content-center">
+    {% comment %}
+    <div class="desktop_logo">
+    
+                <a href="{{ routes.root_url }}">
+                  <img class="mainLogo"
+                       src="{{ section.settings.logo | img_url: '300x300' }}"
+                       data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
+                       data-aspectratio="{{ section.settings.logo.aspect_ratio }}"
+                       data-sizes="auto"
+                       alt="{{ logo_alt | escape }}">	                
+                </a>
+    </div>
+    {% endcomment %}
+  <nav id="main-nav">
+              <div class="toggle-nav">
+                <i class="ti-menu-alt"></i>
+              </div>
+              <ul id="main-menu" class="sm chira sm-horizontal">
+                {% for link in linklists[section.settings.main_linklist].links %}
+                {% if linklists[link.handle] == empty %}
+                <li>
+                  <a href="{{ link.url }}" class="{% if link.active %} current{% endif %}">
+                    <span>{{ link.title }}</span></a>
+                </li>
+                {% else %}
+                <li class="dropdown"><a href="{{ link.url }}" class="{% if link.active %} current{% endif %}">
+                  <span>{{ link.title }}</span></a>
+                  <ul class="sub-dropdown">
+                    {% for l in linklists[link.handle].links %}
+                    <li><a href="{{ l.url }}"{% if l.active %} class="current"{% endif %}>{{ l.title }}</a></li>
+                    {% endfor %}
+                  </ul>
+                </li>
+                {% endif %}  
+                {% endfor %}
+              </ul> 
+            </nav>
+  </div>
+  
+  {% if section.settings.info_bar == true %}
+  <div class="infomation-bar">
+  
+     <a href="{{ section.settings.bar_url }}"><p>{{ section.settings.bar_text }}</p></a>
+  
+  </div>
+  {% endif %}
+  
+  <div class="header_progress_bar d-none">
+    <progress id="progressbar" value="0" max="100"></progress>
+  </div>
+  
+</header>
+    <!-- header part end -->
+<script>
+
+   $(document).ready(function () {
+     var headerheight = $(".header-2").outerHeight();
+       $('a[href*="#"]').on('click', function (e) {
+    e.preventDefault();
+
+    $('html, body').animate({
+        scrollTop: $($(this).attr('href')).offset().top - headerheight -20
+    }, 200, 'linear');
+});
+    });
+  
+</script>
+
+
+{% schema %}
+{
+  "name": {
+    "en": "Header"
+  },
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": {
+        "en": "Logo image"
+      }
+    },
+     {
+      "type": "image_picker",
+      "id": "mobile_logo",
+      "label": {
+        "en": "Mobile Logo image"
+      }
+    },
+    {
+      "type": "link_list",
+      "id": "main_linklist",
+      "label": {
+        "en": "Menu"
+      },
+      "default": "main-menu"
+    },
+	{
+		"type": "image_picker",
+		"id" : "cart_icon",
+		"label" : {
+			"en": "Cart Icon"
+		}
+	},
+	{
+      "type": "checkbox",
+      "id": "show_top_bar",
+      "label": "Show top bar",
+      "default": true	
+      }, 
+	{
+      "type": "color",
+      "id": "bar_bg_color",
+      "label": "Top bar background color",
+      "default": "#000"	
+      }, 
+	{
+      "type": "text",
+      "id": "top_bar_text",
+      "label": "Top bar text"
+      }, 
+	{
+      "type": "text",
+      "id": "top_bar_btn_text",
+      "label": "Top bar button text"
+      }, 
+	{
+      "type": "url",
+      "id": "top_bar_btn_url",
+      "label": "Top bar button url"
+      },
+	{
+      "type": "color",
+      "id": "btn_bg_color",
+      "label": "Button background color"	
+      }, 
+	{
+      "type": "color",
+      "id": "btn_text_color",
+      "label": "Button text color"
+      },  
+	{
+      "type": "checkbox",
+      "id": "info_bar",
+      "label": "Show information bar",
+      "default": true	
+      }, 
+	{
+      "type": "text",
+      "id": "bar_text",
+      "label": {
+       
+        "en": "Content"
+      },
+      "default": {
+     
+        "en": "Sign up to our newsletter and save 10%"
+      }
+    },
+	{
+      "type": "url",
+      "id": "bar_url",
+      "label": "Link"
+	
+      }
+  ]
+  	
+}
+{% endschema %}
+<style>
+	.search-bar__form {
+	display: table-cell;
+	width: 100%;
+	position: relative;
+	height: calc(46em / 16);
+	border: 1px solid transparent;
+	vertical-align: middle;
+}
+</style>

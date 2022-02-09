@@ -1,0 +1,30 @@
+<section id="header_image_section">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 header_image text-center">
+        <a href="/">
+          <img src="{{ section.settings.header_image | img_url: 'master' }}">
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+  {
+    "name": "Header landing page",
+    "settings": [
+                {
+                   "type": "image_picker",
+                   "id": "header_image",
+                   "label": "Header image"
+                }
+]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

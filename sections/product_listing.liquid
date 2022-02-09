@@ -1,0 +1,48 @@
+
+<!-- Banner section start -->
+  <div class="p-0 home-banner layout-2-menu shadow-home inner-banner">
+    <img src="{{ section.settings.banner_image | img_url: '1024x1024' }}" alt="">
+    <div class="desc">
+      <div class="container">
+        <div class="text-block">
+          <h2>{{ section.settings.banner_text }}</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+<!-- Banner section end-->
+
+
+{% schema %}
+{
+  "name": {
+    "en": "Collections list page"
+  },
+  "settings": [
+	{
+		"label": "Banner Image",
+		"id": "banner_image",
+		"type": "image_picker"
+	},
+	{
+		"label": "Banner Text",
+		"id": "banner_text",
+		"type": "text"
+	},
+    {
+      "label": {
+      "en": "First Collection"
+      },
+      "id": "collection1",
+      "type": "collection"
+    },
+	{
+      "label": {
+      "en": "Second Collection"
+      },
+      "id": "collection2",
+      "type": "collection"
+    }
+  ]
+}
+{% endschema %}

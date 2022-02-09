@@ -1,0 +1,550 @@
+<!-- footer section start -->
+<footer id="footer_section" class="footer-2">
+  {%- for block in section.blocks -%}
+  	{%- case block.type -%}
+  	  {%- when 'newsletter' -%}
+                <div id="subscribe-content" class="subscribe-content text-center only_desktop d-none">
+                  <h4>{{- block.settings.title -}}</h4>
+                  <p>{{- block.settings.content -}}</p>
+                </div>
+        <div id="footer-subscribe-section" class="subscribe-section" {% if block.settings.newsletter_img_pick != blank %} style="background: url({{ block.settings.newsletter_img_pick | img_url: '2048x2048' }}) 0 0 no-repeat; padding: 120px 0 150px; background-size: cover;" {% endif %} >
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 p-0">
+                <div class="subscribe-content text-center d-lg-none">
+                  <h4>{{- block.settings.title -}}</h4>
+                   {{- block.settings.content -}}
+                </div>
+              </div>
+			<!-- form section starts -->
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 p-0">
+                  {% form "customer", class: "form-inline subscribe-form" %}
+                	<p class="thank-you">{% if form.posted_successfully? %}
+                		{{ 'general.newsletter_form.confirmation' | t }}
+                      {% endif %}</p>
+                	<input type="hidden" name="contact[tags]" value="newsletter">
+                	<div class="news-latter-box">
+                      <div class="row">
+                        <div class="form-group col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                            <input type="text" name="contact[first_name]" class="form-control" placeholder="Enter your name here" required>	  
+                        </div>  
+
+                        <div class="form-group col-lg-9 col-md-9 col-sm-12 col-xs-12">
+                          <div class="search-block">
+                            <input type="email" name="contact[email]" class="form-control" value="{{ form.email }}" placeholder="Enter your email address here..." {% if form.errors %} aria-invalid="true" aria-describedby="{{ formId }}-email-error" data-form-status {% endif %} required>
+                            <button type="submit" name="commit" class="btn btn-solid">Subscribe</button>
+                          </div>
+                        </div>
+                	</div>
+                	</div>
+                  {% endform %}
+                
+              </div>
+              
+            </div>
+          </div>
+        </div>
+  	  
+      <div class="footer-section">
+        {%- when 'feature' -%}
+        
+          <div class="pay-block">
+            <div class="container">
+              <div class="pay-section">
+                <div class="row">
+                  <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="block">
+                      <div class="icon-block">
+                        <img src="{{ block.settings.feature_1_img | img_url }}" alt="">
+                      </div>
+                      <div class="text-block">
+                        <h4>{{ block.settings.feature_1_title }}</h4>
+                        {{ block.settings.feature_1_content }}
+                      </div>
+                      <div class="clearfix"></div>
+                    </div>
+                  </div>
+                  <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="block">
+                      <div class="icon-block">
+                        <img src="{{ block.settings.feature_2_img | img_url }}" alt="">
+                      </div>
+                      <div class="text-block">
+                        <h4>{{ block.settings.feature_2_title }}</h4>
+                        <ul>
+                          <li><a href="#"><img src="{{ block.settings.feature_2_payment_1 | img_url }}" alt=""></a></li>
+                          <li><a href="#"><img src="{{ block.settings.feature_2_payment_2 | img_url }}" alt=""></a></li>
+                          <li><a href="#"><img src="{{ block.settings.feature_2_payment_3 | img_url }}" alt=""></a></li>
+                        </ul>
+                      </div>
+                      <div class="clearfix"></div>
+                    </div>
+                  </div>
+                  <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="block">
+                      <div class="icon-block">
+                        <img src="{{ block.settings.feature_3_img | img_url }}" alt="">
+                      </div>
+                      <div class="text-block">
+                        <h4>{{ block.settings.feature_3_title }}</h4>
+                        {{ block.settings.feature_3_content }}
+                      </div>
+                      <div class="clearfix"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+        <div class="container">
+          <div class="row">
+            {%- when 'contact' -%}
+              <div class="col-xl-3 col-md-6 col-sm-4 float-left">
+                <div class="block">
+                  <h3>{{ block.settings.title }}</h3>
+                  <p class="address" {% if block.settings.address_img %} style="background: url({{ block.settings.address_img | img_url }}) no-repeat 0 50%; background-size: contain;" {% endif %}>{{ block.settings.address }}</p>
+                  <a class="mail" href="mailto:{{ block.settings.email }}" {% if block.settings.email_icon %} style="background: url({{ block.settings.email_icon | img_url }}) no-repeat 0 50%;" {% endif %} >{{ block.settings.email }}</a>
+                </div>
+                
+                {% comment %}
+                <div class="social-block">
+                  {% comment %}Custom Code For Social Icon{% endcomment %}
+                    {%- assign social_accounts = 'Facebook, Twitter, Pinterest, Instagram' | split: ', ' -%}
+                      <ul>
+                        {% for social in social_accounts %}
+                          {%- assign social_handle = social | handleize -%}
+                          {% capture social_link %}social_{{ social_handle }}_link{% endcapture %}
+                          {% capture social_icon %}icon-{{ social_handle }}{% endcapture %}
+
+                          {% if settings[social_link] != blank %}
+                            <li>
+                              <a href="{{ settings[social_link] }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: social }}">
+                                {% include social_icon %}
+                              </a>
+                            </li>
+                          {% endif %}
+
+                        {% endfor %}
+                      </ul>
+                </div>
+                {% endcomment %}
+              </div>
+            {%- when 'link_list' -%}
+              <div class="col-xl-3 col-md-6 col-sm-4 float-left">
+                <div class="block content_block">
+                  <h3>{{ block.settings.title }}</h3>
+                  <ul class="footer-menu">
+                    {% assign footer_menu = block.settings.menu %}
+                      {% for link in linklists[footer_menu].links %}
+                          <li><a href="{{ link.url }}"> {{ link.title }} </a></li>
+                      {% endfor %}
+                  </ul>
+                </div>
+              </div>
+            {%- when 'text' -%}
+              <div class="col-xl-6 col-md-12 col-sm-12  float-left footer_content_block">
+                <div class="block">
+                  {% if block.settings.title != blank %}<h3>{{ block.settings.title }}</h3> {% endif %}
+                  <p>{{ block.settings.text }}</p>
+                </div>
+              </div>
+            
+            {%- when 'payment' -%}
+              <div class="col-xl-6 col-md-12 col-sm-12  float-left footer_payment_block">
+                <div class="payment_block_inner">
+                  {% if block.settings.title != blank %}<h3>{{ block.settings.title }}</h3> {% endif %}
+                  {%- unless shop.enabled_payment_types == empty -%}
+                  {% if block.settings.payment_icons %}
+                    <ul>
+                     {%- for type in shop.enabled_payment_types -%}
+                      <li>
+                        {{ type | payment_type_svg_tag: class: 'icon icon--full-color' }}
+                      </li>
+                     {%- endfor -%}
+                    </ul>
+                  {% endif %}
+                  {%- endunless -%}
+                </div>
+              </div>
+          </div>
+        </div>
+
+
+      </div>
+  	  {%- when 'copywright' -%}	
+  		{% if block.settings.copywright != blank %}
+          <div class="sub-footer  float-left">
+            <div class="container">
+               {{- block.settings.copywright -}} 
+            </div>
+          </div>
+  		{% endif %}
+  
+      {%- when 'image' -%}	
+        <div class="find-on_us">
+         <!--<div class="find_us_slide"> -->
+          <div class="find_us_one">
+            <h2 class="sing_title"><span></span>{{ block.settings.title }}</h2>
+            <div class="logo-wrap">
+              <div class="logo-block">
+                
+                {% if block.settings.partner_image %}
+                  <div class="logo_sig">
+                    <img src="{{ block.settings.partner_image | img_url: '500x' }}" alt="">
+                  </div>
+                {% endif %}
+                {% if block.settings.partner_image1 %}
+                  <div class="logo_sig">
+                    <img src="{{ block.settings.partner_image1 | img_url: '500x' }}" alt="">
+                  </div>
+                {% endif %}
+                {% if block.settings.partner_image2 %}
+                  <div class="logo_sig">
+                    <img src="{{ block.settings.partner_image2 | img_url: '500x' }}" alt="">
+                  </div>
+                {% endif %}
+                {% if block.settings.partner_image3 %}
+                  <div class="logo_sig">
+                    <img src="{{ block.settings.partner_image3 | img_url: '500x' }}" alt="">
+                  </div>
+                {% endif %}
+                <div class="clearfix"></div>
+              </div>
+            </div>
+          </div>
+           
+          <!--<div class="find_us_two">
+            <h2 class="sing_title">{{block.settings.title_two}}</h2>
+            <div class="logo-wrap">
+              <div class="logo-block">
+                  <div class="logo_sig">
+                    <img src="{{ block.settings.partner_image_section_two | img_url: '2048x' }}" alt="">
+                  </div>
+                
+                  <div class="logo_sig">
+                    <img src="{{ block.settings.partner_image_section_three | img_url: '2048x' }}" alt="">
+                  </div>	
+                <div class="clearfix"></div>
+              </div>
+            </div>
+          </div>-->
+         <!--</div>--> 
+        </div> 
+        
+        
+  
+  	{%- endcase -%}
+  {%- endfor -%}
+  
+
+  <script>
+  	function openchat(){
+    	document.getElementById('shopify-chat')[0].click();
+    }
+  </script>
+</footer>
+    <!-- footer section end -->
+
+<!-- Add to cart bar -->
+<!-- <div id="cart_side" class="add_to_cart right">
+  <a href="javascript:void(0)" class="overlay" onclick="closeCart()"></a>
+  <div class="cart-inner">
+    <div class="cart_top">
+      <h3>my cart</h3>
+      <div class="close-cart">
+        <a href="javascript:void(0)" onclick="closeCart()">
+          <i class="fa fa-times" aria-hidden="true"></i>
+        </a>
+      </div>
+    </div>
+    <div class="cart_media">
+    	
+    </div>
+    
+  </div>
+</div> -->
+<!-- Add to cart bar end-->
+
+
+{% schema %}
+{
+  "name": {
+    "en": "Footer"
+  },
+  "settings": [
+    
+  ],
+  "blocks": [
+    {
+      "type": "link_list",
+	  "limit": 2,	
+      "name": {
+        "en": "Menu"
+      },
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": {
+            "en": "Heading"
+          },
+          "default": {
+            "en": "Quick links"
+          }
+        },
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": {
+            "en": "Menu"
+          },
+          "default": "footer"
+        }
+      ]
+    },
+    {
+      "type": "text",
+	  "limit": 1,
+      "name": {
+        "en": "Text"
+      },
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": {
+            "en": "Heading"
+          },
+          "default": {
+            "en": "Input Title"
+          }
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": {
+            "en": "Text"
+          },
+          "default": {
+            "en": "<p>About Store</p>"
+          }
+        }
+      ]
+    },
+    {
+      "type": "payment",
+	  "limit": 1,
+      "name": {
+        "en": "Payment"
+      },
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": {
+            "en": "Heading"
+          }
+        },
+        {
+          "type": "checkbox",
+          "id": "payment_icons",
+          "label": "Show payment icons",
+          "default": true
+        }
+      ]
+    },
+    {
+      "type": "newsletter",
+      "limit": 1,
+      "name": {
+        "en": "Newsletter signup"
+      },
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": {
+            "en": "Heading"
+          },
+          "info": {
+            "en": "Subscribers will be added to your “accepts marketing” [customer list.](/admin/customers?query=&accepts_marketing=1)"
+          },
+          "default": {
+            "en": "Newsletter"
+          }
+        },
+		{
+          "type": "text",
+          "id": "content",
+          "label": {
+            "en": "Content About"
+          }
+        },
+		{
+          "type": "image_picker",
+          "id": "newsletter_img_pick",
+          "label": {
+            "en": "Newsletter BG Image"
+          }
+
+        }
+      ]
+    },
+	{
+        "type": "contact",
+		"limit": 1,
+        "name": "Contact Us",
+        "settings": [
+		  {
+            "id": "title",
+            "type": "text",
+            "label": "Heading"
+          },
+		  {
+            "id": "address_img",
+            "type": "image_picker",
+            "label": "Address Icon"
+          },
+          {
+            "id": "address",
+            "type": "text",
+            "label": "Address"
+          },
+		  {
+			"id": "email_icon",
+			"type": "image_picker",
+			"label": "Email Icon"
+		  },
+		  {
+			"id": "email",
+			"type": "text",
+			"label": "Email"
+		  }
+        ]
+    },
+	{
+		"type": "feature",
+		"limit": 1,
+		"name": "Features",
+		"settings": [
+			{
+				"id": "feature_1_img",
+				"type": "image_picker",
+				"label": "Feature Icon One"
+			},
+			{
+				"id": "feature_1_title",
+				"type": "text",
+				"label": "Feature Title One"
+			},
+			{
+				"id": "feature_1_content",
+				"type": "richtext",
+				"label": "Feature Content One"
+			},
+			{
+				"id": "feature_2_img",
+				"type": "image_picker",
+				"label": "Feature Icon Two"
+			},
+			{
+				"id": "feature_2_title",
+				"type": "text",
+				"label": "Feature Title Two"
+			},
+			{
+				"id": "feature_2_payment_1",
+				"type": "image_picker",
+				"label": "Feature Payment Image One"
+			},
+			{
+				"id": "feature_2_payment_2",
+				"type": "image_picker",
+				"label": "Feature Payment Image Two"
+			},
+			{
+				"id": "feature_2_payment_3",
+				"type": "image_picker",
+				"label": "Feature Payment Image Three"
+			},
+			{
+				"id": "feature_3_img",
+				"type": "image_picker",
+				"label": "Feature Icon Three"
+			},
+			{
+				"id": "feature_3_title",
+				"type": "text",
+				"label": "Feature Title Three"
+			},
+			{
+				"id": "feature_3_content",
+				"type": "richtext",
+				"label": "Feature Content Three"
+			}
+		]
+	},
+	{
+		"type": "copywright",
+		"limit": 1,
+		"name": "Copywright",
+		"settings": [
+			{
+				"id": "copywright",
+				"type": "text",
+				"label": "Copywright"
+			}
+		]
+	},
+	{
+		"type": "image",
+		"name": "Partners Image",
+		"settings": [
+			{
+                "type": "text",
+                "id": "title",
+                "label": "Set Title One"
+            },
+			{
+				"type": "image_picker",
+				"id": "partner_image",
+				"label": "Set Partner Image"
+			},
+			{
+				"type": "image_picker",
+				"id": "partner_image1",
+				"label": "Set Partner Image"
+			},
+			{
+				"type": "image_picker",
+				"id": "partner_image2",
+				"label": "Set Partner Image"
+			},
+			{
+				"type": "image_picker",
+				"id": "partner_image3",
+				"label": "Set Partner Image"
+			},
+			{
+                "type": "text",
+                "id": "title_two",
+                "label": "Set Title Two"
+            },
+			{
+				"type": "image_picker",
+				"id": "partner_image_section_two",
+				"label": "Set Partner Image"
+			},
+			{
+				"type": "image_picker",
+				"id": "partner_image_section_three",
+				"label": "Set Partner Image"
+			}
+		]
+	}
+  ]
+	
+}
+{% endschema %}

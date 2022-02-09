@@ -1,0 +1,1133 @@
+
+<!-- Banner section start -->
+<!--   <div class="p-0 home-banner layout-2-menu shadow-home inner-banner">
+    <img src="{{ section.settings.banner_image | img_url: '1024x1024' }}" alt="">
+    <div class="desc">
+      <div class="container">
+        <div class="text-block">
+          <h2>{{ section.settings.banner_text }}</h2>
+        </div>
+      </div>
+    </div>
+  </div> -->
+<!-- Banner section end-->
+
+
+<section id="tabs" class="products-listing-tab">
+<!--       <nav>
+         <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+           
+          {% assign collection2 = collections[section.settings.collection2] %}
+           
+           <a class="nav-item nav-link active" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="true">
+           
+             <div class="nav-img"><img src="{{ collection2.image | img_url }}"></div>
+             <span>{{ collection2.title }} {% if collection2.metafields.custom_fields["collection_fields_text"] != blank %}{{ collection2.metafields.custom_fields["collection_fields_text"] }}{%endif%} </span></a>
+           {% assign collection1 = collections[section.settings.collection1] %}
+           
+           <a class="nav-item nav-link" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="false">
+           	<div class="nav-img"><img src="{{ collection1.image | img_url }}"></div>
+            <span>{{ collection1.title }} {% if collection1.metafields.custom_fields["collection_fields_text"] != blank %}{{ collection1.metafields.custom_fields["collection_fields_text"] }}{%endif%}</span></a>  
+        </div>
+      </nav> -->
+   <div class="container" style="max-width: 90%;">
+      <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
+         <div class="tab-pane fade" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+            <div class="product-wrap">
+               <div class="row">
+                 
+                  <!-- Loop Starts -->
+                 {% for product in collection1.products %}
+                  <div class="col-md-4  col-sm-12">
+                     <div class="product-box">
+                        <div class="img-block">
+                          <a href="{{ product.url }}"><img src="{{ product.featured_image | img_url: '1024x1024' }}" alt=""></a>
+                        </div>
+                        <div class="text-block">
+                          <h4><a href="{{ product.url }}">{{ product.title }}</a></h4>
+                           {% assign product_description = product.description | split: '<!-- split -->' %}
+                           {{ product_description.first }}
+                        </div>
+                       
+                        <div class="item-wrap">
+                           <div class="item">
+                             {% if product.metafields.custom_fields["custom_fields_allergies_image"] != blank %}
+                              <div class="icon">
+                                 {{ product.metafields.custom_fields["custom_fields_allergies_image"] }}
+                              </div>
+                             {% endif %}
+                             {% if product.metafields.custom_fields["custom_fields_allergies"] != blank %}
+                              <div class="text">
+                                 {{ product.metafields.custom_fields["custom_fields_allergies"] }}
+                              </div>
+                             {% endif %}
+                           </div>
+                           <div class="item">
+                              {% if product.metafields.custom_fields["custom_fields_uk_image"] != blank %}
+                              <div class="icon">
+                                 {{ product.metafields.custom_fields["custom_fields_uk_image"] }}
+                              </div>
+                             {% endif %}
+                             {% if product.metafields.custom_fields["custom_fields_uk"] != blank %}
+                              <div class="text">
+                                 {{ product.metafields.custom_fields["custom_fields_uk"] }}
+                              </div>
+                             {% endif %}
+                           </div>
+                           <div class="item">
+                              {% if product.metafields.custom_fields["custom_fields_sustainable_imag"] != blank %}
+                              <div class="icon">
+                                 {{ product.metafields.custom_fields["custom_fields_sustainable_imag"] }}
+                              </div>
+                             {% endif %}
+                             {% if product.metafields.custom_fields["custom_fields_sustainable"] != blank %}
+                              <div class="text">
+                                 {{ product.metafields.custom_fields["custom_fields_sustainable"] }}
+                              </div>
+                             {% endif %}
+                           </div>
+                        </div>
+                       
+                        <div class="btn-block">
+                           <a href="{{ product.url }}">Details</a>
+                        </div>
+                     </div>
+                  </div>
+                 {% endfor %}
+                  <!-- Loop Ends -->
+
+               </div>
+            </div>
+         </div>
+         <div class="tab-pane fade show active" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+            <div class="product-wrap fcdf">
+               
+              {% if collection.title=='Medicinal Mushrooms' %} 
+              	<div class="row" style="margin-bottom: 50px;">
+					<div class="col-sm-12" class="collection_title" style="color: #c3b18d;">
+                    <h2 class="collection_title">Powders </h2>
+					<!--<div class="sortingMainDiv">{render 'collection-sorting'}</div>-->
+                 </div>
+                  <!-- Loop Starts -->
+                 {% for product in collections['mushroom-powders'].products %}
+                  <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
+                     <div class="product-box">
+                        <div class="img-block">
+                           <a href="{{ product.url }}"><img src="{{ product.featured_image | img_url: '1024x1024' }}" alt=""></a>
+                        </div>
+                        <div class="text-block">
+                          <div class="des-top">
+                            {% assign product_description = product.description | split: '<!-- split -->' %}
+                            <h4><a href="{{ product.url }}">{{ product.title }}</a></h4>
+                            <div class="review-part">
+                               
+								{% render 'okendo-reviews-product-rating-summary', product: product %}
+                              </div>
+                              
+                          </div>
+                               
+
+                            <p><span style="color: black;">{{sca_price | money}}</span> &nbsp&nbsp<span style="text-decoration: line-through;">{{ sca_compare_at_price | money }}</span></p>
+                        </div>
+                        <div class="text-block">
+<div class="text-block">
+                    	{% assign product_quantity = 0 %}
+                        {% for variant in product.variants %}
+{% unless variant.metafields.secomapp.freegifts %}
+{% unless variant.title contains '% off)' %}
+
+                          {% assign product_quantity = product_quantity | plus: variant.inventory_quantity %}
+
+{% endunless %}
+{% endunless %}
+                        {% endfor %}
+                        {% if product_quantity <=0 %}
+                        <p>{{product.metafields.oversell-note.oversell-note}}</p>  
+                          {% else %}
+                          <p></p>  
+
+                           {% endif %}
+                          </div>
+                       </div>
+                        <div class="item-wrap">
+                          
+                           <div class="item">
+                             {% if product.metafields.custom_fields["custom_fields_allergies_image"] != blank %}
+                              <div class="icon">
+                                 {{ product.metafields.custom_fields["custom_fields_allergies_image"] }}
+                              </div>
+                             {% endif %}
+                             {% if product.metafields.custom_fields["custom_fields_allergies"] != blank %}
+                              <div class="text">
+                                 {{ product.metafields.custom_fields["custom_fields_allergies"] }}
+                              </div>
+                             {% endif %}
+                           </div>
+                           <div class="item">
+                              {% if product.metafields.custom_fields["custom_fields_uk_image"] != blank %}
+                              <div class="icon">
+                                 {{ product.metafields.custom_fields["custom_fields_uk_image"] }}
+                              </div>
+                             {% endif %}
+                             {% if product.metafields.custom_fields["custom_fields_uk"] != blank %}
+                              <div class="text">
+                                 {{ product.metafields.custom_fields["custom_fields_uk"] }}
+                              </div>
+                             {% endif %}
+                           </div>
+                           <div class="item">
+                              {% if product.metafields.custom_fields["custom_fields_sustainable_imag"] != blank %}
+                              <div class="icon">
+                                 {{ product.metafields.custom_fields["custom_fields_sustainable_imag"] }}
+                              </div>
+                             {% endif %}
+                             {% if product.metafields.custom_fields["custom_fields_sustainable"] != blank %}
+                              <div class="text">
+                                 {{ product.metafields.custom_fields["custom_fields_sustainable"] }}
+                              </div>
+                             {% endif %}
+                           </div>
+                          
+                        </div>
+<!--                         <div class="btn-block">
+                          <a href="{{ product.url }}">Checkout</a>
+                          <a href="#">{{sca_price | money}}</a>
+                        </div> -->
+                       <form class="addtocart" method="post" action="/cart/add" style="display:none;">
+                          <input type="hidden" name="id" value="{{ product.variants.first.id }}" />
+                          <input class="product-qt" min="1" type="number" id="quantity" name="quantity" value="1"  />
+                          <input type="submit" value="Add to cart" class="btn collection-btn" />
+                       </form> 
+<div class="sca-fg-cat-list" style="display: none;" name="secomapp-fg-data-{{ product.id }}"></div>
+
+                       <div class="button-wrapper" >
+                          <form class="addtocart" method="post" action="/cart/add" style="width:100%;">
+
+                            <span class="btn collection-btn " onClick="return addToCardQuick('{{product.id}}')" data-count="2">
+                              <span>Quick Add To Bag</span>
+                              <span><i class="icon2 fa fa-plus2 icon_{{product.id}}"></i></span>
+                            </span>     
+
+                            <div class="slide-categories step div_{{product.id}}" style="display:none">
+                               <h4 class="sub-title">Select Size</h4>
+
+                               <div class="size-div">
+                                 {% for variant in product.variants %}
+{% unless variant.metafields.secomapp.freegifts %}
+{% unless variant.title contains '% off)' %}
+
+                                  {% if variant.available %}
+                                 <div class="p-rel selectBox" >
+                                   <input style="" type="radio" onChange="return changeBackColor(this);" name="id" data-countx="{{ count }}" data-priceee="{{variant.price | money }}" data-productid="{{ product.id }}" data-productid="{{product.id}}" id="ProductSelect-{{ section.id }}" class="product-form__variants no-js pid-{{ product.id }}{% if sca_product_variantCount == 1 %} myhidden{% endif %} " value="{{ variant.id }}">
+                                   <div class="variation-box">
+                                       <label for="10">  
+                                         {% if variant.title =="Default Title" %} 
+                                            90 Capsules
+                                         {% else %}
+                                            {{ variant.title }}
+                                         {% endif %}
+                                        </label>
+            <!--                        <br> -->
+                                       <span>{{variant.price | money }} GBP</span>
+                                     </div>
+                                 </div>
+                                  {% else %}
+                                 <div class="p-rel">
+                                   <input style="" type="radio"  disabled="disabled" name="id" data-productid="{{ product.id }}" data-productid="{{product.id}}" id="ProductSelect-{{ section.id }}" class="product-form__variants no-js pid-{{ product.id }}{% if sca_product_variantCount == 1 %} myhidden{% endif %} " value="{{ variant.id }}">
+                                    <div class="variation-box">
+                                   <label for="10">  {{ variant.title }} - {{ 'products.product.sold_out' | t }}</label>
+            <!--                        <br> -->
+                                       <span>{{variant.price | money }} GBP</span>
+                                     </div>
+                                 </div>
+                                  {% endif %}
+
+{% endunless %}
+{% endunless %}
+                                 {% endfor %}
+                               </div>
+                               <input type="submit" value="Add to cart" class="btn collection-btn" />
+                              </div>
+                          </form>
+<div class="sca-fg-cat-list" style="display: none;" name="secomapp-fg-data-{{ product.id }}"></div>
+
+                        </div> 
+                         
+                     </div>
+                  </div>
+                 {% endfor %}
+                  <!-- Loop Ends -->
+
+               </div>
+              
+              	<div class="row" style="margin-bottom: 50px;">
+					<div class="col-sm-12" class="collection_title" style="color: #c3b18d;">
+                   <h2 class="collection_title">Capsules</h2>
+                 </div>
+                  <!-- Loop Starts -->
+                 {% for product in collections['capsules'].products %}
+                  <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
+                     <div class="product-box">
+                        <div class="img-block">
+                           <a href="{{ product.url }}"><img src="{{ product.featured_image | img_url: '1024x1024' }}" alt=""></a>
+                        </div>
+                        <div class="text-block">
+                          <div class="des-top">
+                            {% assign product_description = product.description | split: '<!-- split -->' %}
+                            <h4><a href="{{ product.url }}">{{ product.title }}</a></h4>
+                            <div class="review-part">
+                               
+{% render 'okendo-reviews-product-rating-summary', product: product %}
+                              </div>
+                              
+                          </div>
+                           
+                           
+                            <p><span style="color: black;">{{sca_price | money}}</span> &nbsp&nbsp<span style="text-decoration: line-through;">{{ sca_compare_at_price | money }}</span></p>
+                        </div>
+                       <div class="text-block">
+                                        	{% assign product_quantity = 0 %}
+                        {% for variant in product.variants %}
+{% unless variant.metafields.secomapp.freegifts %}
+{% unless variant.title contains '% off)' %}
+
+                          {% assign product_quantity = product_quantity | plus: variant.inventory_quantity %}
+
+{% endunless %}
+{% endunless %}
+                        {% endfor %}
+                        {% if product_quantity <=0 %}
+                        <p>{{product.metafields.oversell-note.oversell-note}}</p>  
+                          {% else %}
+                          <p></p>  
+
+                           {% endif %}
+                       </div>
+                        <div class="item-wrap">
+                          
+                           <div class="item">
+                             {% if product.metafields.custom_fields["custom_fields_allergies_image"] != blank %}
+                              <div class="icon">
+                                 {{ product.metafields.custom_fields["custom_fields_allergies_image"] }}
+                              </div>
+                             {% endif %}
+                             {% if product.metafields.custom_fields["custom_fields_allergies"] != blank %}
+                              <div class="text">
+                                 {{ product.metafields.custom_fields["custom_fields_allergies"] }}
+                              </div>
+                             {% endif %}
+                           </div>
+                           <div class="item">
+                              {% if product.metafields.custom_fields["custom_fields_uk_image"] != blank %}
+                              <div class="icon">
+                                 {{ product.metafields.custom_fields["custom_fields_uk_image"] }}
+                              </div>
+                             {% endif %}
+                             {% if product.metafields.custom_fields["custom_fields_uk"] != blank %}
+                              <div class="text">
+                                 {{ product.metafields.custom_fields["custom_fields_uk"] }}
+                              </div>
+                             {% endif %}
+                           </div>
+                           <div class="item">
+                              {% if product.metafields.custom_fields["custom_fields_sustainable_imag"] != blank %}
+                              <div class="icon">
+                                 {{ product.metafields.custom_fields["custom_fields_sustainable_imag"] }}
+                              </div>
+                             {% endif %}
+                             {% if product.metafields.custom_fields["custom_fields_sustainable"] != blank %}
+                              <div class="text">
+                                 {{ product.metafields.custom_fields["custom_fields_sustainable"] }}
+                              </div>
+                             {% endif %}
+                           </div>
+                          
+                        </div>
+<!--                         <div class="btn-block">
+                          <a href="{{ product.url }}">Checkout</a>
+                          <a href="#">{{sca_price | money}}</a>
+                        </div> -->
+                       <form class="addtocart" method="post" action="/cart/add">
+                          <input type="hidden" name="id" value="{{ product.variants.first.id }}" />
+                          <input class="product-qt" min="1" type="number" id="quantity" name="quantity" value="1"  />
+                          <input type="submit" value="Add to cart" class="btn collection-btn" />
+                         
+                     {% if product_quantity <= 0 %}
+                    
+                     <input id="pre-order" type="text" name="properties[*Pre order product]" value="{{ settings.pre_order_text }}" hidden>
+                      {% endif %}
+                       </form> 
+<div class="sca-fg-cat-list" style="display: none;" name="secomapp-fg-data-{{ product.id }}"></div>
+
+                         
+                     </div>
+                  </div>
+                 {% endfor %}
+                  <!-- Loop Ends -->
+
+               </div>
+              
+              	<div class="row" style="margin-bottom: 50px;">
+					<div class="col-sm-12" class="collection_title" style="color: #c3b18d;">
+                   <h2 class="collection_title">Blends</h2>
+                 </div>
+                  <!-- Loop Starts -->
+                 {% for product in collections['blends'].products %}
+
+                {% assign sca_product = product %}{% assign sca_product_id_text = "," | append : sca_product.id | append : "," %}{% assign sca_price = sca_product.price %}{% assign sca_price_min = sca_product.price_min %}{% assign sca_price_max = sca_product.price_max %}{% assign sca_compare_at_price = sca_product.compare_at_price %}{% assign sca_compare_at_price_min = sca_product.compare_at_price_min %}{% assign sca_compare_at_price_max = sca_product.compare_at_price_max %}{% assign sca_product_available = sca_product.available %}{% assign sca_product_variantCount = sca_product.variants.size %}{% assign sca_compare_at_price_varies = sca_product.compare_at_price_varies %}{% assign sca_price_varies = sca_product.price_varies %}{% assign sca_has_only_default_variant = false %}{% capture sca_product_variants_json %}{{sca_product.variants | json }}{% endcapture %} {% capture sca_product_json %}{ {% if sca_all_gift_products_ids == null or sca_all_gift_products_ids contains sca_product_id_text %}{% assign sca_product_available = false %}{% assign sca_product_variantCount = 0 %}{% assign sca_has_only_default_variant = true %}{% assign sca_is_first_variant = true %}{% capture sca_variants_json %} [{% for variant in sca_product.variants %}{% unless variant.metafields.secomapp.freegifts %}{% unless variant.title contains '(Freegifts)' %}{% unless variant.title contains '% Off' %}{% unless variant.metafields.shappify_qb.qb_hide == "1" %}{% unless variant.metafields.shappify_bundle.is_bundle == "true" %}{% unless variant.metafields.brodev_scn.hide == "true" %}{% unless variant.metafields.wholesaler2.wholesale %}{% unless variant.metafields.Wholesaler.level %}{% unless variant.title contains '(Wholesale' %}{% if sca_is_first_variant%} {{ variant | json }}{% assign sca_price = variant.price %} {% assign sca_price_min = variant.price %} {% assign sca_price_max = variant.price %} {% assign sca_compare_at_price = variant.compare_at_price %} {% assign sca_compare_at_price_min = variant.compare_at_price %} {% assign sca_compare_at_price_max = variant.compare_at_price %} {% assign sca_product_available = variant.available %} {% assign sca_product_variantCount = 1 %} {% assign sca_is_first_variant = false%}{% else %},{{variant | json }} {% if sca_price_min >= variant.price %} {% assign sca_price_min = variant.price %} {% assign sca_price = variant.price %}{% endif %} {% if sca_price_max <= variant.price %} {% assign sca_price_max = variant.price %} {% endif %} {% if variant.compare_at_price %} {% if sca_compare_at_price_min==null or sca_compare_at_price_min >= variant.compare_at_price %} {% assign sca_compare_at_price_min = variant.compare_at_price %} {% assign sca_compare_at_price = variant.compare_at_price %} {% endif %} {% if sca_compare_at_price_max==null or sca_compare_at_price_max < variant.compare_at_price %} {% assign sca_compare_at_price_max = variant.compare_at_price %} {% endif %} {% endif %} {% if variant.available == true %} {% assign sca_product_available = true %} {% endif %} {% assign sca_product_variantCount = sca_product_variantCount | plus: 1 %}{% endif %}{% endunless %}{% endunless %}{% endunless %}{% endunless %}{% endunless %}{% endunless %}{% endunless %}{% endunless %}{% endunless %}{%endfor%} ]{% endcapture %}{% if sca_price_min < sca_price_max %}{% assign sca_price_varies = true %}{% else %}{% assign sca_price_varies = false %}{% endif %}{% if sca_compare_at_price_min < sca_compare_at_price_max %}{% assign sca_compare_at_price_varies = true %}{% else %}{% assign sca_compare_at_price_varies = false %}{% endif %}{% if sca_product_variantCount > 1 %}{% assign sca_has_only_default_variant = false %}{% endif %}{% if sca_product_variantCount == sca_product.variants.size %} "variants":{{ sca_product.variants }},{% else %}{%assign sca_product_variants_json = sca_variants_json %} "variants":{{ sca_variants_json }},{% endif %}{% else %} "variants":{{ sca_product_variants_json }},{% endif %} "id": {{sca_product.id}}, "title": {{sca_product.title | json}}, "handle": {{sca_product.handle | json}}, "description": {{sca_product.description | json}}, "published_at": "{{sca_product.published_at | date: "%Y-%m-%dT%H-%M-%S%:z" }}", "created_at": "{{sca_product.created_at | date: "%Y-%m-%dT%H-%M-%S%:z" }}", "vendor": {{sca_product.vendor | json}}, "type": {{sca_product.type | json}}, "tags": {{sca_product.tags | json}}, "price": {{sca_price}}, "price_min": {{sca_price_min}}, "price_max": {{sca_price_max}}, "available": {{sca_product.available}}, "price_varies": {{sca_price_varies}}, "compare_at_price": {{sca_compare_at_price}}, "compare_at_price_min": {{sca_compare_at_price_min}}, "compare_at_price_max": {{sca_compare_at_price_max}}, "compare_at_price_varies": {{sca_compare_at_price_varies}}, "images": {{sca_product.images | json}}, "featured_image": {{sca_product.featured_image | json }}, "options": {{sca_product.options | json}}, "media": {{sca_product.media | json }}, "content": {{sca_product.content | json }}} {% endcapture sca_product_json %}
+
+                  <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
+                     <div class="product-box">
+                        <div class="img-block">
+                           <a href="{{ product.url }}"><img src="{{ product.featured_image | img_url: '1024x1024' }}" alt=""></a>
+                        </div>
+                        <div class="text-block">
+                          <div class="des-top">
+                            {% assign product_description = product.description | split: '<!-- split -->' %}
+                            <h4><a href="{{ product.url }}">{{ product.title }}</a></h4>
+                            <div class="review-part">
+                               
+{% render 'okendo-reviews-product-rating-summary', product: product %}
+                              </div>
+                              
+                          </div>
+                           
+                           
+                            <p><span style="color: black;">{{sca_price | money}}</span> &nbsp&nbsp<span style="text-decoration: line-through;">{{ sca_compare_at_price | money }}</span></p>
+                        </div>
+                       <div class="text-block">
+                    {% assign product_quantity = 0 %}
+                        {% for variant in product.variants %}
+{% unless variant.metafields.secomapp.freegifts %}
+{% unless variant.title contains '% off)' %}
+
+                          {% assign product_quantity = product_quantity | plus: variant.inventory_quantity %}
+
+{% endunless %}
+{% endunless %}
+                        {% endfor %}
+                        {% if product_quantity <=0 %}
+                        <p>{{product.metafields.oversell-note.oversell-note}}</p>  
+                          {% else %}
+                          <p></p>  
+
+                           {% endif %}
+                       </div>
+                        <div class="item-wrap">
+                          
+                           <div class="item">
+                             {% if product.metafields.custom_fields["custom_fields_allergies_image"] != blank %}
+                              <div class="icon">
+                                 {{ product.metafields.custom_fields["custom_fields_allergies_image"] }}
+                              </div>
+                             {% endif %}
+                             {% if product.metafields.custom_fields["custom_fields_allergies"] != blank %}
+                              <div class="text">
+                                 {{ product.metafields.custom_fields["custom_fields_allergies"] }}
+                              </div>
+                             {% endif %}
+                           </div>
+                           <div class="item">
+                              {% if product.metafields.custom_fields["custom_fields_uk_image"] != blank %}
+                              <div class="icon">
+                                 {{ product.metafields.custom_fields["custom_fields_uk_image"] }}
+                              </div>
+                             {% endif %}
+                             {% if product.metafields.custom_fields["custom_fields_uk"] != blank %}
+                              <div class="text">
+                                 {{ product.metafields.custom_fields["custom_fields_uk"] }}
+                              </div>
+                             {% endif %}
+                           </div>
+                           <div class="item">
+                              {% if product.metafields.custom_fields["custom_fields_sustainable_imag"] != blank %}
+                              <div class="icon">
+                                 {{ product.metafields.custom_fields["custom_fields_sustainable_imag"] }}
+                              </div>
+                             {% endif %}
+                             {% if product.metafields.custom_fields["custom_fields_sustainable"] != blank %}
+                              <div class="text">
+                                 {{ product.metafields.custom_fields["custom_fields_sustainable"] }}
+                              </div>
+                             {% endif %}
+                           </div>
+                          
+                        </div>
+<!--                         <div class="btn-block">
+                          <a href="{{ product.url }}">Checkout</a>
+                          <a href="#">{{sca_price | money}}</a>
+                        </div> -->
+                       <form class="addtocart" method="post" action="/cart/add" style="display:none;">
+                          <input type="hidden" name="id" value="{{ product.variants.first.id }}" />
+                          <input class="product-qt" min="1" type="number" id="quantity" name="quantity" value="1"  />
+                          <input type="submit" value="Add to cart" class="btn collection-btn" />
+                       </form> 
+<div class="sca-fg-cat-list" style="display: none;" name="secomapp-fg-data-{{ product.id }}"></div>
+
+                       <div class="button-wrapper" >
+                          <form class="addtocart" method="post" action="/cart/add" style="width:100%;">
+
+                            <span class="btn collection-btn " onClick="return addToCardQuick('{{product.id}}')" data-count="2">
+                              <span>Quick Add To Bag</span>
+                              <span><i class="icon2 fa fa-plus2 icon_{{product.id}}"></i></span>
+                            </span>     
+
+                            <div class="slide-categories step div_{{product.id}}" style="display:none">
+                               <h4 class="sub-title">Select Size</h4>
+
+                               <div class="size-div">
+                                 {% for variant in product.variants %}
+{% unless variant.metafields.secomapp.freegifts %}
+{% unless variant.title contains '% off)' %}
+
+                                  {% if variant.available %}
+                                 <div class="p-rel selectBox" >
+                                   <input style="" type="radio" onChange="return changeBackColor(this);" name="id" data-countx="{{ count }}" data-priceee="{{variant.price | money }}" data-productid="{{ product.id }}" data-productid="{{product.id}}" id="ProductSelect-{{ section.id }}" class="product-form__variants no-js pid-{{ product.id }}{% if sca_product_variantCount == 1 %} myhidden{% endif %} " value="{{ variant.id }}">
+                                   <div class="variation-box">
+                                       <label for="10">  
+                                         {% if variant.title =="Default Title" %} 
+                                            90 Capsules
+                                         {% else %}
+                                            {{ variant.title }}
+                                         {% endif %}
+                                        </label>
+            <!--                        <br> -->
+                                       <span>{{variant.price | money }} GBP</span>
+                                     </div>
+                                 </div>
+                                  {% else %}
+                                 <div class="p-rel">
+                                   <input style="" type="radio"  disabled="disabled" name="id" data-productid="{{ product.id }}" data-productid="{{product.id}}" id="ProductSelect-{{ section.id }}" class="product-form__variants no-js pid-{{ product.id }}{% if sca_product_variantCount == 1 %} myhidden{% endif %} " value="{{ variant.id }}">
+                                    <div class="variation-box">
+                                   <label for="10">  {{ variant.title }} - {{ 'products.product.sold_out' | t }}</label>
+            <!--                        <br> -->
+                                       <span>{{variant.price | money }} GBP</span>
+                                     </div>
+                                 </div>
+                                  {% endif %}
+
+{% endunless %}
+{% endunless %}
+                                 {% endfor %}
+                               </div>
+                               <input type="submit" value="Add to cart" class="btn collection-btn" />
+                              </div>
+                          </form>
+<div class="sca-fg-cat-list" style="display: none;" name="secomapp-fg-data-{{ product.id }}"></div>
+
+                        </div> 
+                         
+                     </div>
+                  </div>
+                 {% endfor %}
+                  <!-- Loop Ends -->
+
+               </div>
+              
+              {% endif %}
+              
+              {% if collection.title=='Superfoods' %} 
+             	 <div class="row" style="margin-bottom: 50px;">
+					<div class="col-sm-12" class="collection_title" style="color: #c3b18d;">
+                   	<h2 class="collection_title ">Powders </h2>
+					<!--<div class="sortingMainDiv">{render 'collection-sorting'}</div>-->
+                 </div>
+                
+                  <!-- Loop Starts -->
+                 {% for product in collections['superfood-powders'].products %}
+                  <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
+                     <div class="product-box">
+                        <div class="img-block">
+                           <a href="{{ product.url }}"><img src="{{ product.featured_image | img_url: '1024x1024' }}" alt=""></a>
+                        </div>
+                        <div class="text-block">
+                          <div class="des-top">
+                            {% assign product_description = product.description | split: '<!-- split -->' %}
+                            <h4><a href="{{ product.url }}">{{ product.title }}</a></h4>
+                            <div class="review-part">
+{% render 'okendo-reviews-product-rating-summary', product: product %}
+                              </div>                              
+                          </div>         
+                           
+                          <p><span style="color: black;">{{sca_price | money}}</span> &nbsp&nbsp<span style="text-decoration: line-through;">{{ sca_compare_at_price | money }}</span></p>
+                        </div> 
+                       <div class="text-block">
+                       {% assign product_quantity = 0 %}
+                        {% for variant in product.variants %}
+{% unless variant.metafields.secomapp.freegifts %}
+{% unless variant.title contains '% off)' %}
+
+                          {% assign product_quantity = product_quantity | plus: variant.inventory_quantity %}
+
+{% endunless %}
+{% endunless %}
+                        {% endfor %}
+                        {% if product_quantity <=0 %}
+                        <p>{{product.metafields.oversell-note.oversell-note}}</p>  
+                          {% else %}
+                          <p></p>  
+
+                           {% endif %}
+                       </div>
+                        <div class="item-wrap">
+                          
+                           <div class="item">
+                             {% if product.metafields.custom_fields["custom_fields_allergies_image"] != blank %}
+                              <div class="icon">
+                                 {{ product.metafields.custom_fields["custom_fields_allergies_image"] }}
+                              </div>
+                             {% endif %}
+                             {% if product.metafields.custom_fields["custom_fields_allergies"] != blank %}
+                              <div class="text">
+                                 {{ product.metafields.custom_fields["custom_fields_allergies"] }}
+                              </div>
+                             {% endif %}
+                           </div>
+                           <div class="item">
+                              {% if product.metafields.custom_fields["custom_fields_uk_image"] != blank %}
+                              <div class="icon">
+                                 {{ product.metafields.custom_fields["custom_fields_uk_image"] }}
+                              </div>
+                             {% endif %}
+                             {% if product.metafields.custom_fields["custom_fields_uk"] != blank %}
+                              <div class="text">
+                                 {{ product.metafields.custom_fields["custom_fields_uk"] }}
+                              </div>
+                             {% endif %}
+                           </div>
+                           <div class="item">
+                              {% if product.metafields.custom_fields["custom_fields_sustainable_imag"] != blank %}
+                              <div class="icon">
+                                 {{ product.metafields.custom_fields["custom_fields_sustainable_imag"] }}
+                              </div>
+                             {% endif %}
+                             {% if product.metafields.custom_fields["custom_fields_sustainable"] != blank %}
+                              <div class="text">
+                                 {{ product.metafields.custom_fields["custom_fields_sustainable"] }}
+                              </div>
+                             {% endif %}
+                           </div>
+                          
+                        </div>
+<!--                         <div class="btn-block">
+                          <a href="{{ product.url }}">Checkout</a>                        
+                        </div> -->
+                       <form class="addtocart" method="post" action="/cart/add" style="display:none;">
+                          <input type="hidden" name="id" value="{{ product.variants.first.id }}" />
+                          <input class="product-qt" min="1" type="number" id="quantity" name="quantity" value="1"  />
+                          <input type="submit" value="Add to cart" class="btn collection-btn" />
+                       
+					   </form>
+<div class="sca-fg-cat-list" style="display: none;" name="secomapp-fg-data-{{ product.id }}"></div>
+
+                       
+                       <div class="button-wrapper" >
+                          <form class="addtocart" method="post" action="/cart/add" style="width:100%;">
+
+                            <span class="btn collection-btn " onClick="return addToCardQuick('{{product.id}}')" data-count="2">
+                              <span>Quick Add To Bag</span>
+                              <span><i class="icon2 fa fa-plus2 icon_{{product.id}}"></i></span>
+                            </span>     
+
+                            <div class="slide-categories step div_{{product.id}}" style="display:none">
+                               <h4 class="sub-title">Select Size</h4>
+
+                               <div class="size-div">
+                                 {% for variant in product.variants %}
+{% unless variant.metafields.secomapp.freegifts %}
+{% unless variant.title contains '% off)' %}
+
+                                  {% if variant.available %}
+                                 <div class="p-rel selectBox" >
+                                   <input style="" type="radio" onChange="return changeBackColor(this);" name="id" data-countx="{{ count }}" data-priceee="{{variant.price | money }}" data-productid="{{ product.id }}" data-productid="{{product.id}}" id="ProductSelect-{{ section.id }}" class="product-form__variants no-js pid-{{ product.id }}{% if sca_product_variantCount == 1 %} myhidden{% endif %} " value="{{ variant.id }}">
+                                   <div class="variation-box">
+                                       <label for="10">  
+                                         {% if variant.title =="Default Title" %} 
+                                            90 Capsules
+                                         {% else %}
+                                            {{ variant.title }}
+                                         {% endif %}
+                                        </label>
+            <!--                        <br> -->
+                                       <span>{{variant.price | money }} GBP</span>
+                                     </div>
+                                 </div>
+                                  {% else %}
+                                 <div class="p-rel">
+                                   <input style="" type="radio"  disabled="disabled" name="id" data-productid="{{ product.id }}" data-productid="{{product.id}}" id="ProductSelect-{{ section.id }}" class="product-form__variants no-js pid-{{ product.id }}{% if sca_product_variantCount == 1 %} myhidden{% endif %} " value="{{ variant.id }}">
+                                    <div class="variation-box">
+                                   <label for="10">  {{ variant.title }} - {{ 'products.product.sold_out' | t }}</label>
+            <!--                        <br> -->
+                                       <span>{{variant.price | money }} GBP</span>
+                                     </div>
+                                 </div>
+                                  {% endif %}
+
+{% endunless %}
+{% endunless %}
+                                 {% endfor %}
+                               </div>
+                               <input type="submit" value="Add to cart" class="btn collection-btn" />
+                              </div>
+                          </form>
+<div class="sca-fg-cat-list" style="display: none;" name="secomapp-fg-data-{{ product.id }}"></div>
+
+                        </div> 
+                         
+                     </div>
+                  </div>
+                 {% endfor %}
+                  <!-- Loop Ends -->
+
+               </div>
+              
+              	 <div class="row" style="margin-bottom: 50px;">
+					<div class="col-sm-12" class="collection_title" style="color: #c3b18d;">
+                   <h2 class="collection_title">Blends</h2>
+                 </div>
+                
+                  <!-- Loop Starts -->
+                 {% for product in collections['superfood-blends'].products %}
+                  <div class="col-sm-6 col-md-6 col-lg-4 col-xl-3">
+                     <div class="product-box">
+                        <div class="img-block">
+                           <a href="{{ product.url }}"><img src="{{ product.featured_image | img_url: '1024x1024' }}" alt=""></a>
+                        </div>
+                        <div class="text-block">
+                          <div class="des-top">
+                            {% assign product_description = product.description | split: '<!-- split -->' %}
+                            <h4><a href="{{ product.url }}">{{ product.title }}</a></h4>
+                            <div class="review-part">
+{% render 'okendo-reviews-product-rating-summary', product: product %}
+                              </div>                              
+                          </div>         
+                       
+                          <p><span style="color: black;">{{sca_price | money}}</span> &nbsp&nbsp<span style="text-decoration: line-through;">{{ sca_compare_at_price | money }}</span></p>
+                        </div>   
+                       <div class="text-block">
+                       {% assign product_quantity = 0 %}
+                        {% for variant in product.variants %}
+{% unless variant.metafields.secomapp.freegifts %}
+{% unless variant.title contains '% off)' %}
+
+                          {% assign product_quantity = product_quantity | plus: variant.inventory_quantity %}
+
+{% endunless %}
+{% endunless %}
+                        {% endfor %}
+                        {% if product_quantity <=0 %}
+                        <p>{{product.metafields.oversell-note.oversell-note}}</p>  
+                          {% else %}
+                          <p></p>  
+
+                           {% endif %}
+                       </div>
+                        <div class="item-wrap">
+                          
+                           <div class="item">
+                             {% if product.metafields.custom_fields["custom_fields_allergies_image"] != blank %}
+                              <div class="icon">
+                                 {{ product.metafields.custom_fields["custom_fields_allergies_image"] }}
+                              </div>
+                             {% endif %}
+                             {% if product.metafields.custom_fields["custom_fields_allergies"] != blank %}
+                              <div class="text">
+                                 {{ product.metafields.custom_fields["custom_fields_allergies"] }}
+                              </div>
+                             {% endif %}
+                           </div>
+                           <div class="item">
+                              {% if product.metafields.custom_fields["custom_fields_uk_image"] != blank %}
+                              <div class="icon">
+                                 {{ product.metafields.custom_fields["custom_fields_uk_image"] }}
+                              </div>
+                             {% endif %}
+                             {% if product.metafields.custom_fields["custom_fields_uk"] != blank %}
+                              <div class="text">
+                                 {{ product.metafields.custom_fields["custom_fields_uk"] }}
+                              </div>
+                             {% endif %}
+                           </div>
+                           <div class="item">
+                              {% if product.metafields.custom_fields["custom_fields_sustainable_imag"] != blank %}
+                              <div class="icon">
+                                 {{ product.metafields.custom_fields["custom_fields_sustainable_imag"] }}
+                              </div>
+                             {% endif %}
+                             {% if product.metafields.custom_fields["custom_fields_sustainable"] != blank %}
+                              <div class="text">
+                                 {{ product.metafields.custom_fields["custom_fields_sustainable"] }}
+                              </div>
+                             {% endif %}
+                           </div>
+                          
+                        </div>
+<!--                         <div class="btn-block">
+                          <a href="{{ product.url }}">Checkout</a>                        
+                        </div> -->
+                       <form class="addtocart" method="post" action="/cart/add" style="display:none;">
+                          <input type="hidden" name="id" value="{{ product.variants.first.id }}" />
+                          <input class="product-qt" min="1" type="number" id="quantity" name="quantity" value="1"  />
+                          <input type="submit" value="Add to cart" class="btn collection-btn" />
+                       </form>
+<div class="sca-fg-cat-list" style="display: none;" name="secomapp-fg-data-{{ product.id }}"></div>
+
+
+						<div class="button-wrapper" >
+                          <form class="addtocart" method="post" action="/cart/add" style="width:100%;">
+
+                            <span class="btn collection-btn " onClick="return addToCardQuick('{{product.id}}')" data-count="2">
+                              <span>Quick Add To Bag</span>
+                              <span><i class="icon2 fa fa-plus2 icon_{{product.id}}"></i></span>
+                            </span>     
+
+                            <div class="slide-categories step div_{{product.id}}" style="display:none">
+                               <h4 class="sub-title">Select Size</h4>
+
+                               <div class="size-div">
+                                 {% for variant in product.variants %}
+{% unless variant.metafields.secomapp.freegifts %}
+{% unless variant.title contains '% off)' %}
+
+                                  {% if variant.available %}
+                                 <div class="p-rel selectBox" >
+                                   <input style="" type="radio" onChange="return changeBackColor(this);" name="id" data-countx="{{ count }}" data-priceee="{{variant.price | money }}" data-productid="{{ product.id }}" data-productid="{{product.id}}" id="ProductSelect-{{ section.id }}" class="product-form__variants no-js pid-{{ product.id }}{% if sca_product_variantCount == 1 %} myhidden{% endif %} " value="{{ variant.id }}">
+                                   <div class="variation-box">
+                                       <label for="10">  
+                                         {% if variant.title =="Default Title" %} 
+                                            90 Capsules
+                                         {% else %}
+                                            {{ variant.title }}
+                                         {% endif %}
+                                        </label>
+            <!--                        <br> -->
+                                       <span>{{variant.price | money }} GBP</span>
+                                     </div>
+                                 </div>
+                                  {% else %}
+                                 <div class="p-rel">
+                                   <input style="" type="radio"  disabled="disabled" name="id" data-productid="{{ product.id }}" data-productid="{{product.id}}" id="ProductSelect-{{ section.id }}" class="product-form__variants no-js pid-{{ product.id }}{% if sca_product_variantCount == 1 %} myhidden{% endif %} " value="{{ variant.id }}">
+                                    <div class="variation-box">
+                                   <label for="10">  {{ variant.title }} - {{ 'products.product.sold_out' | t }}</label>
+            <!--                        <br> -->
+                                       <span>{{variant.price | money }} GBP</span>
+                                     </div>
+                                 </div>
+                                  {% endif %}
+
+{% endunless %}
+{% endunless %}
+                                 {% endfor %}
+                               </div>
+                               <input type="submit" value="Add to cart" class="btn collection-btn" />
+                              </div>
+                          </form>
+<div class="sca-fg-cat-list" style="display: none;" name="secomapp-fg-data-{{ product.id }}"></div>
+
+                        </div> 
+                         
+                     </div>
+                  </div>
+                 {% endfor %}
+                  <!-- Loop Ends -->
+
+               </div>
+              
+              {% endif %}
+              
+           </div>
+         </div>
+      </div>
+   </div>
+</section>
+
+<script>
+  function addToCardQuick(divName){  	
+     $('.div_'+divName).slideToggle(500);
+     $('.icon_'+divName).toggleClass('fa-minus2');
+  }
+  function changeBackColor(el){
+  	
+    $(el).parent().parent().find('.selectBox').removeClass("changeBack");
+    $(el).parent().addClass("changeBack");
+  }
+</script>
+
+{% schema %}
+{
+  "name": {
+    "da": "Kollektionssider",
+    "de": "Kategorie-Seiten",
+    "en": "Collection pages",
+    "es": "Páginas de colección",
+    "fi": "Kokoelman sivut",
+    "fr": "Pages de collections",
+    "hi": "कलेक्शन पेज",
+    "it": "Pagine delle collezioni",
+    "ja": "コレクションページ",
+    "ko": "컬렉션 페이지",
+    "ms": "Halaman koleksi",
+    "nb": "Samlingssider",
+    "nl": "Collectiepagina's",
+    "pt-BR": "Páginas de coleções",
+    "pt-PT": "Páginas de Coleções",
+    "sv": "Produktseriesidor",
+    "th": "หน้าคอลเลกชัน",
+    "zh-CN": "产品系列页面",
+    "zh-TW": "商品系列頁面"
+  },
+  "settings": [
+    {
+      "type": "select",
+      "id": "layout",
+      "label": {
+        "da": "Layout",
+        "de": "Layout",
+        "en": "Layout",
+        "es": "Diseño",
+        "fi": "Asettelu",
+        "fr": "Mise en page",
+        "hi": "लेआउट",
+        "it": "Layout",
+        "ja": "レイアウト",
+        "ko": "레이아웃",
+        "ms": "Susun atur",
+        "nb": "Oppsett",
+        "nl": "Indeling",
+        "pt-BR": "Layout",
+        "pt-PT": "Esquema",
+        "sv": "Layout",
+        "th": "เลย์เอาต์",
+        "zh-CN": "布局",
+        "zh-TW": "版面配置"
+      },
+      "default": "grid",
+      "options": [
+        {
+          "value": "grid",
+          "label": {
+            "da": "Gitter",
+            "de": "Raster",
+            "en": "Grid",
+            "es": "Cuadrícula",
+            "fi": "Ruudukko",
+            "fr": "Grille",
+            "hi": "ग्रिड",
+            "it": "Griglia",
+            "ja": "グリッド",
+            "ko": "그리드",
+            "ms": "Grid",
+            "nb": "Rutenett",
+            "nl": "Raster",
+            "pt-BR": "Grade",
+            "pt-PT": "Grelha",
+            "sv": "Rutnät",
+            "th": "กริด",
+            "zh-CN": "网格",
+            "zh-TW": "網格"
+          }
+        },
+        {
+          "value": "list",
+          "label": {
+            "da": "Liste",
+            "de": "Liste",
+            "en": "List",
+            "es": "Lista",
+            "fi": "Luettelo",
+            "fr": "Liste",
+            "hi": "सूची",
+            "it": "Elenco",
+            "ja": "リスト",
+            "ko": "목록",
+            "ms": "Senarai",
+            "nb": "Liste",
+            "nl": "Lijst",
+            "pt-BR": "Lista",
+            "pt-PT": "Lista",
+            "sv": "Lista",
+            "th": "รายการ",
+            "zh-CN": "列表",
+            "zh-TW": "清單"
+          }
+        }
+      ]
+    },
+    {
+      "type": "range",
+      "id": "grid",
+      "label": {
+        "da": "Produkter pr. række (kun gitter)",
+        "de": "Produkte per Reihe (nur Raster)",
+        "en": "Products per row (grid only)",
+        "es": "Productos por fila (solo cuadrícula)",
+        "fi": "Tuotteita per rivi (vain ruudukko)",
+        "fr": "Produits par rangée (grille uniquement)",
+        "hi": "उत्पाद प्रति पंक्ति (केवल ग्रिड)",
+        "it": "Prodotti per riga (solo griglia)",
+        "ja": "行あたりの商品数（グリッドのみ）",
+        "ko": "열 별 제품 (그리드 전용)",
+        "ms": "Produk setiap baris (grid sahaja)",
+        "nb": "Produkter per rad (kun rutenett)",
+        "nl": "Producten per rij (alleen raster)",
+        "pt-BR": "Produtos por linha (somente grade)",
+        "pt-PT": "Produtos por linha (somente grelha)",
+        "sv": "Produkter per rad (endast rutnät)",
+        "th": "สินค้าต่อแถว (กริดเท่านั้น)",
+        "zh-CN": "每行产品数（仅限网格）",
+        "zh-TW": "每列產品數 (僅限網格)"
+      },
+      "default": 4,
+      "min": 2,
+      "max": 5,
+      "step": 1
+    },
+    {
+      "type": "range",
+      "id": "rows",
+      "label": {
+        "da": "Rækker pr. side (kun gitter)",
+        "de": "Reihen per Seite (nur Raster)",
+        "en": "Rows per page (grid only)",
+        "es": "Filas por página (solo cuadrícula)",
+        "fi": "Rivejä per sivu (vain ruudukko)",
+        "fr": "Rangées par page (grille uniquement)",
+        "hi": "प्रति पृष्ठ पंक्तियां (केवल ग्रिड)",
+        "it": "Righe per pagina (solo griglia)",
+        "ja": "ページあたりの行数（グリッドのみ）",
+        "ko": "페이지 별 열 (그리드 전용)",
+        "ms": "Baris setiap halaman (grid sahaja)",
+        "nb": "Rader per side (kun rutenett)",
+        "nl": "Rijen per pagina (alleen raster)",
+        "pt-BR": "Linhas por página (somente grade)",
+        "pt-PT": "Linhas por página (somente grelha)",
+        "sv": "Rader per sida (endast rutnät)",
+        "th": "แถวต่อหน้า (กริดเท่านั้น)",
+        "zh-CN": "每行产品数（仅限网格）",
+        "zh-TW": "每頁列數 (僅限網格)"
+      },
+      "default": 2,
+      "min": 2,
+      "max": 8,
+      "step": 1
+    },
+    {
+      "type": "checkbox",
+      "id": "show_collection_image",
+      "label": {
+        "da": "Vis kollektionsbillede",
+        "de": "Kategorie-Foto anzeigen",
+        "en": "Show collection image",
+        "es": "Mostrar imagen de la colección",
+        "fi": "Näytä kokoelman kuva",
+        "fr": "Afficher l'image de la collection",
+        "hi": "कलेक्शन इमेज दिखाएं",
+        "it": "Mostra immagine collezione",
+        "ja": "コレクションの画像を表示する",
+        "ko": "컬렉션 이미지 표시",
+        "ms": "Tunjukkan imej koleksi",
+        "nb": "Vis samlingsbilde",
+        "nl": "Collectieafbeelding weergeven",
+        "pt-BR": "Exibir imagem da coleção",
+        "pt-PT": "Mostrar imagem da coleção",
+        "sv": "Visa produktseriebilder",
+        "th": "แสดงรูปภาพคอลเลกชัน",
+        "zh-CN": "显示产品系列图片",
+        "zh-TW": "顯示商品系列圖片"
+      },
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "label": {
+        "da": "Vis produktleverandører",
+        "de": "Produkt-Lieferanten anzeigen",
+        "en": "Show product vendors",
+        "es": "Mostrar proveedores del producto",
+        "fi": "Näytä tuotteen myyjät",
+        "fr": "Afficher les vendeurs",
+        "hi": "उत्पाद विक्रेताओं को दिखाएं",
+        "it": "Mostra fornitori prodotto",
+        "ja": "商品の販売元を表示する",
+        "ko": "제품 공급 업체 표시",
+        "ms": "Tunjukkan vendor produk",
+        "nb": "Vis produktleverandører",
+        "nl": "Productleveranciers weergeven",
+        "pt-BR": "Exibir fornecedores do produto",
+        "pt-PT": "Mostrar fornecedores do produto",
+        "sv": "Visa produktleverantörer",
+        "th": "แสดงผู้ขายสินค้า",
+        "zh-CN": "显示产品厂商",
+        "zh-TW": "顯示產品廠商"
+      },
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "sort_enable",
+      "label": {
+        "da": "Aktivér sortering",
+        "de": "Sortieren erlauben",
+        "en": "Enable sorting",
+        "es": "Habilitar la función ordenar",
+        "fi": "Ota lajittelu käyttöön",
+        "fr": "Activer le tri",
+        "hi": "क्रमबद्ध करना सक्षम करें",
+        "it": "Permetti di ordinare",
+        "ja": "並べ替えを有効にする",
+        "ko": "정렬 사용",
+        "ms": "Dayakan penyusunan",
+        "nb": "Aktiver sortering",
+        "nl": "Sortering inschakelen",
+        "pt-BR": "Ativar classificação",
+        "pt-PT": "Ativar ordenação",
+        "sv": "Aktivera sortering",
+        "th": "เปิดใช้การจัดเรียง",
+        "zh-CN": "启用排序",
+        "zh-TW": "啟用排序"
+      },
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "tags_enable",
+      "label": {
+        "da": "Aktivér tagfiltrering",
+        "de": "Tag-Filtern erlauben",
+        "en": "Enable tag filtering",
+        "es": "Habilitar filtro de etiquetas",
+        "fi": "Ota tunnisteiden suodatus käyttöön",
+        "fr": "Activer le filtrage par balises",
+        "hi": "टैग फ़िल्टर करना सक्षम करें",
+        "it": "Attiva filtro tag",
+        "ja": "タグでの絞り込みを有効にする",
+        "ko": "태그 필터링 사용",
+        "ms": "Dayakan penapisan tag",
+        "nb": "Aktiver taggfiltrering",
+        "nl": "Filteren op tags inschakelen",
+        "pt-BR": "Ativar filtragem de tags",
+        "pt-PT": "Ativar filtragem por etiqueta",
+        "sv": "Aktivera taggfiltrering",
+        "th": "เปิดใช้การกรองแท็ก",
+        "zh-CN": "启用标签筛选",
+        "zh-TW": "啟用標籤篩選功能"
+      },
+      "default": true
+    }
+  ]
+}
+{% endschema %}
+<style>
+  .des-top h4 a:hover {
+	color: #000;
+}
+/* iPhone X ----------- */
+@media only screen and (min-device-width: 375px) and (max-device-height: 812px) and (orientation : landscape) and (-webkit-device-pixel-ratio: 3){
+/* Styles */
+  .product-box .text-block p {
+	margin-top: 0px !important;
+}
+}
+
+</style>

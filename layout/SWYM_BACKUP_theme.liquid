@@ -1,0 +1,283 @@
+ <!doctype html>
+<html class="no-js" lang="{{ shop.locale }}">
+<head>
+  <meta name="google-site-verification" content="Qez0X4v0SvhFJ4hRgLF6HgRESJT7ld_x-T7LqfdqgtI" />
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="{{ settings.color_button }}">
+  <link rel="canonical" href="{{ canonical_url }}">
+
+  {%- if settings.favicon != blank -%}
+    <link rel="shortcut icon" href="{{ settings.favicon | img_url: '32x32' }}" type="image/png">
+  {%- endif -%}
+
+  {%- capture seo_title -%}
+    {%- if template == 'search' and search.performed == true -%}
+      {{ 'general.search.heading' | t: count: search.results_count }}: {{ 'general.search.results_with_count' | t: terms: search.terms, count: search.results_count }}
+    {%- else -%}
+      {{ page_title }}
+    {%- endif -%}
+    {%- if current_tags -%}
+      {%- assign meta_tags = current_tags | join: ', ' -%} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags -}}
+    {%- endif -%}
+    {%- if current_page != 1 -%}
+      &ndash; {{ 'general.meta.page' | t: page: current_page }}
+    {%- endif -%}
+    {%- assign escaped_page_title = page_title | escape -%}
+    {%- unless escaped_page_title contains shop.name -%}
+      &ndash; {{ shop.name }}
+    {%- endunless -%}
+  {%- endcapture -%}
+  <title>{{ seo_title | strip }}</title>
+
+  {%- if page_description -%}
+    <meta name="description" content="{{ page_description | escape }}">
+  {%- endif -%}
+
+  {% include 'social-meta-tags' %}
+
+  {{ 'theme.scss.css' | asset_url | stylesheet_tag }}
+  
+  {% comment %}
+  	Custom CSS
+  {% endcomment %}
+  
+  {{ 'animate.css' | asset_url | stylesheet_tag }}
+  {{ 'bootstrap.css' | asset_url | stylesheet_tag }}
+  {{ 'easyzoom.css' | asset_url | stylesheet_tag }}
+  {{ 'slick.css' | asset_url | stylesheet_tag }}
+  {{ 'style.css' | asset_url | stylesheet_tag }}
+  {{ 'owl.carousel.min.css' | asset_url | stylesheet_tag }}
+  {{ 'flickity.css' | asset_url | stylesheet_tag }}
+  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" type="text/css">  
+
+  <script>
+    var theme = {
+      breakpoints: {
+        medium: 750,
+        large: 990,
+        widescreen: 1400
+      },
+      strings: {
+        addToCart: {{ 'products.product.add_to_cart' | t | json }},
+        soldOut: {{ 'products.product.sold_out' | t | json }},
+        unavailable: {{ 'products.product.unavailable' | t | json }},
+        regularPrice: {{ 'products.product.regular_price' | t | json }},
+        salePrice: {{
+          'products.product.sale_price' | t | json }},
+        sale: {{ 'products.product.on_sale' | t | json }},
+        showMore: {{ 'general.filters.show_more' | t | json }},
+        showLess: {{ 'general.filters.show_less' | t | json }},
+        addressError: {{ 'sections.map.address_error' | t | json }},
+        addressNoResults: {{ 'sections.map.address_no_results' | t | json }},
+        addressQueryLimit: {{ 'sections.map.address_query_limit_html' | t | json }},
+        authError: {{ 'sections.map.auth_error_html' | t | json }},
+        newWindow: {{ 'general.accessibility.link_messages.new_window' | t | json }},
+        external: {{ 'general.accessibility.link_messages.external' | t | json }},
+        newWindowExternal: {{ 'general.accessibility.link_messages.new_window_and_external' | t | json }},
+        removeLabel: {{ 'cart.label.remove' | t: product: '[product]' | json }},
+        update: {{ 'cart.label.update' | t | json }},
+        quantity: {{ 'cart.label.quantity' | t | json }},
+        discountedTotal: {{ 'cart.label.discounted_total' | t | json }},
+        regularTotal: {{ 'cart.label.regular_total' | t | json }},
+        priceColumn: {{ 'cart.label.price_column' | t | json }},
+        quantityMinimumMessage: {{ 'products.product.quantity_minimum_message' | t | json }},
+        cartError: {{ 'cart.general.cart_error' | t | json }},
+        removedItemMessage: {{ 'cart.general.removed_item_html' | t: quantity: '[quantity]', link: '[link]' | json }},
+        unitPrice: {{ 'products.product.unit_price_label' | t | json }},
+        unitPriceSeparator: {{ 'general.accessibility.unit_price_separator' | t | json }},
+        oneCartCount: {{ 'cart.popup.cart_count' | t: count: 1 | json }},
+        otherCartCount: {{ 'cart.popup.cart_count' | t: count: '[count]' | json }},
+        quantityLabel: {{ 'cart.popup.quantity_label' | t: quantity_count: '[count]' | json }}
+      },
+      moneyFormat: {{ shop.money_format | json }},
+      moneyFormatWithCurrency: {{ shop.money_with_currency_format | json }}
+    }
+
+    document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+  </script>
+
+
+  {%- if template.directory == 'customers' -%}
+    <script src="{{ 'shopify_common.js' | shopify_asset_url }}" defer="defer"></script>
+  {%- endif -%}
+
+  <script src="{{ 'lazysizes.js' | asset_url }}" async="async"></script>
+  <script src="{{ 'vendor.js' | asset_url }}" defer="defer"></script>
+  <script src="{{ 'theme.js' | asset_url }}" defer="defer"></script>
+  
+  {% comment %}
+  	Custom Scripts
+  {% endcomment %}
+  
+  <script src="{{ 'bootstrap.js' | asset_url }}" defer="defer"></script>
+  <script src="{{ 'owl.carousel.min.js' | asset_url }}" defer="defer"></script>
+  <script src="{{ 'menu.js' | asset_url }}" defer="defer"></script>
+  <script src="{{ 'slick.js' | asset_url }}" defer="defer"></script>
+  {% if template contains 'product' %}
+    <script type="text/javascript" src="{{ 'jquery.zoom.min.js' | asset_url }}" defer=”defer”></script>
+  {% endif %}
+  <script src="{{ 'jquery.elevatezoom.js' | asset_url }}" defer="defer"></script>
+  <script src="{{ 'script.js' | asset_url }}" defer="defer"></script>
+  <script src="{{ 'custom.js' | asset_url }}" defer="defer"></script>
+  <script src="{{ 'flickity.pkgd.min.js' | asset_url }}" defer="defer"></script>
+<!-- 
+  {{ 'api.jquery.js' | shopify_asset_url | script_tag }} -->
+  <link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet">
+  {{ content_for_header }}
+
+
+	{{ shop.metafields.okendo.ReviewsWidgetStyleTag }}
+    {{ shop.metafields.okendo.StyleCustomizations }}
+    {% include 'okendo-reviews-json-ld' %}
+  <!-- Global site tag (gtag.js) - Google Ads: 734416922 --> <script async src="https://www.googletagmanager.com/gtag/js?id=AW-734416922"></script> <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'AW-734416922'); </script>
+
+  <script type="text/javascript" src="//cdn.wishpond.net/connect.js?merchantId=1481113&writeKey=f5d4bffb1728" async></script>
+  
+  <script async type="text/javascript" src="https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=WiTA3E"></script>
+  
+  <script src="https://demandforapps.com/buy/js/add_buynow.js"></script></head>
+
+<body class="template-{{ template | split: '.' | first }}">
+<script>!function(){window.SLIDECART=!0;window.SLIDECART_FORMAT='{{shop.money_format}}';var e="https://cdn.jsdelivr.net/gh/apphq/slidecart-dist@master/slidecarthq.js?"+(new Date).getTime(),t=document.createElement("script");t.type="text/javascript",t.src=e,document.querySelector("body").appendChild(t)}();</script>
+  <a class="in-page-link visually-hidden skip-link" href="#MainContent">{{ 'general.accessibility.skip_to_content' | t }}</a>
+
+  <div id="SearchDrawer" class="search-bar drawer drawer--top" role="dialog" aria-modal="true" aria-label="{{ 'general.search.placeholder' | t }}">
+    <div class="search-bar__table">
+      <div class="search-bar__table-cell search-bar__form-wrapper">
+        <form class="search search-bar__form" action="{{ routes.search_url }}" method="get" role="search">
+          <input class="search__input search-bar__input" type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ 'general.search.placeholder' | t }}" aria-label="{{ 'general.search.placeholder' | t }}">
+          <button class="search-bar__submit search__submit btn--link" type="submit">
+            {% include 'icon-search' %}
+            <span class="icon__fallback-text">{{ 'general.search.submit' | t }}</span>
+          </button>
+        </form>
+      </div>
+      <div class="search-bar__table-cell text-right">
+        <button type="button" class="btn--link search-bar__close js-drawer-close">
+          {% include 'icon-close' %}
+          <span class="icon__fallback-text">{{ 'general.search.close' | t }}</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  {%- if settings.enable_ajax -%}
+    {% include 'cart-popup' %}
+  {%- endif -%}
+
+  {% section 'header' %}
+
+  <div class="page-container" id="PageContainer">
+
+    <main class="main-content js-focus-hidden" id="MainContent" role="main" tabindex="-1">
+      {{ content_for_layout }}
+    </main>
+
+    
+
+    <div id="slideshow-info" class="visually-hidden" aria-hidden="true">
+      {{- 'sections.slideshow.navigation_instructions' | t -}}
+    </div>
+
+  </div>
+
+  {% section 'footer' %}
+  <ul hidden>
+    <li id="a11y-refresh-page-message">{{ 'general.accessibility.refresh_page' | t }}</li>
+    <li id="a11y-selection-message">{{ 'general.accessibility.selection_help' | t }}</li>
+  </ul>
+  
+  <script>
+   
+    function func(){
+      if ($(window).width() > 767) {
+   setTimeout(func1, 100);
+}
+else {
+   
+}
+    	
+    }
+    
+    function func1(){
+    	console.log($("#product-detailsection").offset().top);
+      	console.log($("#product-detailsection").height());
+      imgY = $("#product-detailsection").offset().top + $("#product-detailsection").height() - $("#blog-demo-2").height() - 100;  
+      console.log(imgY);
+      console.log(document.documentElement.scrollTop);
+      
+      if(document.documentElement.scrollTop < imgY){
+      	$("#blog-demo-2").attr("style", "top: " + document.documentElement.scrollTop + "px; !important");
+        
+      }
+      else{
+        imgY = -60;
+        $("#blog-demo-2").attr("style", "top: " + imgY + "px; !important");
+        $(window).scrollTop(imgY+300);
+      	
+      }
+    }
+  	window.onscroll = function(){scrollFunction()};
+    
+    function scrollFunction() {
+      var pathname = window.location.pathname;
+      
+     if ($(window).width() > 767 && pathname.search('products') != -1) {
+   imgY = $("#product-detailsection").offset().top + $("#product-detailsection").height() - $("#blog-demo-2").height() - 100;  
+          if(document.documentElement.scrollTop < imgY){
+      	$("#blog-demo-2").attr("style", "top: " + document.documentElement.scrollTop + "px !important; transition: all 800ms ease;");
+      }    
+}
+else {
+   
+}
+      if(document.body.scrollTop > 40 || document.documentElement.scrollTop > 40){
+        console.log("scroll");
+         
+        $(".header-2").attr("style", "position: fixed !important; top: 0px !important; z-index: 11111111111111; background-color: white; width: 100%;");
+//         $(".header--bottom-row").attr("style", "");
+      }else{
+      	console.log("scroll");
+        $(".header-2").attr("style", "top: 74px !important");
+      }
+    }   
+    $(document).ready(function() {
+    	console.log($("#count-number").text());
+     
+           $('.main-carousel').flickity({
+        // options
+       		lazyLoad: true,
+             bgLazyLoad: 1,
+             prevNextButtons: false,
+			pageDots: false,
+        	contain: true,
+             autoPlay: true
+      
+      });
+      
+	});
+    var counter = 0;
+    var flag = false;
+    var timer = setInterval(function () {
+        counter++;
+        console.log($("#count-number").text());
+        if($("#count-number").text() > 0){          
+          $("#cart-icon").attr("style", " animation-name: shake;");  
+          setTimeout(function(){ $("#cart-icon").attr("style", "animation-name: shake1;"); console.log("2");}, 2000);
+          console.log("1");
+        }
+      else{
+        $("#cart-icon").attr("style", "animation-name: shake1;");
+      }
+    }, 5000);
+    
+   
+  </script>
+  {% include 'subscription-theme-footer' %}
+{% include 'subscribe-it-helper' %}
+  {% render 'preorder-now' %}
+  </body>
+</html>

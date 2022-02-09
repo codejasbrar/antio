@@ -1,0 +1,89 @@
+<button class="accordion">{{ blog.title }} Type</button>
+<div class="panel">
+ 
+<div class="filter_main_div"> 
+            <ul class="filterlist flex-filter">
+              
+      {% for blog_tag in blog.all_tags %}
+         
+            {% if blog_tag contains "product" %} 
+                 <li class="sidebarfilters sidebar-current">
+                  
+                   <div class="checkbox">
+                    <label><input type="checkbox" class="blog-filters-bar" value="" attr_tags="{{ blog_tag.handle }}"> {{ blog_tag | replace: "product_", ""  }}</label>
+                  </div>
+                   
+                </li>
+            {% endif %}
+         
+      {% endfor %}        
+              
+            </ul>
+</div>
+
+</div>
+
+
+
+<input type="hidden" id="result" value="">
+
+<script>
+
+   $(document).ready(function(){
+     
+  
+     
+        $('.blog-filters-bar').click(function(){
+            
+         splashArray = [];
+          
+         var splashArray = new Array();
+          
+          $(".blog-filters-bar").each(function(index){
+            
+          
+            if($(this).prop("checked") == true){
+              
+               splashArray.push("."+$(this).attr("attr_tags"));
+              
+            } 
+            
+          });
+          
+          
+          
+          
+          console.log(splashArray);
+          
+          $("#result").val(splashArray);
+          
+          /* get html array value */
+          
+        var str = $("#result").val()
+          
+          str.replace(",", " ");
+          
+          console.log(str);
+          
+          if(str != ''){
+          	
+            $(".article-list").hide();
+
+            $(str).show();
+            
+          } else {
+          
+          	$(".article-list").show();
+            
+          }
+          
+          
+          
+         /* print an array */
+          
+        
+          
+        });
+    });
+  
+</script>

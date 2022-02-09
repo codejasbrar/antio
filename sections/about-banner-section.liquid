@@ -1,0 +1,51 @@
+<section id="about_banner">
+  <div class="about_banner_image mobile_image" style="background-image: url({{ section.settings.banner_image | img_url:'master' }});">
+    <div class="about_banner_content">
+      <h1 class="heading">{{ section.settings.banner_heading }}</h1>
+      <p class="subheading red_text">{{ section.settings.banner_subheading }}</p>
+    </div>
+  </div>
+
+</section>
+
+<style>
+  @media only screen and (max-width: 480px){
+    .about_banner_image.mobile_image{
+      background-image: url({{ section.settings.mobile_banner_image | img_url:'master' }}) !important;
+    }
+  }
+</style>
+
+{% schema %}
+  {
+    "name": "Banner section",
+    "settings": [
+            {
+              "type": "image_picker",
+              "id": "banner_image",
+              "label": "Banner image"
+            },
+            {
+              "type": "image_picker",
+              "id": "mobile_banner_image",
+              "label": "Mobile banner image"
+            },
+            {
+              "type": "text",
+              "id": "banner_heading",
+              "label": "Heading"
+            },
+            {
+              "type": "text",
+              "id": "banner_subheading",
+              "label": "Subheading"
+            }
+]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

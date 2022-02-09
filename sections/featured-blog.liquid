@@ -1,0 +1,161 @@
+<!-- Blog section start -->
+<section class="blog-sec">
+  <div class="container">
+    <div class="row desktop" >
+      
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <h2 class="sing_title"><span></span>{{section.settings.title}}</h2>
+      </div>
+      {% assign blog = blogs[section.settings.blog] %}
+      	{% for article in blog.articles limit: section.settings.post_limit %}
+      		<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+              <div class="blog-box">
+                <img src="{{ article.image.src | img_url: '1200x' }}" class=" img-fluid" alt="">
+                <div class="blog-text-sec">
+                	<h2>{{ article.title }}</h2>
+                	<p>{{ article.content | strip_html | truncate: 100 }}</p>
+                </div>
+                <a href="{{ article.url }}" class="btn btn-solid btn-read" tabindex="0">{{section.settings.blog_readmore}}</a>
+              </div>
+            </div>
+      	{% endfor %}
+      
+      <a href="{{ blog.url }}" class="btn btn-solid btn-center btn-sq" tabindex="0">Read More</a>
+    </div>
+    <div class=" mobile" >
+      
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <h2 class="sing_title"><span></span>{{section.settings.title}}</h2>
+      </div>
+      {% assign blog = blogs[section.settings.blog] %}
+      <div class="slide-4">
+      	{% for article in blog.articles %}
+<!--         <div class="carousel-cell"> -->
+      		<div>
+              <div class="box">
+                <div class="m-box-img">
+                <img src="{{ article.image.src | img_url: '1200x' }}" class=" img-fluid" alt="">
+                </div>
+                <div class="blog-text-sec">
+                	<h2>{{ article.title }}</h2>
+                	<p>{{ article.content | strip_html | truncate: 100 }}</p>
+                  <a href="{{ article.url }}" class="btn btn-solid btn-read" tabindex="0">{{section.settings.blog_readmore}}</a>
+                </div>
+                
+              </div>
+<!--             </div> -->
+        </div>
+      	{% endfor %}
+      
+<!--       <a href="{{ blog.url }}" class="btn btn-solid btn-center btn-sq" tabindex="0">Read More</a> -->
+      
+      </div>
+    </div>
+  </div>
+</section>
+<script>
+$('.slide-4').slick({
+        autoplay: true,
+        autoplaySpeed: 5000,
+        slidesToShow: 4,
+        slidesToScroll: 1,
+        responsive: [
+            {
+                breakpoint: 1200,
+                settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 3
+                }
+            },
+            {
+                breakpoint: 767,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                }
+            },
+            {
+                breakpoint: 576,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                }
+            }
+        ]
+    });
+
+</script>
+
+{% schema %}
+{
+  "name": {
+    "en": "Blog posts"
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": {
+        "en": "Heading"
+      },
+      "default": {
+        "en": "Blog posts"
+      }
+    },
+    {
+      "id": "blog",
+      "type": "blog",
+      "label": {
+        "en": "Blog"
+      }
+    },
+	{
+	  "id": "blog_readmore",
+      "type": "text",
+      "label": {
+        "en": "Set Blog button Title"
+      }	
+	},
+    {
+      "type": "range",
+      "id": "post_limit",
+      "label": {
+        "en": "Posts"
+      },
+      "min": 3,
+      "max": 12,
+      "step": 3,
+      "default": 3
+    },
+	{
+		"id": "read_more",
+		"type": "text",
+		"label": "Set View All Text",
+		"default": {
+			"en": "View All"
+		}
+	}
+  ],
+  "presets": [
+    {
+      "name": {
+        "en": "Blog posts"
+      },
+      "category": {
+        "en": "Blog"
+      },
+      "settings": {
+        "blog": "News",
+        "post_limit": 3
+      }
+    }
+  ]
+}
+{% endschema %}

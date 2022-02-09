@@ -1,0 +1,90 @@
+<!-- About desc section start -->
+
+<!-- <div class="about-section">
+  <div class="container">
+    <div class="desc-text">
+      <div class="squer-block"></div>
+      <div class="title-text">
+        <h2></h2>
+      </div>
+    </div>
+    <p></p>
+  </div>
+</div> -->
+<!-- About desc section End -->
+
+
+
+<!-- Why We do section End -->
+
+<!-- <div class="respons-section">
+  <div class="container">
+    <div class="site-title-block">
+     
+      <div class="title-text">
+        <h2></h2>
+      </div>
+    </div>
+    <div class=respons-img>
+    	<img src="" alt="">
+    </div>
+  </div>
+</div> -->
+
+{% schema %}
+  {
+    "name": "Our Stroey Section",
+    "settings": [
+	  {
+		"type": "text",
+		"id": "our_story_title",
+		"label": "Set Title"
+      },
+	  {
+		"type": "textarea",
+		"id": "our_story_textarea",
+		"label": "Our Story Description"
+      },
+	  {
+		"type": "text",
+		"id": "what_we_do_title",
+		"label": "Set What We Do Title"
+      },	
+	  {
+		"type": "image_picker",
+		"id": "what_we_do_image",
+		"label": "Set What We Do Image"
+      }
+	],
+	"blocks": [
+		{
+			"type": "about_section_second",
+			"limit": 3,
+			"name": "What We Do Section",
+			"settings": [
+				{
+					"type": "image_picker",
+                    "id": "about_section_second_image",
+                    "label": "Set Image"
+				},
+				{
+                    "type": "text",
+                    "id": "about_section_second_title",
+                    "label": "Set Title"
+                },
+				{
+                    "type": "textarea",
+                    "id": "about_section_second_textarea",
+                    "label": "Set Description"
+                }
+			]
+		}
+	]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}
